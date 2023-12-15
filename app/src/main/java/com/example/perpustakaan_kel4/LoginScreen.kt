@@ -9,8 +9,10 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 
 class LoginScreen : AppCompatActivity() {
@@ -18,7 +20,6 @@ class LoginScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_screen)
 
-        var textStatus: TextView = findViewById(R.id.textViewStatus)
         var phoneNumber: EditText = findViewById(R.id.editTextPhone)
         var password: EditText = findViewById(R.id.editTextPassword)
         var loginButton: Button = findViewById(R.id.buttonLogin)
@@ -26,31 +27,33 @@ class LoginScreen : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
-
-            val queue = Volley.newRequestQueue(this)
             val url: String = ApiEndPoint.READ_MEMBER
-            val stringRequest = StringRequest(
-                Request.Method.GET,
-                url,
-                { response ->
+            val stringRequest = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response ->
                     Log.d("response", response)
-                    if (response == "true") {
+                    val jsonObj = JSONObject(response)
+
+                    if (jsonObj.getString("error_text").equals("true", ignoreCase = true)) {
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
                         finish()
-                    } else {
-                        Toast.makeText(
-                            this@LoginScreen,
-                            "Invalid Phone Number or Password",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    } else{
+                    Toast.makeText(this,jsonObj.getString("error_text"),Toast.LENGTH_SHORT).show()
                     }
                 },
-                { response ->
-                    //error callback
-                    textStatus.text = response.toString()
-                })
-            queue.add(stringRequest)
+                Response.ErrorListener { _ ->
+                    Toast.makeText(this, "Gagal Terhubung", Toast.LENGTH_SHORT).show()
+                }
+            ){
+                override fun getParams(): HashMap<String,String>{
+                    val params = HashMap<String,String>()
+                    params["no_telp"]      = phoneNumber.text.toString()
+                    params["password"]     = password.text.toString()
+                    return params
+                }
+            }
+            Volley.newRequestQueue(this).add(stringRequest)
         }
 
         registerTextView.setOnClickListener {
@@ -78,3 +81,35 @@ class LoginScreen : AppCompatActivity() {
 //            Toast.makeText(this, "Nice", Toast.LENGTH_SHORT).show()
 //        })
 //}
+
+
+//val queue = Volley.newRequestQueue(this)
+//val url: String = ApiEndPoint.READ_MEMBER
+//val stringRequest = StringRequest(
+//    Request.Method.POST,
+//    url,
+//    { response ->
+//        Log.d("response", response)
+//        val jsonObj = JSONObject(response)
+//        Toast.makeText(this,jsonObj.getString("error_text"),Toast.LENGTH_SHORT).show()
+////                    if (response == "true") {
+////                        val intent = Intent(this@LoginScreen, MainActivity::class.java)
+////                        startActivity(intent)
+////                        finish()
+////                    } else {
+////                        Toast.makeText(
+////                            this@LoginScreen,
+////                            "Invalid Phone Number or Password",
+////                            Toast.LENGTH_SHORT
+////                        ).show()
+////                    }
+//    },
+//    { response ->
+//        Toast.makeText(
+//            this@LoginScreen,
+//            "$response",
+//            Toast.LENGTH_SHORT
+//        ).show()
+//
+//    })
+//queue.add(stringRequest)
