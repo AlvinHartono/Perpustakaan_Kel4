@@ -32,14 +32,13 @@ class LoginScreen : AppCompatActivity() {
                 Request.Method.POST, url,
                 Response.Listener { response ->
                     Log.d("response", response)
-                    val jsonObj = JSONObject(response)
 
-                    if (jsonObj.getString("error_text").equals("true", ignoreCase = true)) {
+                    if (response.equals("true")) {
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else{
-                    Toast.makeText(this,jsonObj.getString("error_text"),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"false",Toast.LENGTH_SHORT).show()
                     }
                 },
                 Response.ErrorListener { _ ->
