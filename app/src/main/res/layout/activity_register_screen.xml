@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".RegisterScreen">
 
     <ImageView
@@ -11,9 +13,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/books" />
 
     <TextView
@@ -22,11 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="Sign Up"
-        android:textStyle="bold"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView4"
@@ -34,84 +30,67 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Los Santos Public Library"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:textSize="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@id/textInputLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:endIconMode="clear_text"
-        >
+        app:endIconMode="clear_text">
 
         <EditText
             android:id="@+id/editTextPhone"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
-            android:ems="10"
-            android:inputType="phone"
-            android:hint="Phone Number"
             android:drawableStart="@drawable/baseline_phone_24"
             android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="phone"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@id/textInputLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:endIconMode="clear_text"
-        >
+        app:endIconMode="clear_text">
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
             android:drawableStart="@drawable/baseline_email_24"
             android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"/>
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@id/textInputLayout1"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
-        >
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <LinearLayout
-            android:id="@+id/editName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/editFirstName"
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
@@ -121,11 +100,17 @@
                 android:drawableStart="@drawable/baseline_person_24"
                 android:drawablePadding="5dp"
                 android:textSize="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="10dp"/>
 
-                />
 
-            <com.google.android.material.textfield.TextInputEditText
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
                 android:id="@+id/editLastName"
                 android:layout_width="140dp"
                 android:layout_height="match_parent"
@@ -135,40 +120,21 @@
                 android:drawableStart="@drawable/baseline_person_24"
                 android:drawablePadding="5dp"
                 android:textSize="15dp"
-                android:layout_marginStart="10dp"
-                />
+                android:layout_marginStart="10dp"/>
 
-        </LinearLayout>
 
-<!--        -->
-<!--        <EditText-->
-<!--            android:id="@+id/editNama"-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="text"-->
-<!--            android:hint="Username"-->
-<!--            android:drawableStart="@drawable/baseline_person_24"-->
-<!--            android:drawablePadding="5dp"-->
-<!--            android:textSize="15dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"/>-->
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
-        app:passwordToggleEnabled="true"
         android:autofillHints="Re-password"
-        >
+        app:passwordToggleEnabled="true">
 
 
         <EditText
@@ -189,16 +155,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:passwordToggleEnabled="true"
         android:autofillHints="re-password"
-        >
+        app:passwordToggleEnabled="true">
 
         <EditText
             android:id="@+id/editTextRePassword"
@@ -223,33 +184,32 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/green"
-        android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        android:text="Sign Up" />
 
-    <TextView
-        android:id="@+id/textView5"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="10dp"
-        android:text="Already have an account?"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignUp" />
+        android:gravity="start"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textViewLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="127dp"
-        android:text="Login"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignUp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="10dp"
+            android:text="Already have an account?"
+            android:textSize="12sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="127dp"
+            android:text="Login"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
