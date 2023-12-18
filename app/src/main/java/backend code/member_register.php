@@ -2,20 +2,22 @@
 
 require_once('connection.php');
 
-$id_member = $_POST['id_member'];
-$nama_member = $_POST['nama_member'];
+$first_name_member = $_POST['first_name_member'];
+$last_name_member = $_POST['last_name_member'];
 $email = $_POST['email'];
 $no_telp = $_POST['no_telp'];
 $password = $_POST['password'];
 
-if(!$nama_member ||!$email ||!$no_telp ||!$password){
-    echo json_encode(array('message' => 'required field is empty.'));
-} else {
-    $query = mysqli_query($CON, "INSERT INTO member VALUES ('$nama_member', '$email', '$no_telp', '$password')");
+if(!$first_name_member || !$email ||!$no_telp ||!$password){
+    echo "required field is empty.";
+}
+
+else {
+    $query = mysqli_query($CON, "INSERT INTO member (first_name_member, last_name_member, email, no_telp, password) VALUES ('$first_name_member', '$last_name_member', '$email', '$no_telp','".md5("$password")."')");
     if($query){
-        echo json_encode(array('message' => 'Member data successfully added.'));
+        echo 'Member data successfully added.';
     } else {
-        echo json_encode(array('message' => 'Member data failed to add.'));
+        echo "Member data failed to add.";
     }
 }
 ?>
