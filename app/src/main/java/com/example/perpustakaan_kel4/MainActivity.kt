@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+
+
 //    ini kode harusnya buat app close kalo user back 2 kali, tapi belum berhasil.
 //    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
 //        override fun handleOnBackPressed() {
