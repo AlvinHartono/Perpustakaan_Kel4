@@ -8,8 +8,6 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val bundle = intent.extras
-    val message = bundle?.getString("no_telp")
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +31,9 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        val args = Bundle()
-        args.putString("key", message)
-        fragment.arguments = args
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)
