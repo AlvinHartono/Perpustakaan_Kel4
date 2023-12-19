@@ -27,20 +27,19 @@
 
                 <ImageView
                     android:id="@+id/profile_pic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="154dp"
+                    android:layout_height="151dp"
+                    android:layout_margin="24dp"
                     android:src="@drawable/profile"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_margin="24dp"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/account_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="50dp"
-                    android:text="Account Settings"
+                    android:text="Account"
                     android:textColor="#000000"
                     android:textSize="32sp"
                     android:textStyle="bold"
@@ -77,7 +76,7 @@
                     android:layout_marginTop="18dp"
                     android:text="Username"
                     android:textColor="#FFFFFF"
-                    android:textSize="40sp"
+                    android:textSize="26sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +85,7 @@
                     android:id="@+id/profile_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="42dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="092144032134"
                     android:textColor="#FFFFFF"
@@ -105,7 +104,7 @@
                     android:gravity="center"
                     android:text="Change"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -121,11 +120,17 @@
                 android:showDividers="middle"
                 android:divider="@drawable/empty_tall_divider">
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/white_bg"
-                    android:id="@+id/notification_col">
+                    android:id="@+id/notification_col"
+                    android:onClick="login">
 
                     <ImageView
                         android:id="@+id/imageView16"
