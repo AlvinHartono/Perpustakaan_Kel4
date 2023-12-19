@@ -45,8 +45,11 @@ class LoginScreen : AppCompatActivity() {
                 Log.d("response", response)
 
                 if (response.equals("true")) {
+                    val bundle = Bundle()
+                    bundle.putString("no_telp", phoneNumber.text.toString())
                     val intent = Intent(this@LoginScreen, MainActivity::class.java)
                     startActivity(intent)
+                    intent.putExtras(bundle)
                     finish()
                 } else{
                     Toast.makeText(this,"false",Toast.LENGTH_SHORT).show()
