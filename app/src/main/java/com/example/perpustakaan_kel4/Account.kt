@@ -57,6 +57,7 @@ class Account : Fragment() {
         btnLogout.setOnClickListener{
             val intent = Intent(requireActivity(), LoginScreen::class.java)
             startActivity(intent)
+            activity?.finish()
         }
     }
 }
