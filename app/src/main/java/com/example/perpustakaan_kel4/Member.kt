@@ -5,7 +5,11 @@ class Member {
         get() =field
         set(value) {field = value}
 
-    var nama_member : String = ""
+    var first_name_member : String = ""
+        get() = field
+        set(value) {field = value}
+
+    var last_name_member : String = ""
         get() = field
         set(value) {field = value}
 
