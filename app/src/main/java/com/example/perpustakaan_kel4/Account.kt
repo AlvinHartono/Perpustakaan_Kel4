@@ -23,6 +23,8 @@ class Account : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var myTextView: TextView
+    lateinit var no_telp : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +43,17 @@ class Account : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_account, container, false)
+
+        myTextView = view.findViewById<View>(R.id.profile_num) as TextView
+
+        val bundle = arguments
+        val message = bundle!!.getString("no_telp")
+
+        myTextView.text = message.toString()
+        no_telp = message.toString()
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +61,7 @@ class Account : Fragment() {
 
         val btnNotif  = view.findViewById<ConstraintLayout>(R.id.notification_col)
         val btnContactSupport  = view.findViewById<ConstraintLayout>(R.id.contact_us_col)
-        val btnManageAccount = view.findViewById<ConstraintLayout>(R.id.manage_account_col)
+        val btnDeleteAccount = view.findViewById<ConstraintLayout>(R.id.delete_account_col)
         val btnTermsPrivacy = view.findViewById<ConstraintLayout>(R.id.terms_privacy_col)
         val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col)
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
@@ -58,6 +70,10 @@ class Account : Fragment() {
             val intent = Intent(requireActivity(), LoginScreen::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        btnDeleteAccount.setOnClickListener{
+
         }
     }
 }

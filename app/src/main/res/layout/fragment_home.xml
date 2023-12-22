@@ -8,10 +8,11 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/homeFragmentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Home Fragment"
-        android:textSize="26sp"
-        android:layout_gravity="center"/>
+        android:textSize="26sp" />
 
 </FrameLayout>
