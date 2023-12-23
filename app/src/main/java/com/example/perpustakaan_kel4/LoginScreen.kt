@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -26,6 +27,7 @@ class LoginScreen : AppCompatActivity() {
         var password: EditText = findViewById(R.id.editTextPassword)
         var loginButton: Button = findViewById(R.id.buttonLogin)
         var registerTextView: TextView = findViewById(R.id.textViewRegister)
+        var librarianAccess : ImageView = findViewById(R.id.imageView3)
 
 
         loginButton.setOnClickListener {
@@ -36,6 +38,12 @@ class LoginScreen : AppCompatActivity() {
             val intent = Intent(this, RegisterScreen::class.java)
             startActivity(intent)
         }
+
+        librarianAccess.setOnClickListener {
+            val intent = Intent(this, activity_login_librarian::class.java)
+            startActivity(intent)
+        }
+
     }
     private fun login(phoneNumber: EditText, password:EditText){
         val url: String = ApiEndPoint.READ_MEMBER
