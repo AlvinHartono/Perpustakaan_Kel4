@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2023 at 04:56 AM
+-- Generation Time: Dec 23, 2023 at 05:05 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.3.16
 
@@ -138,7 +138,9 @@ ALTER TABLE `kategori`
 -- Indexes for table `librarian`
 --
 ALTER TABLE `librarian`
-  ADD PRIMARY KEY (`id_librarian`);
+  ADD PRIMARY KEY (`id_librarian`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `no_telp` (`no_telp`);
 
 --
 -- Indexes for table `member`
