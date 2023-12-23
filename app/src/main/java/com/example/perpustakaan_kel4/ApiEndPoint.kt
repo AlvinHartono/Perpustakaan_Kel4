@@ -6,7 +6,8 @@ class ApiEndPoint {
         var ipAddress = "192.168.0.12"
         private val SERVER = "http://$ipAddress/Perpustakaan_Kel4/"
         val CREATE_MEMBER = SERVER+"member_register.php"
-        val READ_MEMBER = SERVER+"member_authentication.php"
+        val AUTH_MEMBER = SERVER+"member_authentication.php"
+        val READ_MEMBER = SERVER + "member_read.php"
         val DELETE_MEMBER = SERVER+"member_delete.php"
         val UPDATE_MEMBER = SERVER+"member_update.php"
     }

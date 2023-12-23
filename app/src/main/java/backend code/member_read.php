@@ -3,7 +3,6 @@
 
     $no_telp = $_GET["no_telp"];
     $sql = "SELECT * FROM member WHERE no_telp = $no_telp";
-    // $result = mysqli_fetch_row($sql);
 
     if($result = mysqli_query($CON, $sql)){
         $row = $result->fetch_assoc();
