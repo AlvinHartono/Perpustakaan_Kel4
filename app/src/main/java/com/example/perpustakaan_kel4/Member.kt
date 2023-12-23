@@ -1,7 +1,7 @@
 package com.example.perpustakaan_kel4
 
 class Member {
-    var id_member: Int = 0
+    var id_member: String = ""
         get() =field
         set(value) {field = value}
 
