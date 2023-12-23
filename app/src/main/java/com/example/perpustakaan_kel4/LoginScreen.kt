@@ -36,6 +36,8 @@ class LoginScreen : AppCompatActivity() {
             val intent = Intent(this, RegisterScreen::class.java)
             startActivity(intent)
         }
+
+        
     }
     private fun login(phoneNumber: EditText, password:EditText){
         val url: String = ApiEndPoint.READ_MEMBER
