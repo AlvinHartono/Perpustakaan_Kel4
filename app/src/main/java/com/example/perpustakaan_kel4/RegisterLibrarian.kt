@@ -38,7 +38,7 @@ class RegisterLibrarian : AppCompatActivity() {
 
         signUp.setOnClickListener {
 
-            if (editTextPassword.text.toString().equals(editTextRePassword.text.toString())) {
+            if (editTextPassword.text.toString() == editTextRePassword.text.toString()) {
                 if (editTextPassword.text.toString().length >= 8) {
                     register(
                         editTextPhone,
@@ -48,11 +48,6 @@ class RegisterLibrarian : AppCompatActivity() {
                         editTextPassword,
                         editTextRePassword
                     )
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val intent = Intent(this, LoginScreen::class.java)
-                        startActivity(intent)
-                        finish()
-                    }, 1000)
                 } else {
                     Toast.makeText(this, "Password must be 8 characters or more", Toast.LENGTH_SHORT).show()
                     editTextPassword.setText("")
@@ -81,6 +76,11 @@ class RegisterLibrarian : AppCompatActivity() {
             Response.Listener { response ->
                 Log.d("response", response)
                 Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this, LoginScreen::class.java)
+                    startActivity(intent)
+                    finish()
+                }, 1000)
             },
             Response.ErrorListener { response ->
                 Toast.makeText(this, "Register Failed $response", Toast.LENGTH_SHORT).show()
@@ -88,8 +88,8 @@ class RegisterLibrarian : AppCompatActivity() {
         ) {
             override fun getParams(): HashMap<String, String> {
                 val params = HashMap<String, String>()
-                params["first_name_member"] = editFirstName.text.toString()
-                params["last_name_member"] = editLastName.text.toString()
+                params["first_name_librarian"] = editFirstName.text.toString()
+                params["last_name_librarian"] = editLastName.text.toString()
                 params["email"] = editTextEmail.text.toString()
                 params["no_telp"] = editTextPhone.text.toString()
                 params["password"] = editTextPassword.text.toString()

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2023 at 05:05 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.3.16
+-- Generation Time: Dec 25, 2023 at 11:58 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `buku` (
   `pengarang` varchar(100) NOT NULL,
   `tahun_terbit` year(4) NOT NULL,
   `id_kategori` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,7 @@ CREATE TABLE `input` (
   `id_buku` int(10) NOT NULL,
   `id_librarian` int(10) NOT NULL,
   `tgl_input` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -57,7 +57,7 @@ CREATE TABLE `input` (
 CREATE TABLE `kategori` (
   `id_kategori` varchar(10) NOT NULL,
   `nama_kategori` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -67,11 +67,19 @@ CREATE TABLE `kategori` (
 
 CREATE TABLE `librarian` (
   `id_librarian` int(10) NOT NULL,
-  `nama_librarian` varchar(100) NOT NULL,
+  `first_name_librarian` varchar(100) NOT NULL,
+  `last_name_librarian` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `no_telp` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `librarian`
+--
+
+INSERT INTO `librarian` (`id_librarian`, `first_name_librarian`, `last_name_librarian`, `email`, `no_telp`, `password`) VALUES
+(1, 'a', 'h', 'alvinhartono777@gmail.com', '085691578116', '8ddcff3a80f4189ca1c9d4d902c3c909');
 
 -- --------------------------------------------------------
 
@@ -86,7 +94,7 @@ CREATE TABLE `member` (
   `email` varchar(50) DEFAULT NULL,
   `no_telp` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `member`
@@ -108,7 +116,7 @@ CREATE TABLE `pinjam` (
   `id_member` int(10) NOT NULL,
   `tgl_peminjaman` date NOT NULL,
   `tgl_pengembalian` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -165,7 +173,7 @@ ALTER TABLE `pinjam`
 -- AUTO_INCREMENT for table `librarian`
 --
 ALTER TABLE `librarian`
-  MODIFY `id_librarian` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_librarian` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `member`
