@@ -1,7 +1,7 @@
 <?php
     require_once("connection.php");
 
-    $no_telp = $_GET["no_telp"];
+    $no_telp = $_POST["no_telp"];
     $sql = "SELECT * FROM member WHERE no_telp = $no_telp";
 
     if($result = mysqli_query($CON, $sql)){

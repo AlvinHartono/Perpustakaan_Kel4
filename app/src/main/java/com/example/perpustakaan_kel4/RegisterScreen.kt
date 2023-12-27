@@ -48,11 +48,7 @@ class RegisterScreen : AppCompatActivity() {
                         editTextPassword,
                         editTextRePassword
                     )
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val intent = Intent(this, LoginScreen::class.java)
-                        startActivity(intent)
-                        finish()
-                    }, 1000)
+
                 } else {
                     Toast.makeText(this, "Password must be 8 characters or more", Toast.LENGTH_SHORT).show()
                     editTextPassword.setText("")
@@ -81,6 +77,11 @@ class RegisterScreen : AppCompatActivity() {
             Response.Listener { response ->
                 Log.d("response", response)
                 Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(this, LoginScreen::class.java)
+                    startActivity(intent)
+                    finish()
+                }, 1000)
             },
             Response.ErrorListener { response ->
                 Toast.makeText(this, "Register Failed $response", Toast.LENGTH_SHORT).show()
