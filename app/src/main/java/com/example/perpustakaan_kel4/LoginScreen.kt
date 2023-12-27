@@ -46,11 +46,11 @@ class LoginScreen : AppCompatActivity() {
 
     }
     private fun login(phoneNumber: EditText, password:EditText){
-        val url: String = ApiEndPoint.READ_MEMBER
+        val url: String = ApiEndPoint.AUTH_MEMBER
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
             Response.Listener { response ->
-                Log.d("response", response)
+                Log.d("responser", response)
 
                 if (response.equals("true")) {
                     val bundle = Bundle()

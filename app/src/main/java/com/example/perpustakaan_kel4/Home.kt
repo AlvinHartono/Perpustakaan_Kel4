@@ -1,11 +1,15 @@
 package com.example.perpustakaan_kel4
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import java.io.Serializable
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +26,7 @@ class Home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var myTextView: TextView
+    private var member : Member = Member()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +49,20 @@ class Home : Fragment() {
         myTextView = view.findViewById<View>(R.id.homeFragmentTextView) as TextView
 
         val bundle = arguments
-        val message = bundle!!.getString("no_telp")
 
-        myTextView.text = message.toString()
+        if(bundle != null){
+            val memberData = bundle.getSerializableCompat("memberData", Member::class.java)
+            member.id_member = memberData.id_member
+            member.first_name_member = memberData.first_name_member
+            member.last_name_member = memberData.last_name_member
+            member.no_telp = memberData.no_telp
+            member.email = memberData.email
+            member.password = memberData.password
+        }
+
+//        val message = bundle!!.getSerializable("memberData")
+
+        myTextView.text = member.first_name_member
 
         return view
     }
@@ -70,4 +86,7 @@ class Home : Fragment() {
                 }
             }
     }
+
+
+
 }
