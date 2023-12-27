@@ -1,7 +1,6 @@
 package com.example.perpustakaan_kel4
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -52,7 +50,7 @@ class Account : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_account, container, false)
 
@@ -91,7 +89,9 @@ class Account : Fragment() {
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
 
         editAcc.setOnClickListener {
-            
+            val intent = Intent(requireActivity(), Update_Member_Account::class.java)
+            startActivity(intent)
+
         }
 
         btnLogout.setOnClickListener {
