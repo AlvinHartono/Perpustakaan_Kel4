@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Response
@@ -35,6 +36,7 @@ class Account : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var memberViewModel: MemberViewModel
+    private lateinit var memberCommunicator: MemberCommunicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,10 +89,11 @@ class Account : Fragment() {
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
 
         editAcc.setOnClickListener {
-            val intent = Intent(requireActivity(), Update_Member_Account::class.java)
-            startActivity(intent)
-
+                memberCommunicator = activity as MemberCommunicator
+            memberCommunicator.editMemberFragment()
         }
+
+
 
         btnLogout.setOnClickListener {
             val intent = Intent(requireActivity(), LoginScreen::class.java)
@@ -152,5 +155,7 @@ class Account : Fragment() {
                 .show()
 
         }
+
     }
+
 }

@@ -65,6 +65,7 @@ class LoginScreen : AppCompatActivity() {
             },
             Response.ErrorListener { response ->
                 Toast.makeText(this, "$response", Toast.LENGTH_SHORT).show()
+                Log.d("responser", response.toString())
             }
         ){
             override fun getParams(): HashMap<String,String>{

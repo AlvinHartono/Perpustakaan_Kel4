@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley
 import com.example.perpustakaan_kel4.databinding.ActivityMainBinding
 import org.json.JSONObject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MemberCommunicator {
 
 
     private lateinit var binding: ActivityMainBinding
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         getMemberInfo(phoneNumber)
 
         replaceFragment(Home())
+
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -98,5 +99,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         Volley.newRequestQueue(this).add(stringRequest)
+    }
+
+    override fun editMemberFragment() {
+        replaceFragment(EditMemberAccount())
     }
 }
