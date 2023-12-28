@@ -39,5 +39,21 @@ class Member: Serializable {
             field = value
         }
 
+constructor(
+    idMember: String = "",
+    firstNameMember: String = "",
+    lastNameMember: String ="",
+    email: String = "",
+    noTelp: String = "",
+    password: String = ""
+){
+    this.id_member = idMember
+    this.first_name_member = firstNameMember
+    this.last_name_member = lastNameMember
+    this.email = email
+    this.no_telp = noTelp
+    this.password = password
+}
 
+    constructor()
 }

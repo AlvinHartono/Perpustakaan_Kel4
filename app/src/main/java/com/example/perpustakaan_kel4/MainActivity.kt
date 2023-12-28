@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -15,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityMainBinding
-    private var member : Member = Member()
+    private lateinit var memberViewModel: MemberViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -24,50 +27,38 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val bundle = intent.extras
-        var phoneNumber: String? = null
-
-        phoneNumber = bundle!!.getString("no_telp")
-
+        val phoneNumber = bundle!!.getString("no_telp")
         if (phoneNumber != null) {
-            Log.d("phone number", phoneNumber)
+            Log.d("response", phoneNumber)
         }
 
+        //Initialize MemberViewModel
+        memberViewModel = ViewModelProvider(this)[MemberViewModel::class.java]
         getMemberInfo(phoneNumber)
-        Log.d("member", member.id_member)
 
-
-        replaceFragment(Home(), member)
-
-
-        //Delete account:
-        //ambil data member dari database
-        //masukin data member yg diambil ke Model Member
-        //delete akun berdasarkan id member yg ada di model member.
-        //done
+        replaceFragment(Home())
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home -> replaceFragment(Home(), member)
-                R.id.bookings -> replaceFragment(Bookings(), member)
-                R.id.history -> replaceFragment(History(), member)
-                R.id.account -> replaceFragment(Account(), member)
-                else ->{}
+            when (it.itemId) {
+                R.id.home -> replaceFragment(Home())
+
+                R.id.bookings -> replaceFragment(Bookings())
+
+                R.id.history -> replaceFragment(History())
+
+                R.id.account -> replaceFragment(Account())
+
+                else -> {}
             }
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment, memberData: Member) {
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-
-        //tambah bundle ke fragment
-        val mBundle = Bundle()
-        mBundle.putSerializable("memberData", memberData)
-        fragment.arguments = mBundle
-
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
@@ -78,21 +69,28 @@ class MainActivity : AppCompatActivity() {
             Method.POST,
             url,
             Response.Listener { response ->
-                Log.d("response", response)
-//                TODO: masukkan logic json ke map trus masuk ke variabel brodi
+//                Log.d("response", response)
                 val jsonObj = JSONObject(response)
 
-                member.id_member = jsonObj.getString("id_member")
-                member.first_name_member = jsonObj.getString("first_name_member")
-                member.last_name_member = jsonObj.getString("last_name_member")
-                member.email = jsonObj.getString("email")
-                member.no_telp = jsonObj.getString("no_telp")
-                member.password = jsonObj.getString("password")
+                //updated data
+                val updatedMember = Member(
+                    jsonObj.getString("id_member"),
+                    jsonObj.getString("first_name_member"),
+                    jsonObj.getString("last_name_member"),
+                    jsonObj.getString("email"),
+                    jsonObj.getString("no_telp"),
+                    jsonObj.getString("password"),
+                )
+                Log.d("response updatedMember", updatedMember.toString())
+
+                memberViewModel.updateMemberData(updatedMember)
+
+                Log.d("response", memberViewModel.currentMember.value!!.first_name_member)
 
             },
             Response.ErrorListener { response ->
                 Log.d("data", response.toString())
-            }){
+            }) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
                 params["no_telp"] = phoneNumber.toString()
