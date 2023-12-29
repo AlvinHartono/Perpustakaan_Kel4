@@ -36,7 +36,7 @@ class EditMemberAccount : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var memberViewModel: MemberViewModel
-    private lateinit var memberCommunicator: MemberCommunicator
+//    private lateinit var memberCommunicator: MemberCommunicator
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,9 +77,25 @@ class EditMemberAccount : Fragment() {
         }
 
         editMemberSave.setOnClickListener {
-            Log.d("response", "yayyy")
+
+            var updatedMember = Member(
+                memberViewModel.currentMember.value!!.id_member,
+                editTextEditFirstname.text.toString(),
+                editTextEditLastname.text.toString(),
+                editTextEditEmail.text.toString(),
+                editTextPhoneNumber.text.toString(),
+                memberViewModel.currentMember.value!!.password
+            )
+
+            memberViewModel.updateMemberData(updatedMember)
+
             try {
-                sendModifiedMember()
+                sendModifiedMember(
+                    editTextEditFirstname.text.toString(),
+                    editTextEditLastname.text.toString(),
+                    editTextEditEmail.text.toString(),
+                    editTextPhoneNumber.text.toString()
+                )
 
                 closeCurrentFragment()
             } catch (e: Throwable) {
@@ -91,7 +107,12 @@ class EditMemberAccount : Fragment() {
         return view
     }
 
-    private fun sendModifiedMember() {
+    private fun sendModifiedMember(
+        firstname: String,
+        lastName: String,
+        email: String,
+        noTelp: String
+    ) {
         val url: String = ApiEndPoint.UPDATE_MEMBER
         val stringRequest = object : StringRequest(
             Method.POST, url,
@@ -113,11 +134,10 @@ class EditMemberAccount : Fragment() {
             override fun getParams(): HashMap<String, String> {
                 val params = HashMap<String, String>()
                 params["id_member"] = memberViewModel.currentMember.value!!.id_member
-                params["first_name_member"] = memberViewModel.currentMember.value!!.first_name_member
-                params["last_name_member"] = memberViewModel.currentMember.value!!.last_name_member
-                params["email"] = memberViewModel.currentMember.value!!.email
-                params["no_telp"] = memberViewModel.currentMember.value!!.no_telp
-                params["password"] = memberViewModel.currentMember.value!!.password
+                params["first_name_member"] = firstname
+                params["last_name_member"] = lastName
+                params["email"] = email
+                params["no_telp"] = noTelp
                 return params
             }
         }
