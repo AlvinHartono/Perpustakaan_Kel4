@@ -13,6 +13,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -32,9 +35,8 @@ class Account : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-    //    lateinit var no_telp : String
-    private var member: Member = Member()
+    private lateinit var memberViewModel: MemberViewModel
+    private lateinit var memberCommunicator: MemberCommunicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,9 @@ class Account : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
+
 
     }
 
@@ -59,21 +64,16 @@ class Account : Fragment() {
         var profile_name: TextView = view.findViewById((R.id.profile_name)) as TextView
 
 
-        val bundle = arguments
+        memberViewModel.currentMember.observe(requireActivity(), Observer {
+            profile_name.text = it.first_name_member + " " + it.last_name_member
+            profile_email.text = it.email
+            profile_phone.text = it.no_telp
+        })
 
-        if (bundle != null) {
-            val memberData = bundle.getSerializableCompat("memberData", Member::class.java)
-            member.id_member = memberData.id_member
-            member.first_name_member = memberData.first_name_member
-            member.last_name_member = memberData.last_name_member
-            member.no_telp = memberData.no_telp
-            member.email = memberData.email
-            member.password = memberData.password
-        }
 
-        profile_phone.text = member.no_telp
-        profile_email.text = member.email
-        profile_name.text = member.first_name_member + " " + member.last_name_member
+//        profile_phone.text = member.no_telp
+//        profile_email.text = member.email
+//        profile_name.text = member.first_name_member + " " + member.last_name_member
 
         return view
     }
@@ -89,10 +89,11 @@ class Account : Fragment() {
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
 
         editAcc.setOnClickListener {
-            val intent = Intent(requireActivity(), Update_Member_Account::class.java)
-            startActivity(intent)
-
+                memberCommunicator = activity as MemberCommunicator
+            memberCommunicator.editMemberFragment()
         }
+
+
 
         btnLogout.setOnClickListener {
             val intent = Intent(requireActivity(), LoginScreen::class.java)
@@ -115,7 +116,11 @@ class Account : Fragment() {
                             Log.d("response", response)
 
                             if (response.equals("success")) {
-                                Toast.makeText(requireContext(), "Account Deleted", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Account Deleted",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     val intent = Intent(requireActivity(), LoginScreen::class.java)
                                     startActivity(intent)
@@ -137,7 +142,7 @@ class Account : Fragment() {
                     ) {
                         override fun getParams(): HashMap<String, String> {
                             val params = HashMap<String, String>()
-                            params["id_member"] = member.id_member
+                            params["id_member"] = memberViewModel.currentMember.value!!.id_member
                             return params
                         }
                     }
@@ -151,6 +156,6 @@ class Account : Fragment() {
 
         }
 
-
     }
+
 }
