@@ -24,7 +24,7 @@ class Home : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var myTextView: TextView
+    private lateinit var memberFirstName: TextView
     private lateinit var memberViewModel: MemberViewModel
 
 
@@ -53,11 +53,11 @@ class Home : Fragment() {
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
-        myTextView = view.findViewById<View>(R.id.homeFragmentTextView) as TextView
+        memberFirstName = view.findViewById<View>(R.id.memberFirstName) as TextView
 
 
         memberViewModel.currentMember.observe(requireActivity(), Observer {
-            myTextView.text = it.no_telp
+            memberFirstName.text = it.first_name_member
         })
 
         return view

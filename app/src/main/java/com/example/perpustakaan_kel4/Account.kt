@@ -147,7 +147,6 @@ class Account : Fragment() {
                         }
                     }
                     Volley.newRequestQueue(requireContext()).add(stringRequest)
-
                 }
                 .setNegativeButton("Cancel") { dialog, which ->
                     // Handle the negative button click (Cancel)

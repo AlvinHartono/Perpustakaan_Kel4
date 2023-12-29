@@ -2,6 +2,8 @@ package com.example.perpustakaan_kel4
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -87,6 +89,7 @@ class EditMemberAccount : Fragment() {
                 memberViewModel.currentMember.value!!.password
             )
 
+
             memberViewModel.updateMemberData(updatedMember)
 
             try {
@@ -97,7 +100,12 @@ class EditMemberAccount : Fragment() {
                     editTextPhoneNumber.text.toString()
                 )
 
-                closeCurrentFragment()
+                Toast.makeText(requireContext(), "Account Update Successful", Toast.LENGTH_SHORT).show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    closeCurrentFragment()
+                }, 500)
+
+
             } catch (e: Throwable) {
                 Log.e("Edit Member", e.toString())
             }
