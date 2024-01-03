@@ -1,7 +1,6 @@
 package com.example.perpustakaan_kel4
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,12 +28,12 @@ class Home : Fragment() {
     private lateinit var memberFirstName: TextView
     private lateinit var memberViewModel: MemberViewModel
 
-
+    private var recyclerView : RecyclerView? = null
+    private var recyclerViewBookAdapter : RecyclerViewBookAdapter? = null
+    private var bookList = mutableListOf<Buku>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -51,16 +52,29 @@ class Home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        bookList = ArrayList()
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         memberFirstName = view.findViewById<View>(R.id.memberFirstName) as TextView
+        recyclerView = view.findViewById<View>(R.id.imageRecyclerView) as RecyclerView?
+        recyclerViewBookAdapter = RecyclerViewBookAdapter(requireActivity(), bookList)
+        val layoutManager : RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 2)
+        recyclerView!!.layoutManager = layoutManager
+        recyclerView!!.adapter = recyclerViewBookAdapter
 
+        prepareBookListData()
 
         memberViewModel.currentMember.observe(requireActivity(), Observer {
             memberFirstName.text = it.first_name_member
         })
 
         return view
+    }
+
+    private fun prepareBookListData() {
+        //panggil data
+
+        recyclerViewBookAdapter!!.notifyDataSetChanged()
     }
 
     companion object {

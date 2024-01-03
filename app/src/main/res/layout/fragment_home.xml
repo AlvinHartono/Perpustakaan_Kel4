@@ -76,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="15dp"
+        android:scrollbars="horizontal"
         app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         tools:layout_editor_absoluteX="23dp" />
