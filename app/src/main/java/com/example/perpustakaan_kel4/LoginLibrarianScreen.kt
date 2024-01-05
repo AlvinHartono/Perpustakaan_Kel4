@@ -12,7 +12,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 
-class activity_login_librarian : AppCompatActivity() {
+class LoginLibrarianScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -28,7 +28,7 @@ class activity_login_librarian : AppCompatActivity() {
         }
 
         registerTextView.setOnClickListener {
-            val intent = Intent(this, RegisterLibrarian::class.java)
+            val intent = Intent(this, RegisterLibrarianScreen::class.java)
             startActivity(intent)
         }
     }
@@ -36,12 +36,15 @@ class activity_login_librarian : AppCompatActivity() {
     private fun login(phoneNumber: TextView, password: TextView){
         val url : String = ApiEndPoint.READ_LIBRARIAN
         val stringRequest = object : StringRequest(
-            com.android.volley.Request.Method.POST, url,
+            Method.POST, url,
             Response.Listener { response ->
                 Log.d("response", response)
 
                 if(response.equals("true")){
-                    val intent = Intent(this@activity_login_librarian, MainActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putString("no_telp", phoneNumber.text.toString())
+                    val intent = Intent(this@LoginLibrarianScreen, MainActivityLibrarian::class.java)
+                    intent.putExtras(bundle)
                     startActivity(intent)
                     finish()
                 }

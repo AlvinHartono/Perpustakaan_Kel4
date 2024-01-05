@@ -14,7 +14,6 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONObject
 
 
 class LoginScreen : AppCompatActivity() {
@@ -40,7 +39,7 @@ class LoginScreen : AppCompatActivity() {
         }
 
         librarianAccess.setOnClickListener {
-            val intent = Intent(this, activity_login_librarian::class.java)
+            val intent = Intent(this, LoginLibrarianScreen::class.java)
             startActivity(intent)
         }
 
@@ -50,7 +49,7 @@ class LoginScreen : AppCompatActivity() {
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
             Response.Listener { response ->
-                Log.d("responser", response)
+                Log.d("response", response)
 
                 if (response.equals("true")) {
                     val bundle = Bundle()

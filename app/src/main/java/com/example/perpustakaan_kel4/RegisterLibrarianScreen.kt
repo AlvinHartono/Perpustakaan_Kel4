@@ -16,7 +16,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 
-class RegisterLibrarian : AppCompatActivity() {
+class RegisterLibrarianScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -32,7 +32,7 @@ class RegisterLibrarian : AppCompatActivity() {
         var LoginTextView: TextView = findViewById(R.id.textViewLogin)
 
         LoginTextView.setOnClickListener {
-            val intent = Intent(this, activity_login_librarian::class.java)
+            val intent = Intent(this, LoginLibrarianScreen::class.java)
             startActivity(intent)
         }
 

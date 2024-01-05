@@ -56,13 +56,13 @@ class Home : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         memberFirstName = view.findViewById<View>(R.id.memberFirstName) as TextView
-        recyclerView = view.findViewById<View>(R.id.imageRecyclerView) as RecyclerView?
-        recyclerViewBookAdapter = RecyclerViewBookAdapter(requireActivity(), bookList)
-        val layoutManager : RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 2)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = recyclerViewBookAdapter
+//        recyclerView = view.findViewById<View>(R.id.imageRecyclerView) as RecyclerView?
+//        recyclerViewBookAdapter = RecyclerViewBookAdapter(requireActivity(), bookList)
+//        val layoutManager : RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 2)
+//        recyclerView!!.layoutManager = layoutManager
+//        recyclerView!!.adapter = recyclerViewBookAdapter
 
-        prepareBookListData()
+//        prepareBookListData()
 
         memberViewModel.currentMember.observe(requireActivity(), Observer {
             memberFirstName.text = it.first_name_member
