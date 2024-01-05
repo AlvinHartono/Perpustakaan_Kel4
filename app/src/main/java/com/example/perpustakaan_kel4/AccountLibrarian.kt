@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +21,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +37,10 @@ class AccountLibrarian : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
     private lateinit var librarianViewModel: LibrarianViewModel
     private lateinit var librarianCommunicator: LibrarianCommunicator
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,7 @@ class AccountLibrarian : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
 
         librarianViewModel = ViewModelProvider(requireActivity())[LibrarianViewModel::class.java]
     }
@@ -52,6 +58,7 @@ class AccountLibrarian : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         val view: View = inflater.inflate(R.layout.fragment_account_librarian, container, false)
 
@@ -144,6 +151,7 @@ class AccountLibrarian : Fragment() {
                 .show()
 
         }
+
     }
 
     companion object {

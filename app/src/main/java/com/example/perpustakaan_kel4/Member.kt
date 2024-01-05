@@ -1,25 +1,59 @@
 package com.example.perpustakaan_kel4
 
-class Member {
-    var id_member: Int = 0
-        get() =field
-        set(value) {field = value}
+import java.io.Serializable
 
-    var nama_member : String = ""
+class Member: Serializable {
+    var id_member: String = ""
         get() = field
-        set(value) {field = value}
+        set(value) {
+            field = value
+        }
 
-    var email : String = ""
+    var first_name_member: String = ""
         get() = field
-        set(value) {field = value}
+        set(value) {
+            field = value
+        }
 
-    var no_telp : String = ""
+    var last_name_member: String = ""
         get() = field
-        set(value) {field = value}
+        set(value) {
+            field = value
+        }
 
-    var password : String = ""
+    var email: String = ""
         get() = field
-        set(value) {field = value}
+        set(value) {
+            field = value
+        }
 
+    var no_telp: String = ""
+        get() = field
+        set(value) {
+            field = value
+        }
 
+    var password: String = ""
+        get() = field
+        set(value) {
+            field = value
+        }
+
+constructor(
+    idMember: String = "",
+    firstNameMember: String = "",
+    lastNameMember: String ="",
+    email: String = "",
+    noTelp: String = "",
+    password: String = ""
+){
+    this.id_member = idMember
+    this.first_name_member = firstNameMember
+    this.last_name_member = lastNameMember
+    this.email = email
+    this.no_telp = noTelp
+    this.password = password
+}
+
+    constructor()
 }

@@ -16,11 +16,11 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 
-class RegisterScreen : AppCompatActivity() {
+class RegisterLibrarianScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.activity_register_screen)
+        setContentView(R.layout.activity_register_librarian)
 
         var editTextPhone: EditText = findViewById(R.id.editTextPhone)
         var editTextEmail: EditText = findViewById(R.id.editTextEmail)
@@ -32,13 +32,13 @@ class RegisterScreen : AppCompatActivity() {
         var LoginTextView: TextView = findViewById(R.id.textViewLogin)
 
         LoginTextView.setOnClickListener {
-            val intent = Intent(this, LoginScreen::class.java)
+            val intent = Intent(this, LoginLibrarianScreen::class.java)
             startActivity(intent)
         }
 
         signUp.setOnClickListener {
 
-            if (editTextPassword.text.toString().equals(editTextRePassword.text.toString())) {
+            if (editTextPassword.text.toString() == editTextRePassword.text.toString()) {
                 if (editTextPassword.text.toString().length >= 8) {
                     register(
                         editTextPhone,
@@ -48,7 +48,6 @@ class RegisterScreen : AppCompatActivity() {
                         editTextPassword,
                         editTextRePassword
                     )
-
                 } else {
                     Toast.makeText(this, "Password must be 8 characters or more", Toast.LENGTH_SHORT).show()
                     editTextPassword.setText("")
@@ -61,8 +60,8 @@ class RegisterScreen : AppCompatActivity() {
             }
 
         }
-    }
 
+    }
     private fun register(
         editTextPhone: EditText,
         editTextEmail: EditText,
@@ -71,7 +70,7 @@ class RegisterScreen : AppCompatActivity() {
         editTextPassword: EditText,
         editTextRePassword: EditText
     ) {
-        val url: String = ApiEndPoint.CREATE_MEMBER
+        val url: String = ApiEndPoint.CREATE_LIBRARIAN
         val stringRequest = object : StringRequest(
             Request.Method.POST, url,
             Response.Listener { response ->
@@ -89,8 +88,8 @@ class RegisterScreen : AppCompatActivity() {
         ) {
             override fun getParams(): HashMap<String, String> {
                 val params = HashMap<String, String>()
-                params["first_name_member"] = editFirstName.text.toString()
-                params["last_name_member"] = editLastName.text.toString()
+                params["first_name_librarian"] = editFirstName.text.toString()
+                params["last_name_librarian"] = editLastName.text.toString()
                 params["email"] = editTextEmail.text.toString()
                 params["no_telp"] = editTextPhone.text.toString()
                 params["password"] = editTextPassword.text.toString()
@@ -99,5 +98,4 @@ class RegisterScreen : AppCompatActivity() {
         }
         Volley.newRequestQueue(this).add(stringRequest)
     }
-
 }

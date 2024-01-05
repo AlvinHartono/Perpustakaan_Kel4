@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivityLibrarian"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterLibrarianScreen"
+            android:exported="false" />
+        <activity
+            android:name=".LoginLibrarianScreen"
+            android:exported="false" />
+        <activity
             android:name=".RegisterScreen"
             android:exported="false" />
         <activity
