@@ -12,5 +12,7 @@ class ApiEndPoint {
         val CREATE_LIBRARIAN = SERVER+"librarian_register.php"
         val DELETE_MEMBER = SERVER+"member_delete.php"
         val UPDATE_MEMBER = SERVER+"member_update.php"
+        val DELETE_LIBRARIAN = SERVER+"librarian_delete.php"
+        val UPDATE_LIBRARIAN = SERVER+"librarian_update.php"
     }
 }
