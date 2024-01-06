@@ -46,8 +46,6 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
 
                 R.id.bookings -> replaceFragment(Bookings())
 
-                R.id.history -> replaceFragment(History())
-
                 R.id.account -> replaceFragment(Account())
 
                 else -> {}
