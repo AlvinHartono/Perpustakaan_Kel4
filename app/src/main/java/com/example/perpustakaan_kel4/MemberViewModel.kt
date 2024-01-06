@@ -6,16 +6,9 @@ import androidx.lifecycle.ViewModel
 
 class MemberViewModel : ViewModel() {
 
-
     val currentMember: MutableLiveData<Member> by lazy {
         MutableLiveData<Member>()
     }
-
-    //MutableLiveData hold the member data
-//    private val _memberLiveData = MutableLiveData<Member>()
-
-    //LiveData
-//    val memberLiveData: LiveData<Member> = _memberLiveData
 
     fun updateMemberData(updatedMember: Member){
         currentMember.value = updatedMember

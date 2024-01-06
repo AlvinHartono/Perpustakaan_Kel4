@@ -79,21 +79,22 @@ class AccountLibrarian : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnNotif = view.findViewById<ConstraintLayout>(R.id.notification_col)
-        val btnContactSupport = view.findViewById<ConstraintLayout>(R.id.contact_us_col)
-        val btnDeleteAccount = view.findViewById<ConstraintLayout>(R.id.delete_account_col)
-        val btnTermsPrivacy = view.findViewById<ConstraintLayout>(R.id.terms_privacy_col)
-        val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col)
-        val editAcc = view.findViewById<TextView>(R.id.btnChange)
+        val btnNotif = view.findViewById<ConstraintLayout>(R.id.notification_col_lib)
+        val btnContactSupport = view.findViewById<ConstraintLayout>(R.id.contact_us_col_lib)
+        val btnDeleteAccount = view.findViewById<ConstraintLayout>(R.id.delete_account_col_lib)
+        val btnTermsPrivacy = view.findViewById<ConstraintLayout>(R.id.terms_privacy_col_lib)
+        val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col_lib)
+        val editAcc = view.findViewById<TextView>(R.id.btnChange_lib)
 
 
         editAcc.setOnClickListener {
             librarianCommunicator = activity as LibrarianCommunicator
             librarianCommunicator.editLibrarianFragment()
+            Log.d("response editacc", "edit acced")
         }
 
         btnLogout.setOnClickListener {
-            val intent = Intent(requireActivity(), LoginScreen::class.java)
+            val intent = Intent(requireActivity(), LoginLibrarianScreen::class.java)
             startActivity(intent)
             activity?.finish()
         }
@@ -149,9 +150,8 @@ class AccountLibrarian : Fragment() {
                     // Handle the negative button click (Cancel)
                 }
                 .show()
-
+//
         }
-
     }
 
     companion object {

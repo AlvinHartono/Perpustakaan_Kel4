@@ -34,11 +34,11 @@ class LoginLibrarianScreen : AppCompatActivity() {
     }
 
     private fun login(phoneNumber: TextView, password: TextView){
-        val url : String = ApiEndPoint.READ_LIBRARIAN
+        val url : String = ApiEndPoint.AUTH_LIBRARIAN
         val stringRequest = object : StringRequest(
             Method.POST, url,
             Response.Listener { response ->
-                Log.d("response", response)
+                Log.d("response login", response)
 
                 if(response.equals("true")){
                     val bundle = Bundle()

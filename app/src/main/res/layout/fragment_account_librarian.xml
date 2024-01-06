@@ -25,7 +25,7 @@
                     android:layout_width="154dp"
                     android:layout_height="151dp"
                     android:layout_margin="24dp"
-                    android:src="@tools:sample/avatars"
+                    android:src="@drawable/profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,7 +91,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/profile_name_lib" />
 
                 <TextView
-                    android:id="@+id/btnChange"
+                    android:id="@+id/btnChange_lib"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="24dp"
@@ -119,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/white_bg"
-                    android:id="@+id/notification_col"
+                    android:id="@+id/notification_col_lib"
                     android:onClick="login">
 
                     <ImageView
@@ -158,7 +158,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/white_bg"
-                    android:id="@+id/contact_us_col">
+                    android:id="@+id/contact_us_col_lib">
 
                     <ImageView
                         android:id="@+id/imageView18"
@@ -196,7 +196,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/delete_account_col">
+                    android:id="@+id/delete_account_col_lib">
 
                     <ImageView
                         android:id="@+id/imageView20"
@@ -232,7 +232,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/terms_privacy_col"
+                    android:id="@+id/terms_privacy_col_lib"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -269,7 +269,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/logout_col"
+                    android:id="@+id/logout_col_lib"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 

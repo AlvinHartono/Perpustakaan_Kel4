@@ -51,27 +51,37 @@ class editLibrarianAccount : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.d("response editacc", "yo 1")
         val view : View = inflater.inflate(R.layout.fragment_edit_librarian_account, container, false)
 
-        var editTextEditFirstname = view.findViewById<View>(R.id.editTextEditFirstname) as TextView
-        var editTextEditLastname = view.findViewById<View>(R.id.editTextEditLastName) as TextView
-        var editTextEditEmail = view.findViewById<View>(R.id.editTextEditEmail) as TextView
-        var editTextPhoneNumber = view.findViewById<View>(R.id.editTextPhoneNumber) as TextView
-        var editMemberCancel = view.findViewById<View>(R.id.editMemberCancel) as Button
-        var editMemberSave = view.findViewById<View>(R.id.editMemberSave) as Button
+        Log.d("response editacc", "yo 2")
+
+        var editTextEditFirstname = view.findViewById<View>(R.id.editTextEditFirstnameLib) as TextView
+        var editTextEditLastname = view.findViewById<View>(R.id.editTextEditLastNameLib) as TextView
+        var editTextEditEmail = view.findViewById<View>(R.id.editTextEditEmailLib) as TextView
+        var editTextPhoneNumber = view.findViewById<View>(R.id.editTextPhoneNumberLib) as TextView
+        var editLibrarianCancel = view.findViewById<View>(R.id.editLibrarianCancel) as Button
+        var editLibrarianSave = view.findViewById<View>(R.id.editLibrarianSave) as Button
+
 
         librarianViewModel.currentLibrarian.observe(requireActivity(), Observer {
             editTextEditFirstname.text = it.first_name_librarian
             editTextEditLastname.text = it.last_name_librarian
             editTextEditEmail.text = it.email
             editTextPhoneNumber.text = it.no_telp
+        Log.d("response editacc", "yo 3")
         })
 
-        editMemberCancel.setOnClickListener {
+
+
+        editLibrarianCancel.setOnClickListener {
+
             closeCurrentFragment()
+            Log.d("response editacc", "yo 4")
         }
 
-        editMemberSave.setOnClickListener {
+        editLibrarianSave.setOnClickListener {
+            Log.d("response editacc", "yo 5")
 
             var updatedLibrarian = Librarian(
                 librarianViewModel.currentLibrarian.value!!.id_librarian,

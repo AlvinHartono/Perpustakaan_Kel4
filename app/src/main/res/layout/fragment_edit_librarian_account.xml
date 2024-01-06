@@ -14,7 +14,7 @@
         android:layout_marginTop="50dp">
 
         <EditText
-            android:id="@+id/editTextEditFirstname"
+            android:id="@+id/editTextEditFirstnameLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_account_box_24"
@@ -32,7 +32,7 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editTextEditLastName"
+            android:id="@+id/editTextEditLastNameLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_account_box_24"
@@ -48,7 +48,7 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editTextEditEmail"
+            android:id="@+id/editTextEditEmailLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_email_24"
@@ -65,7 +65,7 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editTextPhoneNumber"
+            android:id="@+id/editTextPhoneNumberLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_phone_24"
@@ -82,7 +82,7 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editTextEditPassword"
+            android:id="@+id/editTextEditPasswordLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_password_24"
@@ -100,7 +100,7 @@
         android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/editTextEditRePassword"
+            android:id="@+id/editTextEditRePasswordLib"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_password_24"
@@ -116,7 +116,7 @@
             android:layout_marginTop="30dp">
 
             <Button
-                android:id="@+id/editMemberCancel"
+                android:id="@+id/editLibrarianCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -125,7 +125,7 @@
                 android:textColor="@color/black"/>
 
             <Button
-                android:id="@+id/editMemberSave"
+                android:id="@+id/editLibrarianSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

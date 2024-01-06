@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
 
 
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
+        binding.bottomNavigationViewMember.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(Home())
 

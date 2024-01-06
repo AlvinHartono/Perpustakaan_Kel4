@@ -47,7 +47,6 @@ class Account : Fragment() {
 
         memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
 
-
     }
 
 
@@ -71,10 +70,6 @@ class Account : Fragment() {
         })
 
 
-//        profile_phone.text = member.no_telp
-//        profile_email.text = member.email
-//        profile_name.text = member.first_name_member + " " + member.last_name_member
-
         return view
     }
 
@@ -89,7 +84,7 @@ class Account : Fragment() {
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
 
         editAcc.setOnClickListener {
-                memberCommunicator = activity as MemberCommunicator
+            memberCommunicator = activity as MemberCommunicator
             memberCommunicator.editMemberFragment()
         }
 
