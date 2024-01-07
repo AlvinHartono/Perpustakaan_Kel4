@@ -42,19 +42,16 @@ class editLibrarianAccount : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        librarianViewModel = ViewModelProvider(requireActivity())[librarianViewModel::class.java]
+        librarianViewModel = ViewModelProvider(requireActivity())[LibrarianViewModel::class.java]
     }
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.d("response editacc", "yo 1")
         val view : View = inflater.inflate(R.layout.fragment_edit_librarian_account, container, false)
-
-        Log.d("response editacc", "yo 2")
 
         var editTextEditFirstname = view.findViewById<View>(R.id.editTextEditFirstnameLib) as TextView
         var editTextEditLastname = view.findViewById<View>(R.id.editTextEditLastNameLib) as TextView
@@ -69,15 +66,12 @@ class editLibrarianAccount : Fragment() {
             editTextEditLastname.text = it.last_name_librarian
             editTextEditEmail.text = it.email
             editTextPhoneNumber.text = it.no_telp
-        Log.d("response editacc", "yo 3")
         })
 
 
 
         editLibrarianCancel.setOnClickListener {
-
             closeCurrentFragment()
-            Log.d("response editacc", "yo 4")
         }
 
         editLibrarianSave.setOnClickListener {
@@ -110,7 +104,7 @@ class editLibrarianAccount : Fragment() {
 
 
             } catch (e: Throwable) {
-                Log.e("Edit Member", e.toString())
+                Log.e("response edit member", e.toString())
             }
         }
 
@@ -165,7 +159,7 @@ class editLibrarianAccount : Fragment() {
         val transaction = fragmentManager.beginTransaction()
 
         // replacing the current fragment
-        transaction.replace(R.id.frame_layout, Account())
+        transaction.replace(R.id.frame_layout_librarian, Account())
         // Commit the transaction
         transaction.commit()
 

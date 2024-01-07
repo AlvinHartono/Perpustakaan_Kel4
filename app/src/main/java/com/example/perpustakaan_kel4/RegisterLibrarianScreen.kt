@@ -77,7 +77,7 @@ class RegisterLibrarianScreen : AppCompatActivity() {
                 Log.d("response", response)
                 Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    val intent = Intent(this, LoginScreen::class.java)
+                    val intent = Intent(this, LoginLibrarianScreen::class.java)
                     startActivity(intent)
                     finish()
                 }, 1000)
