@@ -1,6 +1,7 @@
 package com.example.perpustakaan_kel4
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +28,12 @@ class Home : Fragment() {
     private var param2: String? = null
     private lateinit var memberFirstName: TextView
     private lateinit var memberViewModel: MemberViewModel
+    private lateinit var booksViewModel: BooksViewModel
 
-    private var recyclerView : RecyclerView? = null
-    private var recyclerViewBookAdapter : RecyclerViewBookAdapter? = null
-    private var bookList = mutableListOf<Buku>()
+    private var recyclerView: RecyclerView? = null
+    private var recyclerViewBookAdapter: RecyclerViewBookAdapter? = null
+
+    private lateinit var bookList: List<Book>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +44,8 @@ class Home : Fragment() {
         }
 
         memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
+        booksViewModel = ViewModelProvider(requireActivity())[BooksViewModel::class.java]
 //        Log.d("responsezzz", memberViewModel.currentMember.value!!.last_name_member)
-
 
 
     }
@@ -52,21 +55,35 @@ class Home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        bookList = ArrayList()
+        bookList = booksViewModel.currentBookList.value.orEmpty()
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         memberFirstName = view.findViewById<View>(R.id.memberFirstName) as TextView
-//        recyclerView = view.findViewById<View>(R.id.imageRecyclerView) as RecyclerView?
-//        recyclerViewBookAdapter = RecyclerViewBookAdapter(requireActivity(), bookList)
-//        val layoutManager : RecyclerView.LayoutManager = GridLayoutManager(requireActivity(), 2)
-//        recyclerView!!.layoutManager = layoutManager
-//        recyclerView!!.adapter = recyclerViewBookAdapter
 
-//        prepareBookListData()
+
+
+        try {
+            recyclerView = view.findViewById<View>(R.id.BooksRecyclerView) as RecyclerView?
+
+            // Check if currentBookList.value is not null before using it
+            val bookList = booksViewModel.currentBookList.value
+        } catch (e: Throwable) {
+            Log.d("error listview", e.toString())
+        }
 
         memberViewModel.currentMember.observe(requireActivity(), Observer {
             memberFirstName.text = it.first_name_member
         })
+
+        booksViewModel.currentBookList.observe(requireActivity(), Observer {
+            recyclerViewBookAdapter = RecyclerViewBookAdapter(it)
+            val layoutManager: RecyclerView.LayoutManager =
+                GridLayoutManager(requireActivity(), 2)
+            recyclerView!!.layoutManager = layoutManager
+            recyclerView!!.adapter = recyclerViewBookAdapter
+        })
+
+
 
         return view
     }
@@ -96,7 +113,6 @@ class Home : Fragment() {
                 }
             }
     }
-
 
 
 }

@@ -3,7 +3,7 @@ package com.example.perpustakaan_kel4
 class ApiEndPoint {
 
     companion object {
-        var ipAddress = "192.168.1.27"
+        var ipAddress = "192.168.0.12"
         private val SERVER = "http://$ipAddress/Perpustakaan_Kel4/"
 
         //MEMBER'S CRUD
@@ -21,6 +21,7 @@ class ApiEndPoint {
         val DELETE_LIBRARIAN = SERVER+"librarian_delete.php"
 
         //BOOK'S CRUD
+        val READ_BOOKS = SERVER+"buku_read.php"
         //TODO: ADD BOOKS CRUD
     }
 }

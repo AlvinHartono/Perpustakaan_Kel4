@@ -8,17 +8,27 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.android.volley.Request.Method
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.android.volley.toolbox.Volley.*
 import com.example.perpustakaan_kel4.databinding.ActivityMainBinding
+import org.json.JSONArray
 import org.json.JSONObject
+import android.util.Base64
 
 class MainActivity : AppCompatActivity(), MemberCommunicator {
 
 
     private lateinit var binding: ActivityMainBinding
+
+
+    //create viewModel variable that will be init later
     private lateinit var memberViewModel: MemberViewModel
+    private lateinit var booksViewModel: BooksViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -34,12 +44,15 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
 
         //Initialize MemberViewModel
         memberViewModel = ViewModelProvider(this)[MemberViewModel::class.java]
+
+        //Initialize BookViewModel
+        booksViewModel = ViewModelProvider(this)[BooksViewModel::class.java]
+
         getMemberInfo(phoneNumber)
+        getAllBooks()
+
 
         replaceFragment(Home())
-
-
-
         binding.bottomNavigationViewMember.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> replaceFragment(Home())
@@ -96,7 +109,96 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
                 return params
             }
         }
-        Volley.newRequestQueue(this).add(stringRequest)
+        newRequestQueue(this).add(stringRequest)
+    }
+
+    private fun getAllBooks() {
+        val url: String = ApiEndPoint.READ_BOOKS
+        val stringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener { response ->
+
+                try {
+
+
+                    val jsonArray = JSONArray(response)
+                    Log.d("response", jsonArray.length().toString())
+                    for (i in 0 until jsonArray.length()) {
+                        Log.d("response book", i.toString())
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val book = Book()
+                        book.id_buku = jsonObject.getString("id_buku").toInt();
+                        book.judul_buku = jsonObject.getString("judul_buku");
+                        book.penerbit = jsonObject.getString("penerbit");
+                        book.pengarang = jsonObject.getString("pengarang");
+                        book.nama_kategori = jsonObject.getString("nama_kategori");
+
+                        val imageBase64 = jsonObject.getString("image_buku")
+                        val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                        book.image_buku = imageByteArray
+
+                        booksViewModel.insertBookList(book)
+                    }
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![0].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![1].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![2].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![3].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![4].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![5].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![6].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![7].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![8].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![9].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![10].judul_buku
+                    )
+                    Log.d(
+                        "response check viewmodel",
+                        booksViewModel.currentBookList.value!![11].judul_buku
+                    )
+                } catch (e: Throwable) {
+                    Log.d("response fetch books", e.toString())
+                }
+
+            },
+            Response.ErrorListener { response ->
+                Log.d("data", response.toString())
+            }) {
+
+        }
+        newRequestQueue(this).add(stringRequest)
     }
 
     override fun editMemberFragment() {
