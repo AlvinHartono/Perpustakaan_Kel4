@@ -159,7 +159,7 @@ class editLibrarianAccount : Fragment() {
         val transaction = fragmentManager.beginTransaction()
 
         // replacing the current fragment
-        transaction.replace(R.id.frame_layout_librarian, Account())
+        transaction.replace(R.id.frame_layout_librarian, AccountLibrarian())
         // Commit the transaction
         transaction.commit()
 
