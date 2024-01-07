@@ -1,8 +1,11 @@
 package com.example.perpustakaan_kel4
 
-class Buku {
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
-    var id_buku: String = ""
+class Book {
+
+    var id_buku: Int = 0
         get() = field
         set(value) {
             field = value
@@ -32,15 +35,19 @@ class Buku {
             field = value
         }
 
-    var id_kategori: String = ""
+    var nama_kategori: String = ""
         get() = field
         set(value) {
             field = value
         }
 
-    var image_buku: String = ""
+    var image_buku: ByteArray= byteArrayOf()
         get() = field
         set(value) {
             field = value
         }
+
+    fun decodeByteArrayToBitmap(byteArray: ByteArray) : Bitmap{
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
 }
