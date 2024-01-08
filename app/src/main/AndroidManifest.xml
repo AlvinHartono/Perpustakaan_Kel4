@@ -15,9 +15,7 @@
         android:theme="@style/Theme.Perpustakaan_kel4"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".bookMemberOnClickDetail"
-            android:exported="false" />
+
         <activity
             android:name=".BookingListDetailed"
             android:exported="false" />

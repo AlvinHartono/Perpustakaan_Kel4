@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewBookAdapter(private val booklist: List<Book>) :
@@ -35,7 +37,17 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>) :
             Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_LONG)
                 .show()
 
-            holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
+            val fragment = bookMemberOnClickDetailPage()
+
+            val fragmentManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+
+            transaction.replace(R.id.book_member_on_click_detail_page, fragment)
+            transaction.addToBackStack(null)
+
+            transaction.commit()
+
+            //holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
         }
     }
 
