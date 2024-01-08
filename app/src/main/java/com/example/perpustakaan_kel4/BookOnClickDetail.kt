@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +45,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_book_on_click_detail, container, false)
 
         val image : ImageView = view.findViewById<View>(R.id.bookIMG) as ImageView
+
         val judulBuku : TextView = view.findViewById<View>(R.id.judulBuku) as TextView
         val namaPenerbit : TextView = view.findViewById<View>(R.id.nama_penerbit) as TextView
         val namaPengarang : TextView = view.findViewById<View>(R.id.nama_pengarang) as TextView
@@ -60,6 +63,31 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             Toast.makeText(requireContext(), book.tahun_terbit, Toast.LENGTH_SHORT).show()
         }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val back : ImageView = view.findViewById<View>(R.id.backbtn) as ImageView
+
+        back.setOnClickListener {
+            closeCurrentFragment()
+        }
+    }
+
+    private fun closeCurrentFragment() {
+        // Get the fragment manager
+        val fragmentManager = requireActivity().supportFragmentManager
+
+        // Begin a fragment transaction
+        val transaction = fragmentManager.beginTransaction()
+
+        // replacing the current fragment
+        transaction.replace(R.id.frame_layout, Home())
+        // Commit the transaction
+        transaction.commit()
+
+        // Optionally, you can add the following line to allow the user to navigate back
+        // fragmentManager.popBackStack()
     }
 
     companion object {
