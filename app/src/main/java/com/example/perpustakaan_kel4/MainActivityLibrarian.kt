@@ -36,7 +36,6 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
 
         binding.bottomNavigationViewLibrarian.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home_librarian -> replaceFragment(HomeLibrarian())
 
                 R.id.books_librarian -> replaceFragment(BooksLibrarian())
 
