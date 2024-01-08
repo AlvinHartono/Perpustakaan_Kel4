@@ -2,17 +2,15 @@ package com.example.perpustakaan_kel4
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import org.w3c.dom.Text
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +27,14 @@ class Bookings : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var recyclerView: RecyclerView? = null
+    private var recyclerViewBookingAdapter : RecyclerViewBookingAdapter? = null
+
+    private lateinit var bookingCommunicator: BookingCommunicator
+
     private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var memberViewModel: MemberViewModel
+    private lateinit var booksViewModel: BooksViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,8 @@ class Bookings : Fragment() {
         }
 
         bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
+        memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
+        booksViewModel = ViewModelProvider(requireActivity())[BooksViewModel::class.java]
 
     }
 
@@ -50,15 +57,22 @@ class Bookings : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bookings, container, false)
 
-        var bukuImg: ImageView = view.findViewById(R.id.booking_list_img)
-        var judulBuku : TextView = view.findViewById(R.id.list_judulbuku)
-        var tglPinjam : TextView = view.findViewById(R.id.list_tglpinjam)
-        var status : TextView = view.findViewById(R.id.list_status)
+        try {
+            recyclerView = view.findViewById<View>(R.id.Booking_RecyclerView) as RecyclerView?
+        }catch (e: Throwable){
+            Log.d("error listview", e.toString())
+        }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
-            tglPinjam.text = it.tgl_peminjaman.toString()
-            status.text = it.statusToText()
-            //TODO: yang judul buku gimana ya
+            try {
+                recyclerViewBookingAdapter = RecyclerViewBookingAdapter(it, bookingCommunicator)
+
+                val  layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+                recyclerView!!.layoutManager = layoutManager
+//                recyclerView!!.adapter = recyclerViewBookingAdapter
+            }catch (e: Throwable){
+                Log.d("response", e.toString())
+            }
         })
 
         return view

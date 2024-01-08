@@ -5,13 +5,9 @@ import androidx.lifecycle.ViewModel
 
 class BookingViewModel : ViewModel() {
 
-    val currentBooking : MutableLiveData<Pinjam> by lazy {
-        MutableLiveData<Pinjam>()
+    val currentBooking : MutableLiveData<List<Pinjam>> by lazy {
+        MutableLiveData<List<Pinjam>>()
 
-    }
-
-    fun updateBookingData(updatedBookings: Pinjam){
-        currentBooking.value = updatedBookings
     }
 
     override fun onCleared() {

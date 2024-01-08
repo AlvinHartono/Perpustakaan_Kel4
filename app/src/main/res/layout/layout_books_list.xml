@@ -22,6 +22,7 @@
             android:id="@+id/ivBookImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:scaleType="center"
             android:src="@drawable/buku1"/>
 
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Book Title"
+            android:gravity="center"
             android:textStyle="bold" />
 
 
