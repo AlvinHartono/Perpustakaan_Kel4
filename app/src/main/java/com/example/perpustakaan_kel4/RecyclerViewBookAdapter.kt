@@ -1,7 +1,9 @@
 package com.example.perpustakaan_kel4
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +15,8 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewBookAdapter(private val booklist: List<Book>) :
+class RecyclerViewBookAdapter(private val booklist: List<Book>,private var bookCommunicator: BookDetailCommunicator, private var memberID: String) :
     RecyclerView.Adapter<RecyclerViewBookAdapter.MyViewHolder>() {
-
-    private lateinit var memberCommunicator: MemberCommunicator
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
@@ -32,20 +32,24 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>) :
         val currentBook = booklist[position]
 
 
-
         // Update views in the ViewHolder
         holder.bookTitle.text = currentBook.judul_buku
         holder.bookImg.setImageBitmap(currentBook.decodeByteArrayToBitmap(currentBook.image_buku))
 
         // Use itemView.context to get the context associated with the item view
         holder.cardView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_LONG)
+            try {
+
+            bookCommunicator.BookDetailFragment(currentBook, memberID)
+
+
+//            Toast.makeText(holder.itemView.context, currentBook.tahun_terbit, Toast.LENGTH_LONG)
+            Toast.makeText(holder.itemView.context, memberID, Toast.LENGTH_LONG)
                 .show()
+            }catch (e: Throwable){
+                Log.d("response adapter", e.toString())
+            }
 
-
-
-
-            holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
         }
     }
 
