@@ -1,6 +1,7 @@
 package com.example.perpustakaan_kel4
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerViewBookAdapter(private val booklist: List<Book>) :
     RecyclerView.Adapter<RecyclerViewBookAdapter.MyViewHolder>() {
 
+    private lateinit var memberCommunicator: MemberCommunicator
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_books_list, parent, false)
@@ -28,6 +31,8 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentBook = booklist[position]
 
+
+
         // Update views in the ViewHolder
         holder.bookTitle.text = currentBook.judul_buku
         holder.bookImg.setImageBitmap(currentBook.decodeByteArrayToBitmap(currentBook.image_buku))
@@ -37,17 +42,10 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>) :
             Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_LONG)
                 .show()
 
-            val fragment = bookMemberOnClickDetailPage()
 
-            val fragmentManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
 
-            transaction.replace(R.id.book_member_on_click_detail_page, fragment)
-            transaction.addToBackStack(null)
 
-            transaction.commit()
-
-            //holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
+            holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
         }
     }
 

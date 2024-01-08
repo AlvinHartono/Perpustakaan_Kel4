@@ -88,6 +88,7 @@ class Home : Fragment() {
         return view
     }
 
+
     private fun prepareBookListData() {
         //panggil data
 
