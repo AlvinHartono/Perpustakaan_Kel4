@@ -70,7 +70,6 @@ class Home : Fragment() {
             recyclerView = view.findViewById<View>(R.id.BooksRecyclerView) as RecyclerView?
 
             // Check if currentBookList.value is not null before using it
-            val bookList = booksViewModel.currentBookList.value
         } catch (e: Throwable) {
             Log.d("error listview", e.toString())
         }
@@ -107,6 +106,7 @@ class Home : Fragment() {
 
         recyclerViewBookAdapter!!.notifyDataSetChanged()
     }
+
 
     companion object {
         /**

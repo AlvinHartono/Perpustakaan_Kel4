@@ -125,10 +125,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
             Method.POST,
             url,
             Response.Listener { response ->
-
                 try {
-
-
                     val jsonArray = JSONArray(response)
                     Log.d("response", jsonArray.length().toString())
                     for (i in 0 until jsonArray.length()) {
@@ -148,6 +145,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
                         booksViewModel.insertBookList(book)
                     }
+
                 } catch (e: Throwable) {
                     Log.d("response fetch books", e.toString())
                 }
