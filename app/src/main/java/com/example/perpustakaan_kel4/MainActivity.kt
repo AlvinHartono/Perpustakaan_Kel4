@@ -19,7 +19,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import android.util.Base64
 
-class MainActivity : AppCompatActivity(), MemberCommunicator {
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator {
 
 
     private lateinit var binding: ActivityMainBinding
@@ -74,6 +74,13 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
+    private fun addFragment(fragment: Fragment) {
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.show(fragment)
+        fragmentTransaction.commit()
+    }
 
     private fun getMemberInfo(phoneNumber: String?) {
         val url: String = ApiEndPoint.READ_MEMBER
@@ -125,11 +132,12 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
                         Log.d("response book", i.toString())
                         val jsonObject = jsonArray.getJSONObject(i)
                         val book = Book()
-                        book.id_buku = jsonObject.getString("id_buku").toInt();
-                        book.judul_buku = jsonObject.getString("judul_buku");
-                        book.penerbit = jsonObject.getString("penerbit");
-                        book.pengarang = jsonObject.getString("pengarang");
-                        book.nama_kategori = jsonObject.getString("nama_kategori");
+                        book.id_buku = jsonObject.getString("id_buku").toInt()
+                        book.judul_buku = jsonObject.getString("judul_buku")
+                        book.penerbit = jsonObject.getString("penerbit")
+                        book.pengarang = jsonObject.getString("pengarang")
+                        book.tahun_terbit = jsonObject.getString("tahun_terbit")
+                        book.nama_kategori = jsonObject.getString("nama_kategori")
 
                         val imageBase64 = jsonObject.getString("image_buku")
                         val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
@@ -153,5 +161,9 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
 
     override fun editMemberFragment() {
         replaceFragment(EditMemberAccount())
+    }
+
+    override fun BookDetailFragment(book : Book, memberID: String) {
+        replaceFragment(BookOnClickDetail(book, memberID))
     }
 }

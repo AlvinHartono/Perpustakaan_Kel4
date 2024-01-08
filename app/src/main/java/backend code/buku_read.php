@@ -1,19 +1,31 @@
 <?php
     require_once("connection.php");
 
-    $id_buku = $_POST["id_buku"];
-    $sql = "SELECT * FROM buku WHERE id_buku = $id_buku";
-
-    if($result = mysqli_query($CON, $sql)){
-        $row = $result->fetch_assoc();
-
-        // Convert the row to JSON format
-        $json_data = json_encode($row);
+    $sql = "SELECT buku.id_buku, buku.judul_buku, buku.penerbit, buku.pengarang,buku.tahun_terbit, kategori.nama_kategori, buku.image_buku 
+    FROM buku 
+    JOIN kategori ON buku.id_kategori = kategori.id_kategori";
+    $result = mysqli_query($CON, $sql);
     
-        // Output the JSON data
-        echo $json_data;
-    } else {
-        echo "No results found";
-    }
+        // var_dump($result);
+    
+    
+        $rows = array();
 
+        //fetch all rows and store them in the $rows array
+        while ($row = mysqli_fetch_assoc($result)){
+
+
+            array_push($rows, array(
+                "id_buku" => $row["id_buku"],
+                "judul_buku" => $row["judul_buku"],
+                "penerbit" => $row["penerbit"],
+                "pengarang" => $row["pengarang"],
+                "tahun_terbit" => $row["tahun_terbit"],
+                "nama_kategori" => $row["nama_kategori"],
+                "image_buku" => base64_encode($row['image_buku']),
+            ));
+        }
+        echo json_encode($rows);
+
+    mysqli_close($CON);
 ?>

@@ -2,8 +2,11 @@ package com.example.perpustakaan_kel4
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Parcel
+import android.os.Parcelable
+import java.io.Serializable
 
-class Book {
+class Book(){
 
     var id_buku: Int = 0
         get() = field
@@ -50,4 +53,7 @@ class Book {
     fun decodeByteArrayToBitmap(byteArray: ByteArray) : Bitmap{
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
     }
+
+
+
 }

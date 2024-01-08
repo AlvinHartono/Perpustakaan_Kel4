@@ -33,7 +33,9 @@ class Home : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var recyclerViewBookAdapter: RecyclerViewBookAdapter? = null
 
+    private lateinit var bookCommunicator: BookDetailCommunicator
     private lateinit var bookList: List<Book>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,8 @@ class Home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        bookCommunicator = activity as BookDetailCommunicator
+
         bookList = booksViewModel.currentBookList.value.orEmpty()
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
@@ -75,17 +79,34 @@ class Home : Fragment() {
         })
 
         booksViewModel.currentBookList.observe(requireActivity(), Observer {
-            recyclerViewBookAdapter = RecyclerViewBookAdapter(it)
-            val layoutManager: RecyclerView.LayoutManager =
-                GridLayoutManager(requireActivity(), 2)
-            recyclerView!!.layoutManager = layoutManager
-            recyclerView!!.adapter = recyclerViewBookAdapter
+            try {
+
+                recyclerViewBookAdapter = RecyclerViewBookAdapter(
+                    booklist = it,
+                    bookCommunicator = bookCommunicator,
+                    memberViewModel.currentMember.value!!.id_member
+                )
+                val layoutManager: RecyclerView.LayoutManager =
+                    GridLayoutManager(requireActivity(), 2)
+                recyclerView!!.layoutManager = layoutManager
+                recyclerView!!.adapter = recyclerViewBookAdapter
+            } catch (e: Throwable) {
+                Log.d("response", e.toString())
+            }
         })
 
 
 
         return view
     }
+
+
+    private fun prepareBookListData() {
+        //panggil data
+
+        recyclerViewBookAdapter!!.notifyDataSetChanged()
+    }
+
 
     companion object {
         /**
