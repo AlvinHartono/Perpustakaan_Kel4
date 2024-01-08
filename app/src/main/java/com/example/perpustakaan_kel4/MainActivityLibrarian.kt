@@ -2,6 +2,7 @@ package com.example.perpustakaan_kel4
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -10,12 +11,14 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.perpustakaan_kel4.databinding.ActivityMainLibrarianBinding
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
 
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
+    private lateinit var memberViewModel: MemberViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +34,23 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
 
         //Initialize LibrarianViewModel
         librarianViewModel = ViewModelProvider(this)[LibrarianViewModel::class.java]
+
+        //Initialize MemberViewModel
+        memberViewModel = ViewModelProvider(this)[MemberViewModel::class.java]
+
+
+        //Fetching Librarian Data from the database
         getLibrarianInfo(phoneNumber)
+
+
+        //Fetching Lists of Members from the database
+        getAllMembers()
+
+        //First Initial fragment
         replaceFragment(BooksLibrarian())
 
+
+        //Binding fragments with each navbar
         binding.bottomNavigationViewLibrarian.setOnItemSelectedListener {
             when (it.itemId) {
 
@@ -94,6 +111,49 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
                 params["no_telp"] = phoneNumber.toString()
                 return params
             }
+        }
+        Volley.newRequestQueue(this).add(stringRequest)
+    }
+
+    private fun getAllMembers() {
+        val url: String = ApiEndPoint.READ_MEMBER_LIBRARIAN
+        val stringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+
+                    Log.d("response quantity", jsonArray.length().toString())
+                    for (i in 0 until jsonArray.length()) {
+                        Log.d("response member", i.toString())
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val member = Member(
+                            jsonObject.getString("id_member"),
+                            jsonObject.getString("first_name_member"),
+                            jsonObject.getString("last_name_member"),
+                            jsonObject.getString("email"),
+                            jsonObject.getString("no_telp"),
+                            jsonObject.getString("password"),
+                        )
+
+                        memberViewModel.insertBookList(member)
+                        Log.d(
+                            "response check viewmodel",
+                            memberViewModel.currentMemberList.value!![i].first_name_member
+                        )
+                    }
+
+
+                } catch (e: Throwable) {
+                    Log.d("response fetch books", e.toString())
+                }
+
+            },
+            Response.ErrorListener { response ->
+                Log.d("data", response.toString())
+            }) {
+
         }
         Volley.newRequestQueue(this).add(stringRequest)
     }

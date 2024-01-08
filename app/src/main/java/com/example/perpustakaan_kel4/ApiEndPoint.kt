@@ -20,6 +20,8 @@ class ApiEndPoint {
         val UPDATE_LIBRARIAN = SERVER+"librarian_update.php"
         val DELETE_LIBRARIAN = SERVER+"librarian_delete.php"
 
+        val READ_MEMBER_LIBRARIAN = SERVER+"member_read_all.php"
+
         //BOOK'S CRUD
         val READ_BOOKS = SERVER+"buku_read.php"
         //TODO: ADD BOOKS CRUD

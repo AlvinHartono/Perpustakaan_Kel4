@@ -118,10 +118,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
             Method.POST,
             url,
             Response.Listener { response ->
-
                 try {
-
-
                     val jsonArray = JSONArray(response)
                     Log.d("response", jsonArray.length().toString())
                     for (i in 0 until jsonArray.length()) {
@@ -140,54 +137,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator {
 
                         booksViewModel.insertBookList(book)
                     }
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![0].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![1].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![2].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![3].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![4].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![5].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![6].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![7].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![8].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![9].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![10].judul_buku
-                    )
-                    Log.d(
-                        "response check viewmodel",
-                        booksViewModel.currentBookList.value!![11].judul_buku
-                    )
+
                 } catch (e: Throwable) {
                     Log.d("response fetch books", e.toString())
                 }
