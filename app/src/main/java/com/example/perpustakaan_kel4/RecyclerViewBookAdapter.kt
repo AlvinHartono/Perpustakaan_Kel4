@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,8 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>) :
         holder.cardView.setOnClickListener {
             Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_LONG)
                 .show()
+
+            holder.cardView.context.startActivity(Intent(holder.cardView.context, bookMemberOnClickDetail::class.java))
         }
     }
 
