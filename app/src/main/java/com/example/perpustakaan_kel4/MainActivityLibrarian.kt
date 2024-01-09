@@ -2,7 +2,6 @@ package com.example.perpustakaan_kel4
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -14,7 +13,7 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainLibrarianBinding
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
+class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator {
 
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
@@ -162,6 +161,10 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator {
         Log.d("response editacc", "yo")
         replaceFragment(editLibrarianAccount())
         Log.d("response editacc", "yo end")
+    }
+
+    override fun booksToAddBooksFragment() {
+        replaceFragment(AddBook())
     }
 
 }
