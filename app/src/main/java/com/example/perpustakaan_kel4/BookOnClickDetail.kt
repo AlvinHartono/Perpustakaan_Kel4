@@ -53,14 +53,17 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         val namaKategori : TextView = view.findViewById<View>(R.id.nama_kategori) as TextView
         val buttonPinjam : Button = view.findViewById<View>(R.id.btnPinjam) as Button
 
-//        image.setImage(book.image_buku)
+        image.setImageBitmap(book.decodeByteArrayToBitmap(book.image_buku))
+
         judulBuku.text = book.judul_buku
         namaPenerbit.text = book.penerbit
         namaPengarang.text = book.pengarang
         tahunTerbit.text = book.tahun_terbit
         namaKategori.text = book.nama_kategori
+
         buttonPinjam.setOnClickListener {
             Toast.makeText(requireContext(), book.tahun_terbit, Toast.LENGTH_SHORT).show()
+            requestBookingBook(bookID = book.id_buku.toString(), memberID = memberID)
         }
         return view
     }
@@ -73,6 +76,15 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             closeCurrentFragment()
         }
     }
+
+    //Function buat request buku
+    private fun requestBookingBook(bookID: String, memberID: String){
+        //TODO: Buat http request 2 kali.
+        //1 buat cek status book ()
+        // kalo occupied ga ke step selanjutnya
+        // step selanjutnya buat request buku.
+    }
+
 
     private fun closeCurrentFragment() {
         // Get the fragment manager
