@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditMemberAccount"
     android:orientation="vertical"
-    tools:context=".AddBook">
-
+    android:gravity="center_horizontal">
     <!-- TODO: Update blank fragment layout -->
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
-        app:srcCompat="@drawable/books" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Tambahkan Buku"
-        android:textSize="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@id/textInputLayout2"
@@ -70,53 +55,45 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
             tools:ignore="TextSizeCheck" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="5dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/tahunTerbit"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:drawableStart="@drawable/year1"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="Tahun Terbit"
+                android:inputType="text"
+                android:textSize="15dp"
+                tools:ignore="TextSizeCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <EditText
-                    android:id="@+id/tahunTerbit"
-                    android:layout_width="140dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:drawableStart="@drawable/year1"
-                    android:drawablePadding="5dp"
-                    android:ems="10"
-                    android:hint="Tahun Terbit"
-                    android:inputType="text"
-                    android:textSize="15dp"
-                    tools:ignore="TextSizeCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <Spinner
+                    android:id="@+id/spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/imageadd"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
@@ -130,8 +107,9 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="75dp"
                 android:text="Pilih Gambar untuk Buku"
                 android:textColor="@android:color/black"
                 android:layout_marginTop="8dp"/>
@@ -143,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="20dp"
+            android:layout_margin="100dp"
             app:srcCompat="@drawable/ic_send" />
 
 
