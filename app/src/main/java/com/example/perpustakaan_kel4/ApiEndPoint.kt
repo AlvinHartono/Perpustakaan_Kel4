@@ -3,7 +3,8 @@ package com.example.perpustakaan_kel4
 class ApiEndPoint {
 
     companion object {
-        var ipAddress = "10.234.211.141"
+        var ipAddress = "192.168.0.5"
+
         private val SERVER = "http://$ipAddress/Perpustakaan_Kel4/"
 
         //MEMBER'S CRUD
