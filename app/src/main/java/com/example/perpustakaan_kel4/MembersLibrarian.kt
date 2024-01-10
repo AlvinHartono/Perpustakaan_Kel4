@@ -28,6 +28,7 @@ class MembersLibrarian : Fragment() {
 
     private lateinit var memberViewModel: MemberViewModel
     private lateinit var memberList: List<Member>
+    private lateinit var librarianCommunicator: LibrarianCommunicator
 
     private var recyclerView: RecyclerView? = null
     private var recyclerViewMemberAdapter: RecyclerViewMemberAdapter? = null
@@ -47,6 +48,8 @@ class MembersLibrarian : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        librarianCommunicator = activity as LibrarianCommunicator
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_members_librarian, container, false)
         memberList = memberViewModel.currentMemberList.value.orEmpty()
@@ -58,13 +61,24 @@ class MembersLibrarian : Fragment() {
             Log.e("error", e.message.toString())
         }
 
-        recyclerViewMemberAdapter = RecyclerViewMemberAdapter(emptyList())
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireActivity())
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = recyclerViewMemberAdapter
         memberViewModel.currentMemberList.observe(requireActivity(), Observer {
-            recyclerViewMemberAdapter?.updateData(it)
+
+            try {
+                recyclerViewMemberAdapter = RecyclerViewMemberAdapter(
+                    memberList = it,
+                    librarianCommunicator = librarianCommunicator
+                )
+                val layoutManager: RecyclerView.LayoutManager =
+                    LinearLayoutManager(requireActivity())
+                recyclerView!!.layoutManager = layoutManager
+                recyclerView!!.adapter = recyclerViewMemberAdapter
+                recyclerViewMemberAdapter?.updateData(it)
+
+            } catch (e: Throwable) {
+                Log.d("response bad", e.toString())
+            }
         })
+
 
         return view
     }
