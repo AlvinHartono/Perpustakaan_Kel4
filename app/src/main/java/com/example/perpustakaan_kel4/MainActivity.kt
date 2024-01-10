@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
     //create viewModel variable that will be init later
     private lateinit var memberViewModel: MemberViewModel
     private lateinit var booksViewModel: BooksViewModel
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -144,6 +145,47 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
                         book.image_buku = imageByteArray
 
                         booksViewModel.insertBookList(book)
+                    }
+
+                } catch (e: Throwable) {
+                    Log.d("response fetch books", e.toString())
+                }
+
+            },
+            Response.ErrorListener { response ->
+                Log.d("data", response.toString())
+            }) {
+
+        }
+        newRequestQueue(this).add(stringRequest)
+    }
+
+    private fun getBookingData(){
+        val url : String = ApiEndPoint.READ_PINJAM
+        val stringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener { response ->
+                try {
+                    val jsonArray = JSONArray(response)
+                    Log.d("response", jsonArray.length().toString())
+                    for (i in 0 until jsonArray.length()) {
+                        Log.d("response book", i.toString())
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val pinjam :Pinjam()
+                        pinjam.id_member = jsonObject.getString("id_member").toString().toInt()
+                        pinjam.id_buku = jsonObject.getString("id_buku").toString().toInt()
+                        pinjam.judul_buku = jsonObject.getString("judul_buku")
+                        pinjam.tgl_peminjaman = jsonObject.getString("tgl_peminjaman")
+                        pinjam.tgl_pengembalian = jsonObject.getString("tgl_pengembalian")
+                        pinjam.batas_tgl_pengembalian = jsonObject.getString("batas_tgl_pengembalian")
+                        pinjam.status = jsonObject.getString("status").toBoolean()
+
+                        val imageBase64 = jsonObject.getString("image_buku")
+                        val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                        pinjam.image_buku = imageByteArray
+
+                        bookingViewModel.insertBookingList(pinjam)
                     }
 
                 } catch (e: Throwable) {

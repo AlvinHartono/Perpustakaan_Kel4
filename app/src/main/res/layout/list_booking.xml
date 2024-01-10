@@ -27,12 +27,13 @@
         
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/list_judulbuku"
             android:text="Judul Buku"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_marginTop="40dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/booking_list_img"/>
 
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="Tanggal Peminjaman : "
             android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_below="@id/list_judulbuku"
             android:layout_toEndOf="@id/booking_list_img"
             android:layout_marginStart="30dp"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:text="dd/mm/yy"
             android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_below="@id/list_judulbuku"
             android:layout_toEndOf="@id/textview25"
             android:layout_marginStart="0dp"
@@ -68,15 +69,34 @@
             android:layout_height="wrap_content"
             android:text="Status Peminjaman"
             android:textColor="@color/grey"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_below="@id/textview25"
             android:layout_toEndOf="@id/booking_list_img"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             />
 
+        <ImageView
+            android:id="@+id/warning_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/baseline_warning_24"
+            android:layout_below="@+id/list_status"
+            android:layout_toEndOf="@+id/booking_list_img"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"/>
 
-
+        <TextView
+            android:id="@+id/list_bts_tgl_pengembalian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dd/mm/yy"
+            android:layout_below="@+id/list_status"
+            android:layout_toEndOf="@+id/warning_icon"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="@color/red"/>
 
 
     </RelativeLayout>
