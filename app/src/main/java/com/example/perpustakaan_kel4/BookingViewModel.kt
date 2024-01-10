@@ -10,6 +10,12 @@ class BookingViewModel : ViewModel() {
 
     }
 
+    fun insertBookingList(newBookings: Pinjam){
+        val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
+        currentList.add(newBookings)
+        currentBooking.value = currentList.toList()
+    }
+
     override fun onCleared() {
         super.onCleared()
     }

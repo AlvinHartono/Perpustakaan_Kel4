@@ -1,18 +1,13 @@
 package com.example.perpustakaan_kel4
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import java.io.Serializable
 import java.sql.Time
 import java.time.Year
 import java.util.Date
 
 class Pinjam : Serializable {
-    fun statusToText(): CharSequence? {
-        if (!status){
-            return "Belum Dikembalikan"
-        }else{
-            return "Sudah Dikembalikan"
-        }
-    }
 
     var id_buku: String = ""
         get() = field
@@ -50,13 +45,27 @@ class Pinjam : Serializable {
             field = value
         }
 
+    var image_buku : ByteArray = byteArrayOf()
+        get() = field
+        set(value) {
+            field = value
+        }
+
+    var judul_buku : String = ""
+        get() = field
+        set(value){
+            field = value
+        }
+
     constructor(
         idBuku: String = "",
         idMember : String = "",
         tglPinjam: Date = Date(),
         tglKembali: Date = Date(),
         batasTglKembali: Date = Date(),
-        status: Boolean = false
+        status: Boolean = false,
+        imgBuku: ByteArray = byteArrayOf(),
+        judulBuku: String = ""
     ){
         this.id_buku = idBuku
         this.id_member = idMember
@@ -64,7 +73,13 @@ class Pinjam : Serializable {
         this.tgl_pengembalian = tglKembali
         this.batas_tgl_pengembalian = batasTglKembali
         this.status = status
+        this.image_buku = imgBuku
+        this.judul_buku = judulBuku
     }
 
     constructor()
+
+    fun decodeByteArrayToBitmap(byteArray: ByteArray) : Bitmap {
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
 }
