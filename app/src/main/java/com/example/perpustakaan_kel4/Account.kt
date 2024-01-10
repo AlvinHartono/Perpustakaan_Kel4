@@ -88,6 +88,10 @@ class Account : Fragment() {
             memberCommunicator.editMemberFragment()
         }
 
+        btnNotif.setOnClickListener {
+            val intent = Intent(requireActivity(), NotificationPage::class.java)
+            startActivity(intent)
+        }
 
 
         btnLogout.setOnClickListener {

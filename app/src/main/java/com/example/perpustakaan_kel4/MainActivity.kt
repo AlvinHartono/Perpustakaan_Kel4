@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
                     for (i in 0 until jsonArray.length()) {
                         Log.d("response book", i.toString())
                         val jsonObject = jsonArray.getJSONObject(i)
-                        val pinjam :Pinjam()
+                        val pinjam : Pinjam()
                         pinjam.id_member = jsonObject.getString("id_member").toString().toInt()
                         pinjam.id_buku = jsonObject.getString("id_buku").toString().toInt()
                         pinjam.judul_buku = jsonObject.getString("judul_buku")

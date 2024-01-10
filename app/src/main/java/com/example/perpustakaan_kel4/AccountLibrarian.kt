@@ -92,6 +92,11 @@ class AccountLibrarian : Fragment() {
             Log.d("response editacc", "edit acced")
         }
 
+        btnNotif.setOnClickListener {
+            val intent = Intent(requireActivity(), NotificationPage::class.java)
+            startActivity(intent)
+        }
+
         btnLogout.setOnClickListener {
             val intent = Intent(requireActivity(), LoginLibrarianScreen::class.java)
             startActivity(intent)
