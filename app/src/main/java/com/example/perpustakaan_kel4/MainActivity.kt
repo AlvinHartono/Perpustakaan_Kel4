@@ -18,6 +18,7 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainBinding
 import org.json.JSONArray
 import org.json.JSONObject
 import android.util.Base64
+import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator {
 
@@ -75,6 +76,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
+
     private fun addFragment(fragment: Fragment) {
 
         val fragmentManager = supportFragmentManager
@@ -160,8 +162,8 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         newRequestQueue(this).add(stringRequest)
     }
 
-    private fun getBookingData(){
-        val url : String = ApiEndPoint.READ_PINJAM
+    private fun getBookingData() {
+        val url: String = ApiEndPoint.READ_PINJAM
         val stringRequest = object : StringRequest(
             Method.POST,
             url,
@@ -172,13 +174,23 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
                     for (i in 0 until jsonArray.length()) {
                         Log.d("response book", i.toString())
                         val jsonObject = jsonArray.getJSONObject(i)
-                        val pinjam : Pinjam()
-                        pinjam.id_member = jsonObject.getString("id_member").toString().toInt()
-                        pinjam.id_buku = jsonObject.getString("id_buku").toString().toInt()
+                        val pinjam = Pinjam()
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+                        pinjam.id_member = jsonObject.getString("id_member")
+                        pinjam.id_buku = jsonObject.getString("id_buku")
                         pinjam.judul_buku = jsonObject.getString("judul_buku")
-                        pinjam.tgl_peminjaman = jsonObject.getString("tgl_peminjaman")
-                        pinjam.tgl_pengembalian = jsonObject.getString("tgl_pengembalian")
-                        pinjam.batas_tgl_pengembalian = jsonObject.getString("batas_tgl_pengembalian")
+                        try {
+                            pinjam.tgl_peminjaman =
+                                dateFormat.parse(jsonObject.getString("tgl_peminjaman"))
+                            pinjam.tgl_pengembalian =
+                                dateFormat.parse(jsonObject.getString("tgl_pengembalian"))
+                            pinjam.batas_tgl_pengembalian =
+                                dateFormat.parse(jsonObject.getString("batas_tgl_pengembalian"))
+
+                        } catch (e: Throwable) {
+                            Log.d("date parsing error", e.toString())
+                        }
                         pinjam.status = jsonObject.getString("status").toBoolean()
 
                         val imageBase64 = jsonObject.getString("image_buku")
@@ -205,7 +217,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         replaceFragment(EditMemberAccount())
     }
 
-    override fun BookDetailFragment(book : Book, memberID: String) {
+    override fun BookDetailFragment(book: Book, memberID: String) {
         replaceFragment(BookOnClickDetail(book, memberID))
     }
 }
