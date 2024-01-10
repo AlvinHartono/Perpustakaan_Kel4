@@ -33,18 +33,36 @@ class NotificationPage : AppCompatActivity() {
 
         val backbtn : ImageView = findViewById(R.id.backbutton)
 
-        if(notifSwitch.isChecked){
-            Toast.makeText(this, "Notification Enabled", Toast.LENGTH_LONG).show()
-        }else{
-            Toast.makeText(this, "Notification Disabled", Toast.LENGTH_LONG).show()
+        notifSwitch.isChecked = true
 
-            textNone.setTextColor(Color.parseColor("#808080"))
-            text1hr.setTextColor(Color.parseColor("#808080"))
-            text2hr.setTextColor(Color.parseColor("#808080"))
+        notifSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                Toast.makeText(this, "Notification Enabled", Toast.LENGTH_LONG).show()
 
-            NoneCol.isClickable = false
-            onehrCol.isClickable = false
-            twohrCol.isClickable = false
+                textNone.setTextColor(Color.parseColor("#000000"))
+                text1hr.setTextColor(Color.parseColor("#000000"))
+                text2hr.setTextColor(Color.parseColor("#000000"))
+
+                NoneCol.isClickable = true
+                onehrCol.isClickable = true
+                twohrCol.isClickable = true
+
+            } else {
+                Toast.makeText(this, "Notification Disabled", Toast.LENGTH_LONG).show()
+
+                textNone.setTextColor(Color.parseColor("#808080"))
+                text1hr.setTextColor(Color.parseColor("#808080"))
+                text2hr.setTextColor(Color.parseColor("#808080"))
+
+                NoneCol.isClickable = false
+                onehrCol.isClickable = false
+                twohrCol.isClickable = false
+
+                noneChecked.isVisible = false
+                onehrChecked.isVisible = false
+                twohrChecked.isVisible = false
+
+            }
         }
 
         NoneCol.setOnClickListener {
