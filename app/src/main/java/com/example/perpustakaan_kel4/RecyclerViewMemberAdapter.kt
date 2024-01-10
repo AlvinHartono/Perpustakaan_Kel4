@@ -70,8 +70,6 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
         }
         holder.deleteMember.setOnClickListener {
 
-            Toast.makeText(holder.itemView.context, "deleted", Toast.LENGTH_SHORT)
-                .show()
             val url : String = ApiEndPoint.DELETE_MEMBER
             val stringRequest = object : StringRequest(
                 Method.POST, url,
@@ -109,9 +107,6 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
 
         }
         holder.editMember.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "edited", Toast.LENGTH_SHORT)
-                .show()
-
             librarianCommunicator.editMemberFragment(currentMember)
         }
 

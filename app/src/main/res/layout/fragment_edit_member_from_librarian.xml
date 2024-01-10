@@ -73,42 +73,9 @@
             android:drawablePadding="7dp"
             android:ems="10"
             android:hint="Phone Number"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:layout_marginBottom="50dp"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <EditText
-            android:id="@+id/editTextEditPasswordLib"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/baseline_password_24"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <EditText
-            android:id="@+id/editTextEditRePasswordLib"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/baseline_password_24"
-            android:drawablePadding="7dp"
-            android:ems="10"
-            android:hint="Re-Password"
-            android:inputType="textPassword" />
 
         <LinearLayout
             android:layout_width="match_parent"
