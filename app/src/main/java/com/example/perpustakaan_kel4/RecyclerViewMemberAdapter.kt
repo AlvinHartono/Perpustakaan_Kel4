@@ -17,10 +17,11 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class RecyclerViewMemberAdapter(var memberList: List<Member>) :
+//import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+class RecyclerViewMemberAdapter(private var memberList: List<Member>, private var librarianCommunicator: LibrarianCommunicator) :
     RecyclerView.Adapter<RecyclerViewMemberAdapter.MyViewHolder>() {
 
-    lateinit var librarianCommunicator: LibrarianCommunicator
 
     //delete from list
     fun deleteMember(position: Int) {
@@ -46,12 +47,25 @@ class RecyclerViewMemberAdapter(var memberList: List<Member>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentMembers = memberList[position]
+        val currentMember = memberList[position]
 
-        holder.memberName.text = currentMembers.first_name_member + " " +  currentMembers.last_name_member
-        holder.memberPhoneNumber.text = currentMembers.no_telp
+        holder.memberName.text = currentMember.first_name_member + " " +  currentMember.last_name_member
+        holder.memberPhoneNumber.text = currentMember.no_telp
         holder.cardView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, currentMembers.id_member, Toast.LENGTH_SHORT)
+            MaterialAlertDialogBuilder(holder.itemView.context)
+                .setTitle(currentMember.first_name_member+"'s Data")
+                .setMessage(
+                      "member ID: \t" + currentMember.id_member
+                    + "\nFirst Name: \t" + currentMember.first_name_member
+                    + "\nLast Name: \t" + currentMember.last_name_member
+                    + "\nNo. Telp: \t" + currentMember.no_telp
+                    +  "\nEmail: \t" + currentMember.email
+
+                )
+
+                .setNegativeButton("Close") { dialog, which ->
+                    // Handle the negative button click (Cancel)
+                }
                 .show()
         }
         holder.deleteMember.setOnClickListener {
@@ -72,8 +86,6 @@ class RecyclerViewMemberAdapter(var memberList: List<Member>) :
                         ).show()
                         deleteMember(holder.adapterPosition)
 
-//                        librarianCommunicator.deleteMember(currentMembers.id_member.toInt())
-
                     } else {
                         Toast.makeText(
                             holder.itemView.context,
@@ -88,7 +100,7 @@ class RecyclerViewMemberAdapter(var memberList: List<Member>) :
             ) {
                 override fun getParams(): HashMap<String, String> {
                     val params = HashMap<String, String>()
-                    params["id_member"] = currentMembers.id_member
+                    params["id_member"] = currentMember.id_member
                     return params
                 }
             }
@@ -99,6 +111,8 @@ class RecyclerViewMemberAdapter(var memberList: List<Member>) :
         holder.editMember.setOnClickListener {
             Toast.makeText(holder.itemView.context, "edited", Toast.LENGTH_SHORT)
                 .show()
+
+            librarianCommunicator.editMemberFragment(currentMember)
         }
 
 

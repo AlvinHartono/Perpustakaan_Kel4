@@ -1,24 +1,17 @@
 package com.example.perpustakaan_kel4
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -30,16 +23,16 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [EditMemberAccount.newInstance] factory method to
+ * Use the [EditMemberFromLibrarian.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditMemberAccount : Fragment() {
+class EditMemberFromLibrarian(member: Member) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var memberViewModel: MemberViewModel
-//    private lateinit var memberCommunicator: MemberCommunicator
 
+    private var member: Member = member
+    private lateinit var memberViewModel: MemberViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,70 +40,57 @@ class EditMemberAccount : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
         memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_edit_member_account, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_member_from_librarian, container, false)
+        var editTextEditFirstname =
+            view.findViewById<View>(R.id.editTextEditFirstnameLib) as TextView
+        var editTextEditLastname = view.findViewById<View>(R.id.editTextEditLastNameLib) as TextView
+        var editTextEditEmail = view.findViewById<View>(R.id.editTextEditEmailLib) as TextView
+        var editTextPhoneNumber = view.findViewById<View>(R.id.editTextPhoneNumberLib) as TextView
+        var editMemberCancel = view.findViewById<View>(R.id.editMemberCancelLib) as Button
+        var editMemberSave = view.findViewById<View>(R.id.editMemberSaveLib) as Button
 
-        var editTextEditFirstname = view.findViewById<View>(R.id.editTextEditFirstname) as TextView
-        var editTextEditLastname = view.findViewById<View>(R.id.editTextEditLastName) as TextView
-        var editTextEditEmail = view.findViewById<View>(R.id.editTextEditEmail) as TextView
-        var editTextPhoneNumber = view.findViewById<View>(R.id.editTextPhoneNumber) as TextView
-        var editMemberCancel = view.findViewById<View>(R.id.editMemberCancel) as Button
-        var editMemberSave = view.findViewById<View>(R.id.editMemberSave) as Button
-
-        memberViewModel.currentMember.observe(requireActivity(), Observer {
-            editTextEditFirstname.text = it.first_name_member
-            editTextEditLastname.text = it.last_name_member
-            editTextEditEmail.text = it.email
-            editTextPhoneNumber.text = it.no_telp
-
-        })
-
+        editTextEditFirstname.text = member.first_name_member
+        editTextEditLastname.text = member.last_name_member
+        editTextEditEmail.text = member.email
+        editTextPhoneNumber.text = member.no_telp
         editMemberCancel.setOnClickListener {
             closeCurrentFragment()
         }
-
         editMemberSave.setOnClickListener {
-
-            var updatedMember = Member(
-                memberViewModel.currentMember.value!!.id_member,
-                editTextEditFirstname.text.toString(),
-                editTextEditLastname.text.toString(),
-                editTextEditEmail.text.toString(),
-                editTextPhoneNumber.text.toString(),
-                memberViewModel.currentMember.value!!.password
+            sendModifiedMember(
+                firstname = editTextEditFirstname.text.toString(),
+                lastName = editTextEditLastname.text.toString(),
+                email = editTextEditEmail.text.toString(),
+                noTelp = editTextPhoneNumber.text.toString()
             )
 
-
-            memberViewModel.updateMemberData(updatedMember)
-
             try {
-                sendModifiedMember(
+                member = Member(
+                    member.id_member,
                     editTextEditFirstname.text.toString(),
                     editTextEditLastname.text.toString(),
                     editTextEditEmail.text.toString(),
-                    editTextPhoneNumber.text.toString()
+                    editTextPhoneNumber.text.toString(),
+                    member.password
                 )
-
-                Toast.makeText(requireContext(), "Account Update Successful", Toast.LENGTH_SHORT).show()
-                Handler(Looper.getMainLooper()).postDelayed({
-                    closeCurrentFragment()
-                }, 500)
-
+                memberViewModel.updateOrDeleteMember(member.id_member.toInt(), member)
 
             } catch (e: Throwable) {
-                Log.e("Edit Member", e.toString())
+                Log.d("response", e.toString())
             }
+            Toast.makeText(requireContext(), "Account Update Successful", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                closeCurrentFragment()
+            }, 500)
         }
-
 
         return view
     }
@@ -141,7 +121,7 @@ class EditMemberAccount : Fragment() {
         ) {
             override fun getParams(): HashMap<String, String> {
                 val params = HashMap<String, String>()
-                params["id_member"] = memberViewModel.currentMember.value!!.id_member
+                params["id_member"] = member.id_member
                 params["first_name_member"] = firstname
                 params["last_name_member"] = lastName
                 params["email"] = email
@@ -154,7 +134,6 @@ class EditMemberAccount : Fragment() {
 
     }
 
-
     private fun closeCurrentFragment() {
         // Get the fragment manager
         val fragmentManager = requireActivity().supportFragmentManager
@@ -163,9 +142,12 @@ class EditMemberAccount : Fragment() {
         val transaction = fragmentManager.beginTransaction()
 
         // replacing the current fragment
-        transaction.replace(R.id.frame_layout, Account())
+        transaction.replace(R.id.frame_layout_librarian, MembersLibrarian())
         // Commit the transaction
         transaction.commit()
+
+        // Optionally, you can add the following line to allow the user to navigate back
+        // fragmentManager.popBackStack()
     }
 
     companion object {
@@ -175,12 +157,12 @@ class EditMemberAccount : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment EditMemberAccount.
+         * @return A new instance of fragment EditMemberFromLibrarian.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditMemberAccount().apply {
+        fun newInstance(param1: String, param2: String, member: Member) =
+            EditMemberFromLibrarian(member).apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
