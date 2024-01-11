@@ -2,6 +2,7 @@ package com.example.perpustakaan_kel4
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
@@ -18,7 +19,7 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
     private lateinit var memberViewModel: MemberViewModel
-
+    private lateinit var booksViewModel: BooksViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +39,17 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         //Initialize MemberViewModel
         memberViewModel = ViewModelProvider(this)[MemberViewModel::class.java]
 
+        //
+        booksViewModel = ViewModelProvider(this)[BooksViewModel::class.java]
 
         //Fetching Librarian Data from the database
         getLibrarianInfo(phoneNumber)
+
         //Fetching Lists of Members from the database
         getAllMembers()
+
+        //Fetching Lists of books from the database
+        getAllBooks()
 
         //First Initial fragment
         replaceFragment(BooksLibrarian())
@@ -154,7 +161,41 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         }
         Volley.newRequestQueue(this).add(stringRequest)
     }
+    private fun getAllBooks(){
+        val url: String = ApiEndPoint.READ_BOOKS
+        val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
+            try {
+                val jsonArray = JSONArray(response)
+                Log.d("response books", jsonArray.length().toString())
+                for (i in 0 until jsonArray.length()) {
+                    Log.d("response books", i.toString())
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val book = Book()
+                    book.id_buku = jsonObject.getString("id_buku").toInt()
+                    book.judul_buku = jsonObject.getString("judul_buku")
+                    book.penerbit = jsonObject.getString("penerbit")
+                    book.pengarang = jsonObject.getString("pengarang")
+                    book.tahun_terbit = jsonObject.getString("tahun_terbit")
+                    book.nama_kategori = jsonObject.getString("nama_kategori")
 
+                    val imageBase64 = jsonObject.getString("image_buku")
+                    val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                    book.image_buku = imageByteArray
+
+                    booksViewModel.insertBookList(book)
+                }
+
+            } catch (e: Throwable) {
+                Log.d("response fetch books", e.toString())
+            }
+
+        }, Response.ErrorListener { response ->
+            Log.d("response error data", response.toString())
+        }) {
+
+        }
+        Volley.newRequestQueue(this).add(stringRequest)
+    }
 
     //this function is doing okay
     override fun editLibrarianFragment() {
