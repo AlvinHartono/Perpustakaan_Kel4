@@ -12,11 +12,11 @@
         android:layout_marginRight="10dp">
 
         <ImageView
+            android:id="@+id/imgBuku"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/buku1"
-            />
+            android:src="@drawable/buku1" />
 
         <LinearLayout
             android:layout_width="wrap_content"
