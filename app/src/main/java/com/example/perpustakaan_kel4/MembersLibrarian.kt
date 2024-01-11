@@ -52,7 +52,6 @@ class MembersLibrarian : Fragment() {
         librarianCommunicator = activity as LibrarianCommunicator
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_members_librarian, container, false)
-        memberList = memberViewModel.currentMemberList.value.orEmpty()
 
         try {
             recyclerView = view.findViewById<View>(R.id.MemberRecyclerView) as RecyclerView
@@ -62,19 +61,18 @@ class MembersLibrarian : Fragment() {
 
         memberViewModel.currentMemberList.observe(requireActivity(), Observer {
 
-            try {
+            if (recyclerViewMemberAdapter == null) {
                 recyclerViewMemberAdapter = RecyclerViewMemberAdapter(
-                    memberList = it,
+                    memberList = it.orEmpty(),
                     librarianCommunicator = librarianCommunicator
                 )
                 val layoutManager: RecyclerView.LayoutManager =
                     LinearLayoutManager(requireActivity())
                 recyclerView!!.layoutManager = layoutManager
                 recyclerView!!.adapter = recyclerViewMemberAdapter
-                recyclerViewMemberAdapter?.updateData(it)
-
-            } catch (e: Throwable) {
-                Log.d("response bad", e.toString())
+            } else {
+                // Update the adapter data without reinitializing it
+                recyclerViewMemberAdapter?.updateData(memberList)
             }
         })
 

@@ -13,11 +13,12 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainLibrarianBinding
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator, BookingCommunicator {
+class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator {
 
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
     private lateinit var memberViewModel: MemberViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +41,11 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
 
         //Fetching Librarian Data from the database
         getLibrarianInfo(phoneNumber)
-
-
         //Fetching Lists of Members from the database
         getAllMembers()
 
         //First Initial fragment
         replaceFragment(BooksLibrarian())
-
 
         //Binding fragments with each navbar
         binding.bottomNavigationViewLibrarian.setOnItemSelectedListener {
@@ -158,27 +156,26 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
     }
 
 
-
+    //this function is doing okay
     override fun editLibrarianFragment() {
-        Log.d("response editacc", "yo")
         replaceFragment(editLibrarianAccount())
-        Log.d("response editacc", "yo end")
     }
 
+    //this function is doing okay
     override fun editMemberFragment(currentMember: Member) {
         replaceFragment(EditMemberFromLibrarian(currentMember))
     }
 
-    override fun deleteMember(memberId: Int) {
-        TODO("Not yet implemented")
-        Log.d("response", "yes")
-        memberViewModel.updateOrDeleteMember(memberId = memberId)
-        Log.d("response", "yessssss")
-    }
 
+    //this function is doing okay
+    override fun deleteMember(member: Member) {
+        memberViewModel.deleteMember(member)
+    }
+    //???
     override fun booksToAddBooksFragment() {
         replaceFragment(AddBook())
     }
+
 
     override fun editBookFragment(currentBook : Book) {
         replaceFragment(EditBook())
@@ -187,6 +184,5 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
     override fun editTransactionFragment(currentTransaction: Pinjam) {
         replaceFragment(EditTransactionFromLibrarian())
     }
-
 
 }

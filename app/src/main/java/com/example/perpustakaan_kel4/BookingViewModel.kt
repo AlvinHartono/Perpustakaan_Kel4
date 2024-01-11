@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,11 +10,16 @@ class BookingViewModel : ViewModel() {
         MutableLiveData<List<Pinjam>>()
 
     }
-    
 
-    fun insertBookingList(newBookings: Pinjam){
+    fun insertBookingList(booking: Pinjam){
         val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
-        currentList.add(newBookings)
+        currentList.add(booking)
+        currentBooking.value = currentList.toList()
+    }
+
+    fun cancelBooking(booking : Pinjam){
+        val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
+        currentList.remove(booking)
         currentBooking.value = currentList.toList()
     }
 
