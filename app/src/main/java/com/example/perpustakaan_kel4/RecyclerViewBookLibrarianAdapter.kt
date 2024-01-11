@@ -113,5 +113,9 @@ class RecyclerViewBookLibrarianAdapter(
         }
 
     }
+    fun updateData(newList: List<Book>) {
+        BookList = newList
+        notifyDataSetChanged()
+    }
 
 }

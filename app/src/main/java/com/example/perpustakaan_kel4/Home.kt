@@ -80,8 +80,8 @@ class Home : Fragment() {
         })
 
         booksViewModel.currentBookList.observe(requireActivity(), Observer {
-            try {
 
+            try {
                 recyclerViewBookAdapter = RecyclerViewBookAdapter(
                     booklist = it,
                     bookCommunicator = bookCommunicator,

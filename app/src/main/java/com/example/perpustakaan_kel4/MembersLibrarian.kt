@@ -54,8 +54,8 @@ class MembersLibrarian : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_members_librarian, container, false)
 
         try {
-            recyclerView = view.findViewById<View>(R.id.MemberRecyclerView) as RecyclerView
-        } catch (e: Throwable) {
+            recyclerView = view.findViewById<View>(R.id.BooksLibrarianRecyclerView) as RecyclerView
+        } catch (e: Exception) {
             Log.e("error", e.message.toString())
         }
 

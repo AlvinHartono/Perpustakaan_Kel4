@@ -1,10 +1,15 @@
 package com.example.perpustakaan_kel4
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,6 +28,11 @@ class BooksLibrarian : Fragment() {
     private var param2: String? = null
 
     private lateinit var bookCommunicator: BookCommunicator
+    private lateinit var booksViewModel: BooksViewModel
+    private lateinit var bookList: List<Book>
+
+    private var recyclerView: RecyclerView? = null
+    private var recyclerViewBookLibrarianAdapter: RecyclerViewBookLibrarianAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +40,7 @@ class BooksLibrarian : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        booksViewModel = ViewModelProvider(requireActivity())[BooksViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,13 +48,38 @@ class BooksLibrarian : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_books_librarian, container, false)
 
-        val addBookFAB : FloatingActionButton = view.findViewById(R.id.AddBooksFAB)
+        bookCommunicator = activity as BookCommunicator
+
+        val view = inflater.inflate(R.layout.fragment_books_librarian, container, false)
+        val addBookFAB: FloatingActionButton = view.findViewById(R.id.AddBooksFAB)
+
+        try {
+            recyclerView = view.findViewById<View>(R.id.BooksLibrarianRecyclerView) as RecyclerView
+        } catch (e: Exception) {
+            Log.e("error", e.toString())
+        }
+
+        booksViewModel.currentBookList.observe(requireActivity(), Observer{
+            bookList = it.orEmpty()
+          if(recyclerViewBookLibrarianAdapter == null){
+              recyclerViewBookLibrarianAdapter = RecyclerViewBookLibrarianAdapter(
+                  BookList = bookList,
+                  bookCommunicator = bookCommunicator
+              )
+              val layoutManager: RecyclerView.LayoutManager =
+                  LinearLayoutManager(requireActivity())
+              recyclerView!!.layoutManager = layoutManager
+              recyclerView!!.adapter = recyclerViewBookLibrarianAdapter
+          } else {
+              recyclerViewBookLibrarianAdapter?.updateData(bookList)
+          }
+        })
 
         addBookFAB.setOnClickListener {
-            bookCommunicator = activity as BookCommunicator
-            bookCommunicator.booksToAddBooksFragment()
+            bookCommunicator.booksToAddBooksFragment(
+
+            )
         }
         return view
     }
