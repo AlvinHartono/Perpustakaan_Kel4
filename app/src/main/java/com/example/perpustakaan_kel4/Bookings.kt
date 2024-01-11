@@ -83,7 +83,6 @@ class Bookings : Fragment() {
                 Log.d("response buat recyclerview", e.toString())
             }
         })
-
         return view
     }
 
