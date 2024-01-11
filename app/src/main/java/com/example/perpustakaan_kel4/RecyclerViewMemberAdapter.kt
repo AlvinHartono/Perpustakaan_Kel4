@@ -25,23 +25,6 @@ class RecyclerViewMemberAdapter(
 ) :
     RecyclerView.Adapter<RecyclerViewMemberAdapter.MyViewHolder>() {
 
-    //delete from list
-    fun deleteMember(holder: MyViewHolder) {
-        val position = holder.adapterPosition
-        if (position != RecyclerView.NO_POSITION) {
-            val mutableList = memberList.toMutableList()
-            mutableList.removeAt(position)
-            memberList = mutableList.toList()
-            notifyItemRemoved(position)
-        }
-    }
-
-
-    fun updateData(newList: List<Member>) {
-        memberList = newList
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_member, parent, false)
@@ -110,7 +93,6 @@ class RecyclerViewMemberAdapter(
                 }
             }
             Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
-            deleteMember(holder)
 
 
         }
@@ -119,6 +101,22 @@ class RecyclerViewMemberAdapter(
         }
 
 
+    }
+    //delete from list
+    fun deleteMember(holder: MyViewHolder) {
+        val position = holder.adapterPosition
+        if (position != RecyclerView.NO_POSITION) {
+            val mutableList = memberList.toMutableList()
+            mutableList.removeAt(position)
+            memberList = mutableList.toList()
+            notifyItemRemoved(position)
+        }
+    }
+
+
+    fun updateData(newList: List<Member>) {
+        memberList = newList
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

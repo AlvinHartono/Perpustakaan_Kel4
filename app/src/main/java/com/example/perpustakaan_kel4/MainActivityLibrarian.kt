@@ -40,14 +40,11 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
 
         //Fetching Librarian Data from the database
         getLibrarianInfo(phoneNumber)
-
-
         //Fetching Lists of Members from the database
         getAllMembers()
 
         //First Initial fragment
         replaceFragment(BooksLibrarian())
-
 
         //Binding fragments with each navbar
         binding.bottomNavigationViewLibrarian.setOnItemSelectedListener {
@@ -157,28 +154,29 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         Volley.newRequestQueue(this).add(stringRequest)
     }
 
+
+    //this function is doing okay
     override fun editLibrarianFragment() {
-        Log.d("response editacc", "yo")
         replaceFragment(editLibrarianAccount())
-        Log.d("response editacc", "yo end")
     }
 
+    //this function is doing okay
     override fun editMemberFragment(currentMember: Member) {
         replaceFragment(EditMemberFromLibrarian(currentMember))
     }
 
-    override fun deleteMember(member: Member) {
-        TODO("Not yet implemented")
-        memberViewModel.updateOrDeleteMember(member)
-    }
 
+    //this function is doing okay
+    override fun deleteMember(member: Member) {
+        memberViewModel.deleteMember(member)
+    }
+    //???
     override fun booksToAddBooksFragment() {
         replaceFragment(AddBook())
     }
 
+    //???
     override fun editTransactionFragment(currentTransaction: Pinjam) {
         replaceFragment(EditTransactionFromLibrarian())
     }
-
-
 }
