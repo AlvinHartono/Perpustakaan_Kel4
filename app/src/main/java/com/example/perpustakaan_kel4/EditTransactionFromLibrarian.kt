@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.SurfaceControl.Transaction
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
@@ -53,7 +51,7 @@ class EditTransactionFromLibrarian : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_transaction_from_librarian, container, false)
 
-        var editJudul = view.findViewById<View>(R.id.judulBuku) as TextView
+        var editJudul = view.findViewById<View>(R.id.judulBukuadd) as TextView
         var editNama = view.findViewById<View>(R.id.namaMember) as TextView
         var edittglpinjam = view.findViewById<View>(R.id.tglPeminjaman) as TextView
         var editbtstglkembali = view.findViewById<View>(R.id.batastglPengembalian) as TextView

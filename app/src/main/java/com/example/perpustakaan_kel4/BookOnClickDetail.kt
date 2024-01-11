@@ -1,10 +1,6 @@
 package com.example.perpustakaan_kel4
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,11 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -62,7 +56,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
 
         val image: ImageView = view.findViewById<View>(R.id.bookIMG) as ImageView
 
-        val judulBuku: TextView = view.findViewById<View>(R.id.judulBuku) as TextView
+        val judulBuku: TextView = view.findViewById<View>(R.id.judulBukuadd) as TextView
         val namaPenerbit: TextView = view.findViewById<View>(R.id.nama_penerbit) as TextView
         val namaPengarang: TextView = view.findViewById<View>(R.id.nama_pengarang) as TextView
         val tahunTerbit: TextView = view.findViewById<View>(R.id.tahun_terbit) as TextView

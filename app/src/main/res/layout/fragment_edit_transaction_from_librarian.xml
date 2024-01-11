@@ -15,7 +15,7 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewadd"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/baseline_image_24"
@@ -40,7 +40,7 @@
         app:endIconMode="clear_text">
 
         <EditText
-            android:id="@+id/judulBuku"
+            android:id="@+id/judulBukuadd"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"

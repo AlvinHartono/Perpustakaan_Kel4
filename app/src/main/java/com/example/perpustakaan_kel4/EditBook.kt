@@ -59,6 +59,7 @@ class EditBook(book: Book) : Fragment() {
         tahun_terbit.setText(book.tahun_terbit)
         kategori.setText(book.nama_kategori)
         kategori.isEnabled = false
+        editImage.setImageBitmap(book.decodeByteArrayToBitmap(book.image_buku))
 
         cancel.setOnClickListener {
             closeCurrentFragment()
@@ -67,12 +68,9 @@ class EditBook(book: Book) : Fragment() {
         backButton.setOnClickListener {
             closeCurrentFragment()
         }
+        editImage.setOnClickListener {
 
-
-
-
-
-
+        }
         return view
     }
 
@@ -87,9 +85,6 @@ class EditBook(book: Book) : Fragment() {
         transaction.replace(R.id.frame_layout_librarian, BooksLibrarian())
         // Commit the transaction
         transaction.commit()
-
-        // Optionally, you can add the following line to allow the user to navigate back
-        // fragmentManager.popBackStack()
     }
 
     companion object {

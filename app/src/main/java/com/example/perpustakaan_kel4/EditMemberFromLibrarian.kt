@@ -131,8 +131,6 @@ class EditMemberFromLibrarian(member: Member) : Fragment() {
             }
         }
         Volley.newRequestQueue(requireContext()).add(stringRequest)
-
-
     }
 
     private fun closeCurrentFragment() {
@@ -146,9 +144,6 @@ class EditMemberFromLibrarian(member: Member) : Fragment() {
         transaction.replace(R.id.frame_layout_librarian, MembersLibrarian())
         // Commit the transaction
         transaction.commit()
-
-        // Optionally, you can add the following line to allow the user to navigate back
-        // fragmentManager.popBackStack()
     }
 
     companion object {
