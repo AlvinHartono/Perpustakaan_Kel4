@@ -3,6 +3,7 @@ package com.example.perpustakaan_kel4
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -85,6 +86,13 @@ class AccountLibrarian : Fragment() {
         val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col_lib)
         val editAcc = view.findViewById<TextView>(R.id.btnChange_lib)
 
+
+        btnContactSupport.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto:", "aateck.2002@gmail.com", null))
+
+            startActivity(Intent.createChooser(emailIntent, "Send Email...."))
+        }
 
         editAcc.setOnClickListener {
             librarianCommunicator = activity as LibrarianCommunicator
