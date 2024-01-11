@@ -71,4 +71,9 @@ class RecyclerViewTransactionAdapter(
         }
 
     }
+
+    fun updateData(newList: List<Pinjam>) {
+        TransactionList = newList
+        notifyDataSetChanged()
+    }
 }
