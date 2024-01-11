@@ -9,15 +9,16 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewBookingAdapter(
-    private var bookings: List<Pinjam>, private var bookingCommunicator: BookingCommunicator) :
-    RecyclerView.Adapter<RecyclerViewBookingAdapter.MyViewHolder>(){
+    private var bookings: List<Pinjam>
+) :
+    RecyclerView.Adapter<RecyclerViewBookingAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val bookImg : ImageView = itemView.findViewById(R.id.booking_list_img)
-        val judulbuku : TextView = itemView.findViewById(R.id.list_judulbuku)
-        val tglpinjam : TextView = itemView.findViewById(R.id.list_tglpinjam)
-        val status : TextView = itemView.findViewById(R.id.list_status)
-        val warning : ImageView = itemView.findViewById(R.id.warning_icon)
-        val btstglkembali : TextView = itemView.findViewById(R.id.list_bts_tgl_pengembalian)
+        val bookImg: ImageView = itemView.findViewById(R.id.booking_list_img)
+        val judulbuku: TextView = itemView.findViewById(R.id.list_judulbuku)
+        val tglpinjam: TextView = itemView.findViewById(R.id.list_tglpinjam)
+        val status: TextView = itemView.findViewById(R.id.list_status)
+        val warning: ImageView = itemView.findViewById(R.id.warning_icon)
+        val btstglkembali: TextView = itemView.findViewById(R.id.list_bts_tgl_pengembalian)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,6 +30,7 @@ class RecyclerViewBookingAdapter(
     override fun getItemCount(): Int {
         return bookings.size
     }
+
     fun updateData(newList: List<Pinjam>) {
         bookings = newList
         notifyDataSetChanged()
@@ -41,12 +43,12 @@ class RecyclerViewBookingAdapter(
         holder.tglpinjam.text = currentBooking.tgl_peminjaman.toString()
         holder.bookImg.setImageBitmap(currentBooking.decodeByteArrayToBitmap(currentBooking.image_buku))
 
-        if (currentBooking.status){
+        if (currentBooking.status) {
             holder.status.text = "Sudah Dikembalikan pada " + currentBooking.tgl_pengembalian
             holder.warning.isInvisible
             holder.btstglkembali.isInvisible
 
-        }else{
+        } else {
             holder.status.text = "Belum dikembalikan"
             holder.btstglkembali.text = currentBooking.batas_tgl_pengembalian.toString()
         }

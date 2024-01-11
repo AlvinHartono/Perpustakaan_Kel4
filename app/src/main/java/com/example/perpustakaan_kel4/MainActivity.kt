@@ -20,7 +20,7 @@ import org.json.JSONObject
 import android.util.Base64
 import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator {
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator{
 
 
     private lateinit var binding: ActivityMainBinding

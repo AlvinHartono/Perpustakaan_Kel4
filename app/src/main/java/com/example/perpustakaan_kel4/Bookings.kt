@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,7 +56,9 @@ class Bookings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bookingCommunicator = activity as BookingCommunicator
+//        bookingCommunicator = activity as BookingCommunicator
+
+        Log.d("response empty", bookingViewModel.currentBooking.value!!.isEmpty().toString())
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bookings, container, false)
@@ -63,13 +66,13 @@ class Bookings : Fragment() {
         try {
             recyclerView = view.findViewById<View>(R.id.Booking_RecyclerView) as RecyclerView?
         } catch (e: Throwable) {
-            Log.d("error listview", e.toString())
+            Log.d("response listview", e.toString())
         }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
             try {
                 recyclerViewBookingAdapter =
-                    RecyclerViewBookingAdapter(bookings = it, bookingCommunicator)
+                    RecyclerViewBookingAdapter(bookings = it)
 
                 val layoutManager: RecyclerView.LayoutManager =
                     LinearLayoutManager(requireContext())

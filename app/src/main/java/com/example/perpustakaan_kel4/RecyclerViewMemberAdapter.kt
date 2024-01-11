@@ -22,7 +22,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class RecyclerViewMemberAdapter(private var memberList: List<Member>, private var librarianCommunicator: LibrarianCommunicator) :
     RecyclerView.Adapter<RecyclerViewMemberAdapter.MyViewHolder>() {
 
-
     //delete from list
     fun deleteMember(position: Int) {
         val mutableList =memberList.toMutableList()
