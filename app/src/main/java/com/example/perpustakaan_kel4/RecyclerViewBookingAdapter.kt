@@ -9,7 +9,7 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewBookingAdapter(
-    private val bookings: List<Pinjam>, private var bookingCommunicator: BookingCommunicator) :
+    private var bookings: List<Pinjam>, private var bookingCommunicator: BookingCommunicator) :
     RecyclerView.Adapter<RecyclerViewBookingAdapter.MyViewHolder>(){
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val bookImg : ImageView = itemView.findViewById(R.id.booking_list_img)
@@ -28,6 +28,10 @@ class RecyclerViewBookingAdapter(
 
     override fun getItemCount(): Int {
         return bookings.size
+    }
+    fun updateData(newList: List<Pinjam>) {
+        bookings = newList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

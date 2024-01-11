@@ -2,7 +2,7 @@ package com.example.perpustakaan_kel4
 
 import java.io.Serializable
 
-class Member: Serializable {
+class Member {
     var id_member: String = ""
         get() = field
         set(value) {

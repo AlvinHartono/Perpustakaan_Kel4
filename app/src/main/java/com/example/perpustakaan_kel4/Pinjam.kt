@@ -7,7 +7,7 @@ import java.sql.Time
 import java.time.Year
 import java.util.Date
 
-class Pinjam : Serializable {
+class Pinjam {
 
     var id_buku: String = ""
         get() = field
@@ -21,19 +21,19 @@ class Pinjam : Serializable {
             field = value
         }
 
-    var tgl_peminjaman: Date = Date()
+    var tgl_peminjaman: String = ""
         get() = field
         set(value){
             field = value
         }
 
-    var tgl_pengembalian: Date = Date()
+    var tgl_pengembalian: String = ""
         get() = field
         set(value){
             field = value
         }
 
-    var batas_tgl_pengembalian: Date = Date()
+    var batas_tgl_pengembalian: String = ""
         get() = field
         set(value){
             field = value
@@ -60,9 +60,9 @@ class Pinjam : Serializable {
     constructor(
         idBuku: String = "",
         idMember : String = "",
-        tglPinjam: Date = Date(),
-        tglKembali: Date = Date(),
-        batasTglKembali: Date = Date(),
+        tglPinjam: String = "",
+        tglKembali: String = "",
+        batasTglKembali: String = "",
         status: Boolean = false,
         imgBuku: ByteArray = byteArrayOf(),
         judulBuku: String = ""
