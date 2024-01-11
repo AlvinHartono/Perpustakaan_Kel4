@@ -35,10 +35,6 @@ class Bookings : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var recyclerViewBookingAdapter: RecyclerViewBookingAdapter? = null
 
-
-//    private lateinit var memberViewModel: MemberViewModel
-//    private lateinit var booksViewModel: BooksViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,8 +43,6 @@ class Bookings : Fragment() {
         }
 
         bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
-
-
     }
 
 
@@ -56,31 +50,31 @@ class Bookings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        bookingCommunicator = activity as BookingCommunicator
-
-        Log.d("response empty", bookingViewModel.currentBooking.value!!.isEmpty().toString())
+        bookingCommunicator = activity as BookingCommunicator
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bookings, container, false)
-        bookingList = bookingViewModel.currentBooking.value.orEmpty()
+
         try {
             recyclerView = view.findViewById<View>(R.id.Booking_RecyclerView) as RecyclerView?
         } catch (e: Throwable) {
-            Log.d("response listview", e.toString())
+            Log.e("response listview", e.message.toString())
         }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
-            try {
-                recyclerViewBookingAdapter =
-                    RecyclerViewBookingAdapter(bookings = it)
+            val currentBooking = it.orEmpty()
 
+            if (recyclerViewBookingAdapter == null) {
+                recyclerViewBookingAdapter = RecyclerViewBookingAdapter(
+                    bookings = currentBooking,
+                    bookingCommunicator = bookingCommunicator
+                )
                 val layoutManager: RecyclerView.LayoutManager =
-                    LinearLayoutManager(requireContext())
+                    LinearLayoutManager(requireActivity())
                 recyclerView!!.layoutManager = layoutManager
                 recyclerView!!.adapter = recyclerViewBookingAdapter
-                recyclerViewBookingAdapter?.updateData(it)
-            } catch (e: Throwable) {
-                Log.d("response buat recyclerview", e.toString())
+            } else{
+                recyclerViewBookingAdapter?.updateData(bookingList)
             }
         })
         return view

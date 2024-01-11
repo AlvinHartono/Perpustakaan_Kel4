@@ -81,7 +81,8 @@ class EditMemberFromLibrarian(member: Member) : Fragment() {
                     editTextPhoneNumber.text.toString(),
                     member.password
                 )
-                memberViewModel.updateOrDeleteMember(member.id_member.toInt(), member)
+                //TODO: modif this
+                memberViewModel.updateCurrentMemberList(member)
 
             } catch (e: Throwable) {
                 Log.d("response", e.toString())

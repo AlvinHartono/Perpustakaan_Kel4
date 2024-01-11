@@ -3,7 +3,7 @@ package com.example.perpustakaan_kel4
 interface LibrarianCommunicator {
     fun editLibrarianFragment()
 
-    fun editMemberFragment(currentMember: Member)
+    fun editMemberFragment(member: Member)
 
-    fun deleteMember(memberId: Int)
+    fun deleteMember(member: Member)
 }

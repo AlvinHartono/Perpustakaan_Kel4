@@ -20,7 +20,7 @@ import org.json.JSONObject
 import android.util.Base64
 import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator{
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator, BookingCommunicator{
 
 
     private lateinit var binding: ActivityMainBinding
@@ -166,7 +166,6 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
                     Log.d("response bookings", i.toString())
                     val jsonObject = jsonArray.getJSONObject(i)
                     val pinjam = Pinjam()
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
                     pinjam.id_member = jsonObject.getString("id_member")
                     pinjam.id_buku = jsonObject.getString("id_buku")
@@ -230,5 +229,9 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
     override fun BookDetailFragment(book: Book, memberID: String) {
         replaceFragment(BookOnClickDetail(book, memberID))
+    }
+
+    override fun cancelBooking(booking: Pinjam) {
+        bookingViewModel.cancelBooking(booking)
     }
 }
