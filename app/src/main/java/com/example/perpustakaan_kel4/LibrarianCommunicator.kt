@@ -5,5 +5,5 @@ interface LibrarianCommunicator {
 
     fun editMemberFragment(currentMember: Member)
 
-    fun deleteMember(memberId: Int)
+    fun deleteMember(member: Member)
 }

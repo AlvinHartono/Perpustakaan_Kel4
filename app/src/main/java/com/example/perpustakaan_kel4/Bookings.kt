@@ -72,7 +72,7 @@ class Bookings : Fragment() {
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
             try {
                 recyclerViewBookingAdapter =
-                    RecyclerViewBookingAdapter(bookings = it)
+                    RecyclerViewBookingAdapter(bookings = it, bookingCommunicator)
 
                 val layoutManager: RecyclerView.LayoutManager =
                     LinearLayoutManager(requireContext())

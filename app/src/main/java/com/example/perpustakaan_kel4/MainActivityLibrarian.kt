@@ -167,11 +167,9 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         replaceFragment(EditMemberFromLibrarian(currentMember))
     }
 
-    override fun deleteMember(memberId: Int) {
+    override fun deleteMember(member: Member) {
         TODO("Not yet implemented")
-        Log.d("response", "yes")
-        memberViewModel.updateOrDeleteMember(memberId = memberId)
-        Log.d("response", "yessssss")
+        memberViewModel.updateOrDeleteMember(member)
     }
 
     override fun booksToAddBooksFragment() {

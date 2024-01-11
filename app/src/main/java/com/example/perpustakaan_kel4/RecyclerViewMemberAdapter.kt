@@ -19,16 +19,23 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 //import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class RecyclerViewMemberAdapter(private var memberList: List<Member>, private var librarianCommunicator: LibrarianCommunicator) :
+class RecyclerViewMemberAdapter(
+    private var memberList: List<Member>,
+    private var librarianCommunicator: LibrarianCommunicator
+) :
     RecyclerView.Adapter<RecyclerViewMemberAdapter.MyViewHolder>() {
 
     //delete from list
-    fun deleteMember(position: Int) {
-        val mutableList =memberList.toMutableList()
-        mutableList.removeAt(position)
-        memberList = mutableList.toList()
-        notifyItemRemoved(position)
+    fun deleteMember(holder: MyViewHolder) {
+        val position = holder.adapterPosition
+        if (position != RecyclerView.NO_POSITION) {
+            val mutableList = memberList.toMutableList()
+            mutableList.removeAt(position)
+            memberList = mutableList.toList()
+            notifyItemRemoved(position)
+        }
     }
+
 
     fun updateData(newList: List<Member>) {
         memberList = newList
@@ -48,17 +55,18 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentMember = memberList[position]
 
-        holder.memberName.text = currentMember.first_name_member + " " +  currentMember.last_name_member
+        holder.memberName.text =
+            currentMember.first_name_member + " " + currentMember.last_name_member
         holder.memberPhoneNumber.text = currentMember.no_telp
         holder.cardView.setOnClickListener {
             MaterialAlertDialogBuilder(holder.itemView.context)
-                .setTitle(currentMember.first_name_member+"'s Data")
+                .setTitle(currentMember.first_name_member + "'s Data")
                 .setMessage(
-                      "member ID: \t" + currentMember.id_member
-                    + "\nFirst Name: \t" + currentMember.first_name_member
-                    + "\nLast Name: \t" + currentMember.last_name_member
-                    + "\nNo. Telp: \t" + currentMember.no_telp
-                    +  "\nEmail: \t" + currentMember.email
+                    "member ID: \t" + currentMember.id_member
+                            + "\nFirst Name: \t" + currentMember.first_name_member
+                            + "\nLast Name: \t" + currentMember.last_name_member
+                            + "\nNo. Telp: \t" + currentMember.no_telp
+                            + "\nEmail: \t" + currentMember.email
 
                 )
 
@@ -69,7 +77,7 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
         }
         holder.deleteMember.setOnClickListener {
 
-            val url : String = ApiEndPoint.DELETE_MEMBER
+            val url: String = ApiEndPoint.DELETE_MEMBER
             val stringRequest = object : StringRequest(
                 Method.POST, url,
                 Response.Listener { response ->
@@ -81,7 +89,7 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
                             "Account Deleted",
                             Toast.LENGTH_SHORT
                         ).show()
-                        deleteMember(holder.adapterPosition)
+                        librarianCommunicator.deleteMember(currentMember)
 
                     } else {
                         Toast.makeText(
@@ -102,13 +110,13 @@ class RecyclerViewMemberAdapter(private var memberList: List<Member>, private va
                 }
             }
             Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
+            deleteMember(holder)
 
 
         }
         holder.editMember.setOnClickListener {
             librarianCommunicator.editMemberFragment(currentMember)
         }
-
 
 
     }

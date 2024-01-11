@@ -24,17 +24,21 @@ class MemberViewModel : ViewModel() {
         currentMemberList.value = currentList.toList()
     }
 
-    fun updateOrDeleteMember(memberId: Int, updatedMember: Member? = null){
+    fun updateOrDeleteMember(updatedMember: Member?){
         val currentList = currentMemberList.value?.toMutableList() ?: mutableListOf()
 
-        //Find the index of the member with the specified ID
-        val indexOfBook = currentList.indexOfFirst { it.id_member.toInt() == memberId }
+        // Find the index of the member with the specified ID
+        val indexOfMember = updatedMember?.id_member?.let { id ->
+            currentList.indexOfFirst { it.id_member == id }
+        } ?: -1
 
-        if(indexOfBook != -1){
-            if (updatedMember != null){
-                currentList[indexOfBook] = updatedMember
-            } else  {
-                currentList.removeAt(indexOfBook)
+        if (indexOfMember != -1) {
+            if (updatedMember != null) {
+                // Update the member
+                currentList[indexOfMember] = updatedMember
+            } else {
+                // Delete the member
+                currentList.removeAt(indexOfMember)
             }
             currentMemberList.value = currentList.toList()
         }

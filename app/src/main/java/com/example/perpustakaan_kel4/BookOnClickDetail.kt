@@ -1,7 +1,11 @@
 package com.example.perpustakaan_kel4
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +14,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,8 +35,10 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var book : Book = book
+    private var book: Book = book
     private var memberID = memberID
+
+    private lateinit var bookingViewModel: BookingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +46,11 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
     }
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,14 +58,14 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_book_on_click_detail, container, false)
 
-        val image : ImageView = view.findViewById<View>(R.id.bookIMG) as ImageView
+        val image: ImageView = view.findViewById<View>(R.id.bookIMG) as ImageView
 
-        val judulBuku : TextView = view.findViewById<View>(R.id.judulBuku) as TextView
-        val namaPenerbit : TextView = view.findViewById<View>(R.id.nama_penerbit) as TextView
-        val namaPengarang : TextView = view.findViewById<View>(R.id.nama_pengarang) as TextView
-        val tahunTerbit : TextView = view.findViewById<View>(R.id.tahun_terbit) as TextView
-        val namaKategori : TextView = view.findViewById<View>(R.id.nama_kategori) as TextView
-        val buttonPinjam : Button = view.findViewById<View>(R.id.btnPinjam) as Button
+        val judulBuku: TextView = view.findViewById<View>(R.id.judulBuku) as TextView
+        val namaPenerbit: TextView = view.findViewById<View>(R.id.nama_penerbit) as TextView
+        val namaPengarang: TextView = view.findViewById<View>(R.id.nama_pengarang) as TextView
+        val tahunTerbit: TextView = view.findViewById<View>(R.id.tahun_terbit) as TextView
+        val namaKategori: TextView = view.findViewById<View>(R.id.nama_kategori) as TextView
+        val buttonPinjam: Button = view.findViewById<View>(R.id.btnPinjam) as Button
 
         image.setImageBitmap(book.decodeByteArrayToBitmap(book.image_buku))
 
@@ -62,28 +76,61 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         namaKategori.text = book.nama_kategori
 
         buttonPinjam.setOnClickListener {
-            Toast.makeText(requireContext(), book.tahun_terbit, Toast.LENGTH_SHORT).show()
-            requestBookingBook(bookID = book.id_buku.toString(), memberID = memberID)
+            val url: String = ApiEndPoint.ADD_PINJAM
+            val stringRequest = object : StringRequest(
+                Request.Method.POST, url,
+                Response.Listener { response ->
+//                    val jsonObj = JSONObject(response)
+//
+//                    if (response.equals("fail")) {
+//                        Toast.makeText(requireContext(), "Book is not available", Toast.LENGTH_SHORT)
+//                            .show()
+//                    } else {
+//                    try {
+//                        var pinjam = Pinjam()
+//                        pinjam.id_buku = book.id_buku.toString()
+//                        pinjam.id_member = memberID
+//                        pinjam.tgl_peminjaman = jsonObj.getString("tgl_peminjaman")
+//                        pinjam.tgl_pengembalian = jsonObj.getString("tgl_pengembalian")
+//                        pinjam.batas_tgl_pengembalian = jsonObj.getString("batas_tgl_pengembalian")
+//                        pinjam.status = false
+//                        pinjam.image_buku = book.image_buku
+//                        pinjam.judul_buku = book.judul_buku
+//                        bookingViewModel.insertBookingList(pinjam)
+//                    } catch (e: Throwable) {
+//                        Log.d("response pinjam", e.toString())
+//                    }
+//                        Toast.makeText(requireContext(), "Book successful", Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+                },
+                Response.ErrorListener { response ->
+                    Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
+                    Log.d("responser", response.toString())
+                }
+            ) {
+                override fun getParams(): HashMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["id_buku"] = book.id_buku.toString()
+                    params["id_member"] = memberID
+                    return params
+                }
+            }
+            Volley.newRequestQueue(requireContext()).add(stringRequest)
+
         }
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val back : ImageView = view.findViewById<View>(R.id.backbtn) as ImageView
+        val back: ImageView = view.findViewById<View>(R.id.backbtn) as ImageView
 
         back.setOnClickListener {
             closeCurrentFragment()
         }
     }
 
-    //Function buat request buku
-    private fun requestBookingBook(bookID: String, memberID: String){
-        //TODO: Buat http request 2 kali.
-        //1 buat cek status book ()
-        // kalo occupied ga ke step selanjutnya
-        // step selanjutnya buat request buku.
-    }
 
 
     private fun closeCurrentFragment() {

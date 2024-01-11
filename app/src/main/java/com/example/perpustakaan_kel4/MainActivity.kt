@@ -20,7 +20,7 @@ import org.json.JSONObject
 import android.util.Base64
 import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator{
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator, BookingCommunicator{
 
 
     private lateinit var binding: ActivityMainBinding
@@ -230,5 +230,9 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
     override fun BookDetailFragment(book: Book, memberID: String) {
         replaceFragment(BookOnClickDetail(book, memberID))
+    }
+
+    override fun editTransactionFragment(currentTransaction: Pinjam) {
+        bookingViewModel.updateOrDeleteBooking(currentTransaction)
     }
 }
