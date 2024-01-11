@@ -219,11 +219,15 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
 
 
     override fun editBookFragment(currentBook : Book) {
-        replaceFragment(EditBook())
+        replaceFragment(EditBook(currentBook))
     }
 
     override fun editTransactionFragment(currentTransaction: Pinjam) {
         replaceFragment(EditTransactionFromLibrarian())
+    }
+
+    override fun deleteBook(currentBook: Book) {
+        booksViewModel.deleteBook(currentBook)
     }
 
 }

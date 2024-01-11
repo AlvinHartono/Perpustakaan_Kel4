@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".EditBook"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    tools:context=".EditBook">
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
-            android:id="@+id/backbtn"
+            android:id="@+id/backbtneditbook"
             android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/baseline_arrow_back_24"/>
+            android:src="@drawable/baseline_arrow_back_24" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -28,9 +29,9 @@
         app:endIconMode="clear_text">
 
         <EditText
-            android:id="@+id/judulBuku"
+            android:id="@+id/judulBukuedit"
             android:layout_width="300dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:drawableStart="@drawable/ic_book"
             android:drawablePadding="5dp"
@@ -38,125 +39,130 @@
             android:hint="Judul_buku"
             android:inputType="text"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            app:endIconMode="clear_text">
-
-            <EditText
-                android:id="@+id/Penerbit"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/publish"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="Penerbit"
-                android:inputType="text"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-                tools:ignore="TextSizeCheck" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <EditText
-                    android:id="@+id/tahunTerbit"
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:drawableStart="@drawable/year1"
-                    android:drawablePadding="5dp"
-                    android:ems="10"
-                    android:hint="Tahun Terbit"
-                    android:inputType="text"
-                    android:textSize="15dp"
-                    tools:ignore="TextSizeCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            app:endIconMode="clear_text">
-
-            <EditText
-                android:id="@+id/id_kategori"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/categori"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="ID Kategori"
-                android:inputType="text"
-                android:textSize="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-                tools:ignore="TextSizeCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/imageadd"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center_horizontal"/>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="Press the image to select a new image"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="8dp"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="30dp">
-
-            <Button
-                android:id="@+id/editTransactionCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/holo_red_dark"
-                android:text="cancel"
-                android:textColor="@color/black"/>
-
-            <Button
-                android:id="@+id/editTransactionSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/green"
-                android:text="Save" />
-        </LinearLayout>
-
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:endIconMode="clear_text">
+
+        <EditText
+            android:id="@+id/Penerbitedit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/publish"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="Penerbit"
+            android:inputType="text"
+            android:textSize="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            tools:ignore="TextSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:endIconMode="clear_text">
+
+        <EditText
+            android:id="@+id/Pengarangedit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/publish"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="Pengarang"
+            android:inputType="text"
+            android:textSize="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            tools:ignore="TextSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/tahunTerbitedit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/year1"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="Tahun Terbit"
+            android:inputType="text"
+            android:textSize="15dp"
+            tools:ignore="TextSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:endIconMode="clear_text">
+
+        <EditText
+            android:id="@+id/id_kategoriedit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/categori"
+            android:drawablePadding="5dp"
+            android:ems="10"
+            android:hint="ID Kategori"
+            android:inputType="text"
+            android:textSize="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            tools:ignore="TextSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/imageadd"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/imageViewUpload"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_cloud_upload_24" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/editbookionCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:text="cancel"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/editbookSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/green"
+            android:text="Save" />
+    </LinearLayout>
 
 
 </LinearLayout>

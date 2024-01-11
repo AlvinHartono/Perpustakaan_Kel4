@@ -6,4 +6,6 @@ interface BookCommunicator {
     fun editBookFragment(currentBook: Book)
 
     fun editTransactionFragment(currentTransaction: Pinjam)
+
+    fun deleteBook(currentBook: Book)
 }
