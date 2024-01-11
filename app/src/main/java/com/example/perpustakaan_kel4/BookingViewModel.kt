@@ -9,6 +9,7 @@ class BookingViewModel : ViewModel() {
         MutableLiveData<List<Pinjam>>()
 
     }
+    
 
     fun insertBookingList(newBookings: Pinjam){
         val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()

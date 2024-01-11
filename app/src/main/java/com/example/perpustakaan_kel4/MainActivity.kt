@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var updatedMember: Member
+
 
     //create viewModel variable that will be init later
     private lateinit var memberViewModel: MemberViewModel
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         val bundle = intent.extras
         val phoneNumber = bundle!!.getString("no_telp")
         if (phoneNumber != null) {
-            Log.d("response", phoneNumber)
+            Log.d("response no_telp", phoneNumber)
         }
 
         //Initialize MemberViewModel
@@ -50,10 +52,14 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         //Initialize BookViewModel
         booksViewModel = ViewModelProvider(this)[BooksViewModel::class.java]
 
+        //Initialize BookingViewModel
+        bookingViewModel = ViewModelProvider(this)[BookingViewModel::class.java]
+
+
         getMemberInfo(phoneNumber)
         getAllBooks()
 
-
+        Log.d("response done", "done")
         replaceFragment(Home())
         binding.bottomNavigationViewMember.setOnItemSelectedListener {
             when (it.itemId) {
@@ -77,42 +83,32 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
         fragmentTransaction.commit()
     }
 
-    private fun addFragment(fragment: Fragment) {
-
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.show(fragment)
-        fragmentTransaction.commit()
-    }
 
     private fun getMemberInfo(phoneNumber: String?) {
         val url: String = ApiEndPoint.READ_MEMBER
-        val stringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener { response ->
+        val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
 //                Log.d("response", response)
-                val jsonObj = JSONObject(response)
+            val jsonObj = JSONObject(response)
 
-                //updated data
-                val updatedMember = Member(
-                    jsonObj.getString("id_member"),
-                    jsonObj.getString("first_name_member"),
-                    jsonObj.getString("last_name_member"),
-                    jsonObj.getString("email"),
-                    jsonObj.getString("no_telp"),
-                    jsonObj.getString("password"),
-                )
-                Log.d("response updatedMember", updatedMember.toString())
+            //updated data
+            updatedMember = Member(
+                jsonObj.getString("id_member"),
+                jsonObj.getString("first_name_member"),
+                jsonObj.getString("last_name_member"),
+                jsonObj.getString("email"),
+                jsonObj.getString("no_telp"),
+                jsonObj.getString("password"),
+            )
+            getBookingData(jsonObj.getString("id_member"))
+            Log.d("response updatedMember", updatedMember.toString())
 
-                memberViewModel.updateMemberData(updatedMember)
+            memberViewModel.updateMemberData(updatedMember)
 
-                Log.d("response", memberViewModel.currentMember.value!!.first_name_member)
+            Log.d("response id_member", memberViewModel.currentMember.value!!.id_member)
 
-            },
-            Response.ErrorListener { response ->
-                Log.d("data", response.toString())
-            }) {
+        }, Response.ErrorListener { response ->
+            Log.d("data", response.toString())
+        }) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
                 params["no_telp"] = phoneNumber.toString()
@@ -124,91 +120,106 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
     private fun getAllBooks() {
         val url: String = ApiEndPoint.READ_BOOKS
-        val stringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener { response ->
-                try {
-                    val jsonArray = JSONArray(response)
-                    Log.d("response", jsonArray.length().toString())
-                    for (i in 0 until jsonArray.length()) {
-                        Log.d("response book", i.toString())
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        val book = Book()
-                        book.id_buku = jsonObject.getString("id_buku").toInt()
-                        book.judul_buku = jsonObject.getString("judul_buku")
-                        book.penerbit = jsonObject.getString("penerbit")
-                        book.pengarang = jsonObject.getString("pengarang")
-                        book.tahun_terbit = jsonObject.getString("tahun_terbit")
-                        book.nama_kategori = jsonObject.getString("nama_kategori")
+        val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
+            try {
+                val jsonArray = JSONArray(response)
+                Log.d("response books", jsonArray.length().toString())
+                for (i in 0 until jsonArray.length()) {
+                    Log.d("response books", i.toString())
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val book = Book()
+                    book.id_buku = jsonObject.getString("id_buku").toInt()
+                    book.judul_buku = jsonObject.getString("judul_buku")
+                    book.penerbit = jsonObject.getString("penerbit")
+                    book.pengarang = jsonObject.getString("pengarang")
+                    book.tahun_terbit = jsonObject.getString("tahun_terbit")
+                    book.nama_kategori = jsonObject.getString("nama_kategori")
 
-                        val imageBase64 = jsonObject.getString("image_buku")
-                        val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
-                        book.image_buku = imageByteArray
+                    val imageBase64 = jsonObject.getString("image_buku")
+                    val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                    book.image_buku = imageByteArray
 
-                        booksViewModel.insertBookList(book)
-                    }
-
-                } catch (e: Throwable) {
-                    Log.d("response fetch books", e.toString())
+                    booksViewModel.insertBookList(book)
                 }
 
-            },
-            Response.ErrorListener { response ->
-                Log.d("data", response.toString())
-            }) {
+            } catch (e: Throwable) {
+                Log.d("response fetch books", e.toString())
+            }
+
+        }, Response.ErrorListener { response ->
+            Log.d("response error data", response.toString())
+        }) {
 
         }
         newRequestQueue(this).add(stringRequest)
     }
 
-    private fun getBookingData() {
+    private fun getBookingData(memberID: String) {
         val url: String = ApiEndPoint.READ_PINJAM
-        val stringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener { response ->
-                try {
-                    val jsonArray = JSONArray(response)
-                    Log.d("response", jsonArray.length().toString())
-                    for (i in 0 until jsonArray.length()) {
-                        Log.d("response book", i.toString())
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        val pinjam = Pinjam()
-                        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
+            Log.d("response function", response)
+            try {
+                val jsonArray = JSONArray(response)
 
-                        pinjam.id_member = jsonObject.getString("id_member")
-                        pinjam.id_buku = jsonObject.getString("id_buku")
-                        pinjam.judul_buku = jsonObject.getString("judul_buku")
-                        try {
-                            pinjam.tgl_peminjaman =
-                                dateFormat.parse(jsonObject.getString("tgl_peminjaman"))
-                            pinjam.tgl_pengembalian =
-                                dateFormat.parse(jsonObject.getString("tgl_pengembalian"))
-                            pinjam.batas_tgl_pengembalian =
-                                dateFormat.parse(jsonObject.getString("batas_tgl_pengembalian"))
+                Log.d("response booking", jsonArray.length().toString())
+                for (i in 0 until jsonArray.length()) {
+                    Log.d("response bookings", i.toString())
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val pinjam = Pinjam()
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-                        } catch (e: Throwable) {
-                            Log.d("date parsing error", e.toString())
-                        }
-                        pinjam.status = jsonObject.getString("status").toBoolean()
+                    pinjam.id_member = jsonObject.getString("id_member")
+                    pinjam.id_buku = jsonObject.getString("id_buku")
+                    pinjam.judul_buku = jsonObject.getString("judul_buku")
 
-                        val imageBase64 = jsonObject.getString("image_buku")
-                        val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
-                        pinjam.image_buku = imageByteArray
 
-                        bookingViewModel.insertBookingList(pinjam)
+                    pinjam.tgl_peminjaman =
+                        jsonObject.getString("tgl_peminjaman")
+
+                    pinjam.tgl_pengembalian =
+                        jsonObject.getString("tgl_pengembalian")
+
+                    pinjam.batas_tgl_pengembalian =
+                        jsonObject.getString("batas_tgl_pengembalian")
+                    Log.d("response date 1", pinjam.tgl_peminjaman)
+                    Log.d("response date 2", pinjam.tgl_pengembalian)
+                    Log.d("response date 3", pinjam.batas_tgl_pengembalian)
+
+                    if (jsonObject.getString("status") == "0") {
+                        pinjam.status = false
+
+                    } else if(jsonObject.getString("status") == "1"){
+                        pinjam.status = true
                     }
 
-                } catch (e: Throwable) {
-                    Log.d("response fetch books", e.toString())
+                    Log.d("response book status", jsonObject.getString("status"))
+                    Log.d("response book status", pinjam.status.toString())
+                    val imageBase64 = jsonObject.getString("image_buku")
+                    val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                    pinjam.image_buku = imageByteArray
+
+                    bookingViewModel.insertBookingList(pinjam)
+
+                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].id_member)
+                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].status.toString())
+                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].batas_tgl_pengembalian)
+                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].tgl_pengembalian)
+                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].tgl_peminjaman)
                 }
 
-            },
-            Response.ErrorListener { response ->
-                Log.d("data", response.toString())
-            }) {
+            } catch (e: Throwable) {
+                Log.d("response fetch books", e.toString())
+            }
 
+            Log.d("response function", "getbookingdata finish")
+        }, Response.ErrorListener { response ->
+            Log.d("data", response.toString())
+        }) {
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String, String>()
+                params["id_member"] = memberID
+                return params
+            }
         }
         newRequestQueue(this).add(stringRequest)
     }

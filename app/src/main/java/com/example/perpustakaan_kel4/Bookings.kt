@@ -27,14 +27,16 @@ class Bookings : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var recyclerView: RecyclerView? = null
-    private var recyclerViewBookingAdapter : RecyclerViewBookingAdapter? = null
-
+    private lateinit var bookingViewModel: BookingViewModel
+    private lateinit var bookingList: List<Pinjam>
     private lateinit var bookingCommunicator: BookingCommunicator
 
-    private lateinit var bookingViewModel: BookingViewModel
-    private lateinit var memberViewModel: MemberViewModel
-    private lateinit var booksViewModel: BooksViewModel
+    private var recyclerView: RecyclerView? = null
+    private var recyclerViewBookingAdapter: RecyclerViewBookingAdapter? = null
+
+
+//    private lateinit var memberViewModel: MemberViewModel
+//    private lateinit var booksViewModel: BooksViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,34 +46,38 @@ class Bookings : Fragment() {
         }
 
         bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
-        memberViewModel = ViewModelProvider(requireActivity())[MemberViewModel::class.java]
-        booksViewModel = ViewModelProvider(requireActivity())[BooksViewModel::class.java]
+
 
     }
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        bookingCommunicator = activity as BookingCommunicator
+
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bookings, container, false)
-
+        bookingList = bookingViewModel.currentBooking.value.orEmpty()
         try {
             recyclerView = view.findViewById<View>(R.id.Booking_RecyclerView) as RecyclerView?
-        }catch (e: Throwable){
+        } catch (e: Throwable) {
             Log.d("error listview", e.toString())
         }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
             try {
-                recyclerViewBookingAdapter = RecyclerViewBookingAdapter(it, bookingCommunicator)
+                recyclerViewBookingAdapter =
+                    RecyclerViewBookingAdapter(bookings = it, bookingCommunicator)
 
-                val  layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+                val layoutManager: RecyclerView.LayoutManager =
+                    LinearLayoutManager(requireContext())
                 recyclerView!!.layoutManager = layoutManager
-//                recyclerView!!.adapter = recyclerViewBookingAdapter
-            }catch (e: Throwable){
-                Log.d("response", e.toString())
+                recyclerView!!.adapter = recyclerViewBookingAdapter
+                recyclerViewBookingAdapter?.updateData(it)
+            } catch (e: Throwable) {
+                Log.d("response buat recyclerview", e.toString())
             }
         })
 

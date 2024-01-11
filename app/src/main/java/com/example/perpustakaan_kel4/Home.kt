@@ -26,6 +26,7 @@ class Home : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
     private lateinit var memberFirstName: TextView
     private lateinit var memberViewModel: MemberViewModel
     private lateinit var booksViewModel: BooksViewModel
