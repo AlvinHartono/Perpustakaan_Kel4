@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,10 +10,16 @@ class TransactionViewModel : ViewModel() {
         MutableLiveData<List<Pinjam>>()
     }
 
-    fun insertTransactionList(newBookings: Pinjam){
-        val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()
-        currentList.add(newBookings)
-        currentTransaction.value = currentList.toList()
+    fun insertTransactionList(newTransaction: Pinjam){
+        try {
+            val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()
+            currentList.add(newTransaction)
+            Log.d("response insert zz", currentList.toList().toString())
+            currentTransaction.value = currentList.toList()
+//          Log.d("response insert", currentBooking.value!![1].judul_buku)
+        } catch (e : Exception){
+            Log.d("response", e.toString())
+        }
     }
 
     override fun onCleared() {

@@ -27,7 +27,7 @@ class TransactionLibrarian : Fragment() {
     private var param2: String? = null
 
     private lateinit var transactionViewModel: TransactionViewModel
-    private lateinit var transctionList: List<Pinjam>
+    private lateinit var transactionList: List<Pinjam>
     private lateinit var bookingCommunicator: BookingCommunicator
 
     private var recyclerView : RecyclerView? = null
@@ -52,14 +52,15 @@ class TransactionLibrarian : Fragment() {
         val view : View = inflater.inflate(R.layout.fragment_transaction_librarian, container, false)
 
         try {
-            recyclerView = view.findViewById<View>(R.id.TransactionRecyclerView) as RecyclerView
+            recyclerView = view.findViewById<View>(R.id.TransactionRecyclerView) as RecyclerView?
         } catch (e: Throwable){
-            Log.e("error", e.message.toString())
+            Log.d("error", e.message.toString())
         }
 
 
         transactionViewModel.currentTransaction.observe(requireActivity(), Observer {
-
+            transactionList = it.orEmpty()
+            Log.d("TransactionLibrarian", "Received data: $it")
 
             if(recyclerViewTransactionAdapter == null){
                 recyclerViewTransactionAdapter = RecyclerViewTransactionAdapter(
@@ -71,7 +72,7 @@ class TransactionLibrarian : Fragment() {
                 recyclerView!!.layoutManager = layoutManager
                 recyclerView!!.adapter = recyclerViewTransactionAdapter
             }else{
-                recyclerViewTransactionAdapter?.updateData(transctionList)
+                recyclerViewTransactionAdapter?.updateData(transactionList)
             }
         })
 
