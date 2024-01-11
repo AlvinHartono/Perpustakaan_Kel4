@@ -45,8 +45,8 @@ class RecyclerViewBookingAdapter(
 
         if (currentBooking.status) {
             holder.status.text = "Sudah Dikembalikan pada " + currentBooking.tgl_pengembalian
-            holder.warning.isInvisible
-            holder.btstglkembali.isInvisible
+            holder.warning.isInvisible = true
+            holder.btstglkembali.isInvisible = true
 
         } else {
             holder.status.text = "Belum dikembalikan"
