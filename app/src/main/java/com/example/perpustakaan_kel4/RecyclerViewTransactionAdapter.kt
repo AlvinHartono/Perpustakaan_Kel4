@@ -49,7 +49,7 @@ class RecyclerViewTransactionAdapter(
 
         holder.editbtn.setOnClickListener {
             //pindah fragment
-            bookingCommunicator.editTransactionFragment(currentTransaction)
+//            bookingCommunicator.editTransactionFragment(currentTransaction)
         }
 
         holder.cardview.setOnClickListener {

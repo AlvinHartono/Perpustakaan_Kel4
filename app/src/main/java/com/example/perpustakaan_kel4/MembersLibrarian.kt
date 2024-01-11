@@ -60,11 +60,10 @@ class MembersLibrarian : Fragment() {
         }
 
         memberViewModel.currentMemberList.observe(requireActivity(), Observer {
-            memberList = it.orEmpty()
 
             if (recyclerViewMemberAdapter == null) {
                 recyclerViewMemberAdapter = RecyclerViewMemberAdapter(
-                    memberList = memberList,
+                    memberList = it.orEmpty(),
                     librarianCommunicator = librarianCommunicator
                 )
                 val layoutManager: RecyclerView.LayoutManager =

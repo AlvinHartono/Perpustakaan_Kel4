@@ -103,16 +103,6 @@ class RecyclerViewMemberAdapter(
 
     }
     //delete from list
-    fun deleteMember(holder: MyViewHolder) {
-        val position = holder.adapterPosition
-        if (position != RecyclerView.NO_POSITION) {
-            val mutableList = memberList.toMutableList()
-            mutableList.removeAt(position)
-            memberList = mutableList.toList()
-            notifyItemRemoved(position)
-        }
-    }
-
 
     fun updateData(newList: List<Member>) {
         memberList = newList

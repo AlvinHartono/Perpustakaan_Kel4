@@ -19,6 +19,8 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +49,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
+        bookingViewModel = ViewModelProvider(this)[BookingViewModel::class.java]
     }
 
 
@@ -80,45 +82,61 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             val stringRequest = object : StringRequest(
                 Request.Method.POST, url,
                 Response.Listener { response ->
-//                    val jsonObj = JSONObject(response)
-//
-//                    if (response.equals("fail")) {
-//                        Toast.makeText(requireContext(), "Book is not available", Toast.LENGTH_SHORT)
-//                            .show()
-//                    } else {
-//                    try {
-//                        var pinjam = Pinjam()
-//                        pinjam.id_buku = book.id_buku.toString()
-//                        pinjam.id_member = memberID
-//                        pinjam.tgl_peminjaman = jsonObj.getString("tgl_peminjaman")
-//                        pinjam.tgl_pengembalian = jsonObj.getString("tgl_pengembalian")
-//                        pinjam.batas_tgl_pengembalian = jsonObj.getString("batas_tgl_pengembalian")
-//                        pinjam.status = false
-//                        pinjam.image_buku = book.image_buku
-//                        pinjam.judul_buku = book.judul_buku
-//                        bookingViewModel.insertBookingList(pinjam)
-//                    } catch (e: Throwable) {
-//                        Log.d("response pinjam", e.toString())
-//                    }
-//                        Toast.makeText(requireContext(), "Book successful", Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
+                    try {
+                        // Parse response as a JSONObject
+                        val jsonObject = JSONObject(response)
+
+                        if (jsonObject.getString("fail") == "fail") {
+                            Toast.makeText(
+                                requireContext(),
+                                "Book is not available",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        if (jsonObject.has("id_buku")) {
+                            // Extract values from the JSONObject
+                            val pinjam = Pinjam()
+                            pinjam.id_buku = book.id_buku.toString()
+                            pinjam.id_member = memberID
+                            pinjam.tgl_peminjaman = jsonObject.getString("tgl_peminjaman")
+                            pinjam.tgl_pengembalian = jsonObject.getString("tgl_pengembalian")
+                            pinjam.batas_tgl_pengembalian =
+                                jsonObject.getString("batas_tgl_pengembalian")
+                            pinjam.status = false
+                            pinjam.image_buku = book.image_buku
+                            pinjam.judul_buku = book.judul_buku
+
+                            Log.d("PINJAM ISI", pinjam.id_buku)
+
+                            // Now you can use pinjam object as needed
+                            bookingViewModel.insertBookingList(pinjam)
+                            Toast.makeText(requireContext(), "Booking Succesfull", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                    } catch (e: JSONException) {
+                        Log.e("JSON Parsing Error", e.toString())
+                    }
                 },
-                Response.ErrorListener { response ->
-                    Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
-                    Log.d("responser", response.toString())
+                Response.ErrorListener { error ->
+                    Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show()
+                    Log.d("responseError", error.toString())
                 }
             ) {
-                override fun getParams(): HashMap<String, String> {
+                override fun getParams(): Map<String, String> {
                     val params = HashMap<String, String>()
                     params["id_buku"] = book.id_buku.toString()
                     params["id_member"] = memberID
                     return params
                 }
             }
-            Volley.newRequestQueue(requireContext()).add(stringRequest)
 
+            Volley.newRequestQueue(requireContext()).add(stringRequest)
         }
+
+
+
+
         return view
     }
 
@@ -130,7 +148,6 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             closeCurrentFragment()
         }
     }
-
 
 
     private fun closeCurrentFragment() {

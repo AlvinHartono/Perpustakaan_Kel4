@@ -1,5 +1,6 @@
 package com.example.perpustakaan_kel4
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,28 +10,17 @@ class BookingViewModel : ViewModel() {
         MutableLiveData<List<Pinjam>>()
 
     }
-    
 
-    fun insertBookingList(newBookings: Pinjam){
+    fun insertBookingList(booking: Pinjam){
         val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
-        currentList.add(newBookings)
+        currentList.add(booking)
         currentBooking.value = currentList.toList()
     }
 
-    fun updateOrDeleteBooking(updatedMember: Pinjam? = null){
+    fun cancelBooking(booking : Pinjam){
         val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
-
-        //Find the index of the member with the specified ID
-        val indexOfBook = currentList.indexOfFirst { it.id_member.toInt() == updatedMember!!.id_member.toInt() }
-
-        if(indexOfBook != -1){
-            if (updatedMember != null){
-                currentList[indexOfBook] = updatedMember
-            } else  {
-                currentList.removeAt(indexOfBook)
-            }
-            currentBooking.value = currentList.toList()
-        }
+        currentList.remove(booking)
+        currentBooking.value = currentList.toList()
     }
 
     override fun onCleared() {

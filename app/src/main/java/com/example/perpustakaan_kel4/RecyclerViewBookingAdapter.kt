@@ -61,58 +61,92 @@ class RecyclerViewBookingAdapter(
         }
         holder.cancelBooking.setOnClickListener {
             showCancelBookingConfirmationDialog(holder.itemView.context) {
-                // Handle cancellation logic here if confirmed
-                cancelBooking(currentBooking, holder, position)
-            }
-        }
 
+                val url: String = ApiEndPoint.DELETE_PINJAM
+                val stringRequest = object : StringRequest(
+                    Method.POST, url,
+                    Response.Listener { response ->
+                        Log.d("response delete booking", response)
 
-    }
+                        if (response.equals("success")) {
+                            Toast.makeText(
+                                holder.itemView.context,
+                                "Booking Canceled",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-    private fun cancelBooking(currentBookings: Pinjam, holder: MyViewHolder, position: Int) {
-        val url: String = ApiEndPoint.DELETE_PINJAM
-        val stringRequest = object : StringRequest(
-            Method.POST, url,
-            Response.Listener { response ->
-                Log.d("response delete booking", response)
+                            bookingCommunicator.cancelBooking(currentBooking)
 
-                if (response.equals("success")) {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Booking Canceled",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    val mutableList = bookings.toMutableList()
-                    mutableList.removeAt(position)
-                    bookings = mutableList.toList()
-                    updateData(mutableList.toList())
-                    notifyItemRemoved(position)
-
-                    bookingCommunicator.editTransactionFragment(currentBookings)
-
-                } else {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Failed to cancel booking. Please try again later",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        } else {
+                            Toast.makeText(
+                                holder.itemView.context,
+                                "Failed to cancel booking. Please try again later",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    Response.ErrorListener { response ->
+                        Log.d("response", response.toString())
+                    }
+                ) {
+                    override fun getParams(): HashMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params["id_member"] = currentBooking.id_member
+                        params["id_buku"] = currentBooking.id_buku
+                        return params
+                    }
                 }
-            },
-            Response.ErrorListener { response ->
-                Log.d("response", response.toString())
-            }
-        ) {
-            override fun getParams(): HashMap<String, String> {
-                val params = HashMap<String, String>()
-                params["id_member"] = currentBookings.id_member
-                params["id_buku"] = currentBookings.id_buku
-                return params
+                Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
             }
         }
-        Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
+
 
     }
+
+//    private fun cancelBooking(currentBookings: Pinjam, holder: MyViewHolder, position: Int) {
+//        val url: String = ApiEndPoint.DELETE_PINJAM
+//        val stringRequest = object : StringRequest(
+//            Method.POST, url,
+//            Response.Listener { response ->
+//                Log.d("response delete booking", response)
+//
+//                if (response.equals("success")) {
+//                    Toast.makeText(
+//                        holder.itemView.context,
+//                        "Booking Canceled",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//
+//                    val mutableList = bookings.toMutableList()
+//                    mutableList.removeAt(position)
+//                    bookings = mutableList.toList()
+//                    updateData(mutableList.toList())
+//                    notifyItemRemoved(position)
+//
+//                    bookingCommunicator.editTransactionFragment(currentBookings)
+//
+//                } else {
+//                    Toast.makeText(
+//                        holder.itemView.context,
+//                        "Failed to cancel booking. Please try again later",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            },
+//            Response.ErrorListener { response ->
+//                Log.d("response", response.toString())
+//            }
+//        ) {
+//            override fun getParams(): HashMap<String, String> {
+//                val params = HashMap<String, String>()
+//                params["id_member"] = currentBookings.id_member
+//                params["id_buku"] = currentBookings.id_buku
+//                return params
+//            }
+//        }
+//        Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
+//
+//    }
 
     private fun showCancelBookingConfirmationDialog(context: Context, onConfirm: () -> Unit) {
         val alertDialogBuilder = AlertDialog.Builder(context)
