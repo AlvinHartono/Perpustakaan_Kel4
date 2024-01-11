@@ -102,6 +102,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
                 tools:ignore="TextSizeCheck" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/pengarang"
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:drawableStart="@drawable/baseline_bookmarks_24"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="Pengarang"
+                    android:inputType="text"
+                    android:textSize="15dp"
+                    tools:ignore="TextSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -136,7 +153,7 @@
             android:layout_marginTop="30dp">
 
             <Button
-                android:id="@+id/editTransactionCancel"
+                android:id="@+id/addBookCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -145,7 +162,7 @@
                 android:textColor="@color/black"/>
 
             <Button
-                android:id="@+id/editTransactionSave"
+                android:id="@+id/addBookSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
