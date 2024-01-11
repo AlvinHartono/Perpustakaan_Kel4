@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TermsAndPrivacyPage"
+            android:exported="false" />
+        <activity
             android:name=".NotificationPage"
             android:exported="false" />
         <activity

@@ -2,6 +2,7 @@ package com.example.perpustakaan_kel4
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -82,6 +83,18 @@ class Account : Fragment() {
         val btnTermsPrivacy = view.findViewById<ConstraintLayout>(R.id.terms_privacy_col)
         val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col)
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
+
+        btnTermsPrivacy.setOnClickListener{
+            val intent = Intent(requireActivity(), TermsAndPrivacyPage::class.java)
+            startActivity(intent)
+        }
+
+        btnContactSupport.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto:", "aateck.2002@gmail.com", null))
+
+            startActivity(Intent.createChooser(emailIntent, "Send Email...."))
+        }
 
         editAcc.setOnClickListener {
             memberCommunicator = activity as MemberCommunicator
