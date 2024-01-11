@@ -49,7 +49,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        bookingViewModel = ViewModelProvider(this)[BookingViewModel::class.java]
+        bookingViewModel = ViewModelProvider(requireActivity())[BookingViewModel::class.java]
     }
 
 
@@ -80,7 +80,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
         buttonPinjam.setOnClickListener {
             val url: String = ApiEndPoint.ADD_PINJAM
             val stringRequest = object : StringRequest(
-                Request.Method.POST, url,
+                Method.POST, url,
                 Response.Listener { response ->
                     try {
                         // Parse response as a JSONObject
@@ -103,6 +103,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
 
                             // Now you can use pinjam object as needed
                             bookingViewModel.insertBookingList(pinjam)
+
                             Toast.makeText(requireContext(), "Booking Successful", Toast.LENGTH_SHORT)
                                 .show()
                         } else  {

@@ -13,7 +13,7 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainLibrarianBinding
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator {
+class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator , BookingCommunicator{
 
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
@@ -181,8 +181,10 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         replaceFragment(EditBook())
     }
 
+
     override fun editTransactionFragment(currentTransaction: Pinjam) {
         replaceFragment(EditTransactionFromLibrarian())
     }
+
 
 }

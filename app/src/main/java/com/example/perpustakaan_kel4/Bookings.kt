@@ -30,7 +30,7 @@ class Bookings : Fragment() {
 
     private lateinit var bookingViewModel: BookingViewModel
     private lateinit var bookingList: List<Pinjam>
-    private lateinit var bookingCommunicator: BookingCommunicator
+    private lateinit var bookingMemberCommunicator: BookingMemberComunicator
 
     private var recyclerView: RecyclerView? = null
     private var recyclerViewBookingAdapter: RecyclerViewBookingAdapter? = null
@@ -50,7 +50,7 @@ class Bookings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bookingCommunicator = activity as BookingCommunicator
+        bookingMemberCommunicator = activity as BookingMemberComunicator
 
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_bookings, container, false)
@@ -62,12 +62,12 @@ class Bookings : Fragment() {
         }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
-            val currentBooking = it.orEmpty()
+            bookingList = it.orEmpty()
 
             if (recyclerViewBookingAdapter == null) {
                 recyclerViewBookingAdapter = RecyclerViewBookingAdapter(
-                    bookings = currentBooking,
-                    bookingCommunicator = bookingCommunicator
+                    bookings = bookingList,
+                    bookingMemberCommunicator = bookingMemberCommunicator
                 )
                 val layoutManager: RecyclerView.LayoutManager =
                     LinearLayoutManager(requireActivity())

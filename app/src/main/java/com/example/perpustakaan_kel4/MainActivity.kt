@@ -20,7 +20,7 @@ import org.json.JSONObject
 import android.util.Base64
 import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator, BookingCommunicator{
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator, BookingMemberComunicator{
 
 
     private lateinit var binding: ActivityMainBinding
@@ -234,4 +234,5 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
     override fun cancelBooking(booking: Pinjam) {
         bookingViewModel.cancelBooking(booking)
     }
+
 }
