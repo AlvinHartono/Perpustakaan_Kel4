@@ -84,6 +84,11 @@ class Account : Fragment() {
         val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col)
         val editAcc = view.findViewById<TextView>(R.id.btnChange)
 
+        btnTermsPrivacy.setOnClickListener{
+            val intent = Intent(requireActivity(), TermsAndPrivacyPage::class.java)
+            startActivity(intent)
+        }
+
         btnContactSupport.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto:", "aateck.2002@gmail.com", null))

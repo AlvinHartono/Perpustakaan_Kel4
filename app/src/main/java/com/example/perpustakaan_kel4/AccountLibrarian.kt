@@ -86,6 +86,10 @@ class AccountLibrarian : Fragment() {
         val btnLogout = view.findViewById<ConstraintLayout>(R.id.logout_col_lib)
         val editAcc = view.findViewById<TextView>(R.id.btnChange_lib)
 
+        btnTermsPrivacy.setOnClickListener{
+            val intent = Intent(requireActivity(), TermsAndPrivacyPage::class.java)
+            startActivity(intent)
+        }
 
         btnContactSupport.setOnClickListener {
             val emailIntent = Intent(Intent.ACTION_SENDTO,
