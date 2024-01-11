@@ -17,7 +17,7 @@ import com.android.volley.toolbox.Volley
 
 class RecyclerViewBookingAdapter(
     private var bookings: List<Pinjam>,
-    private var bookingCommunicator: BookingCommunicator
+    private var bookingMemberCommunicator: BookingMemberComunicator
 ) :
     RecyclerView.Adapter<RecyclerViewBookingAdapter.MyViewHolder>() {
 
@@ -48,9 +48,7 @@ class RecyclerViewBookingAdapter(
         if (currentBooking.status) {
             holder.status.text = "Sudah Dikembalikan pada " + currentBooking.tgl_pengembalian
             holder.warning.isInvisible = true
-
             holder.cancelBooking.isInvisible = true
-
             holder.btstglkembali.isInvisible = true
 
 
@@ -73,8 +71,7 @@ class RecyclerViewBookingAdapter(
                             "Booking Canceled",
                             Toast.LENGTH_SHORT
                         ).show()
-
-//                        bookingCommunicator.cancelBooking(currentBooking)
+                        bookingMemberCommunicator.cancelBooking(currentBooking)
 
                     } else {
                         Toast.makeText(
