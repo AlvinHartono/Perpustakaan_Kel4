@@ -29,5 +29,6 @@ class ApiEndPoint {
 
         //PINJAM'S CRUD
         val READ_PINJAM = SERVER+"pinjam_read.php"
+        val DELETE_PINJAM = SERVER+"pinjam_delete.php"
     }
 }
