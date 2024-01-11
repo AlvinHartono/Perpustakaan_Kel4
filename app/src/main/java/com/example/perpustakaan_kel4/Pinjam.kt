@@ -63,6 +63,14 @@ class Pinjam {
             field = value
         }
 
+    fun statusToText(status: Boolean): String {
+        return if (status) {
+            "Sudah Dikembalikan"
+        } else {
+            "Belum Dikembalikan"
+        }
+    }
+
     constructor(
         idBuku: String = "",
         idMember : String = "",

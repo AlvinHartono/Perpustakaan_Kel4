@@ -136,7 +136,7 @@
             android:layout_marginTop="30dp">
 
             <Button
-                android:id="@+id/addBookCancel"
+                android:id="@+id/editTransactionCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -145,7 +145,7 @@
                 android:textColor="@color/black"/>
 
             <Button
-                android:id="@+id/addBookSave"
+                android:id="@+id/editTransactionSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

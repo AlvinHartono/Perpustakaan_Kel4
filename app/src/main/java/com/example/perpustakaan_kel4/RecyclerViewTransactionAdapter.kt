@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class RecyclerViewTransactionAdapter(
     private var TransactionList: List<Pinjam>,
@@ -39,7 +40,6 @@ class RecyclerViewTransactionAdapter(
         val currentTransaction = TransactionList[position]
 
         holder.namaMember.text = currentTransaction.nama_member
-        //ganti ke nama
         holder.judulBuku.text = currentTransaction.judul_buku
         holder.tglpinjam.text = currentTransaction.tgl_peminjaman.toString()
 
@@ -54,6 +54,20 @@ class RecyclerViewTransactionAdapter(
 
         holder.cardview.setOnClickListener {
             //pindah fragment atau tampilkan detail
+            MaterialAlertDialogBuilder(holder.itemView.context)
+                .setTitle(currentTransaction.id_member + " " + currentTransaction.id_buku)
+                .setMessage(
+                    "Judul Buku: \t" + currentTransaction.judul_buku
+                    + "\nPeminjam: \t" + currentTransaction.nama_member
+                    + "\nPinjam: \t" + currentTransaction.tgl_peminjaman
+                    + "\nKembali: \t" + currentTransaction.tgl_pengembalian
+                    + "\nStatus: \t" + currentTransaction.statusToText(currentTransaction.status)
+                )
+
+                .setNegativeButton("Close") { dialog, which ->
+                    // Handle the negative button click (Cancel)
+                }
+                .show()
         }
 
     }

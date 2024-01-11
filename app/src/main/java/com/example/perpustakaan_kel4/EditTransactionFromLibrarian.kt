@@ -1,13 +1,19 @@
 package com.example.perpustakaan_kel4
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.SurfaceControl.Transaction
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Switch
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,7 +31,8 @@ class EditTransactionFromLibrarian : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var switchStatus: SwitchCompat
+    private lateinit var transactionViewModel: TransactionViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +40,12 @@ class EditTransactionFromLibrarian : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        transactionViewModel = ViewModelProvider(requireActivity())[transactionViewModel::class.java]
+
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,8 +53,21 @@ class EditTransactionFromLibrarian : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_transaction_from_librarian, container, false)
 
-        switchStatus = view.findViewById(R.id.switchStatus)
+        var editJudul = view.findViewById<View>(R.id.judulBuku) as TextView
+        var editNama = view.findViewById<View>(R.id.namaMember) as TextView
+        var edittglpinjam = view.findViewById<View>(R.id.tglPeminjaman) as TextView
+        var editbtstglkembali = view.findViewById<View>(R.id.batastglPengembalian) as TextView
+        var edittglkembali = view.findViewById<View>(R.id.tglPengembalian)
+
+        var cancel = view.findViewById<View>(R.id.editTransactionCancel) as Button
+        var save = view.findViewById<View>(R.id.editTransactionSave) as Button
+
+        var switchStatus = view.findViewById<View>(R.id.switchStatus) as SwitchCompat
         val inputLayoutTglPengembalian : TextInputLayout = view.findViewById(R.id.textInputLayout8)
+
+        transactionViewModel.currentTransaction.observe(requireActivity(), Observer {
+
+        })
 
         switchStatus.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
@@ -51,7 +75,28 @@ class EditTransactionFromLibrarian : Fragment() {
             }
         }
 
+        cancel.setOnClickListener {
+            closeCurrentFragment()
+        }
+
+        save.setOnClickListener {
+            //save
+        }
+
         return view
+    }
+
+    private fun closeCurrentFragment() {
+        // Get the fragment manager
+        val fragmentManager = requireActivity().supportFragmentManager
+
+        // Begin a fragment transaction
+        val transaction = fragmentManager.beginTransaction()
+
+        // replacing the current fragment
+        transaction.replace(R.id.frame_layout, TransactionLibrarian())
+        // Commit the transaction
+        transaction.commit()
     }
 
     companion object {
