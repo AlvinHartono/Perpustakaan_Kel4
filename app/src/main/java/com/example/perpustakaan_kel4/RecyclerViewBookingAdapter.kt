@@ -56,113 +56,49 @@ class RecyclerViewBookingAdapter(
 
         } else {
             holder.status.text = "Belum dikembalikan"
-            holder.btstglkembali.text = currentBooking.batas_tgl_pengembalian.toString()
+            holder.btstglkembali.text = currentBooking.batas_tgl_pengembalian
 
         }
         holder.cancelBooking.setOnClickListener {
-            showCancelBookingConfirmationDialog(holder.itemView.context) {
 
-                val url: String = ApiEndPoint.DELETE_PINJAM
-                val stringRequest = object : StringRequest(
-                    Method.POST, url,
-                    Response.Listener { response ->
-                        Log.d("response delete booking", response)
+            val url: String = ApiEndPoint.DELETE_PINJAM
+            val stringRequest = object : StringRequest(
+                Method.POST, url,
+                Response.Listener { response ->
+                    Log.d("response delete booking", response)
 
-                        if (response.equals("success")) {
-                            Toast.makeText(
-                                holder.itemView.context,
-                                "Booking Canceled",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                    if (response.equals("success")) {
+                        Toast.makeText(
+                            holder.itemView.context,
+                            "Booking Canceled",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-                            bookingCommunicator.cancelBooking(currentBooking)
+//                        bookingCommunicator.cancelBooking(currentBooking)
 
-                        } else {
-                            Toast.makeText(
-                                holder.itemView.context,
-                                "Failed to cancel booking. Please try again later",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    },
-                    Response.ErrorListener { response ->
-                        Log.d("response", response.toString())
+                    } else {
+                        Toast.makeText(
+                            holder.itemView.context,
+                            "Failed to cancel booking. Please try again later",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                ) {
-                    override fun getParams(): HashMap<String, String> {
-                        val params = HashMap<String, String>()
-                        params["id_member"] = currentBooking.id_member
-                        params["id_buku"] = currentBooking.id_buku
-                        return params
-                    }
+                },
+                Response.ErrorListener { response ->
+                    Log.d("response", response.toString())
                 }
-                Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
+            ) {
+                override fun getParams(): HashMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params["id_member"] = currentBooking.id_member
+                    params["id_buku"] = currentBooking.id_buku
+                    return params
+                }
             }
+            Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
         }
 
 
-    }
-
-//    private fun cancelBooking(currentBookings: Pinjam, holder: MyViewHolder, position: Int) {
-//        val url: String = ApiEndPoint.DELETE_PINJAM
-//        val stringRequest = object : StringRequest(
-//            Method.POST, url,
-//            Response.Listener { response ->
-//                Log.d("response delete booking", response)
-//
-//                if (response.equals("success")) {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Booking Canceled",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//
-//                    val mutableList = bookings.toMutableList()
-//                    mutableList.removeAt(position)
-//                    bookings = mutableList.toList()
-//                    updateData(mutableList.toList())
-//                    notifyItemRemoved(position)
-//
-//                    bookingCommunicator.editTransactionFragment(currentBookings)
-//
-//                } else {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Failed to cancel booking. Please try again later",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            },
-//            Response.ErrorListener { response ->
-//                Log.d("response", response.toString())
-//            }
-//        ) {
-//            override fun getParams(): HashMap<String, String> {
-//                val params = HashMap<String, String>()
-//                params["id_member"] = currentBookings.id_member
-//                params["id_buku"] = currentBookings.id_buku
-//                return params
-//            }
-//        }
-//        Volley.newRequestQueue(holder.itemView.context).add(stringRequest)
-//
-//    }
-
-    private fun showCancelBookingConfirmationDialog(context: Context, onConfirm: () -> Unit) {
-        val alertDialogBuilder = AlertDialog.Builder(context)
-        alertDialogBuilder.setTitle("Cancel Booking")
-        alertDialogBuilder.setMessage("Are you sure you want to cancel this booking?")
-        alertDialogBuilder.setNegativeButton("No") { dialog, _ ->
-            // Handle negative button click
-            dialog.dismiss()
-        }
-        alertDialogBuilder.setPositiveButton("Yes") { _, _ ->
-            // Handle positive button click
-            onConfirm.invoke()
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

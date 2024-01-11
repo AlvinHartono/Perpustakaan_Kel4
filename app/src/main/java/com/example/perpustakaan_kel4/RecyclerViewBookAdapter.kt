@@ -44,8 +44,8 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>,private var bookC
 
 
 //            Toast.makeText(holder.itemView.context, currentBook.tahun_terbit, Toast.LENGTH_LONG)
-            Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_SHORT)
+//                .show()
             }catch (e: Throwable){
                 Log.d("response adapter", e.toString())
             }

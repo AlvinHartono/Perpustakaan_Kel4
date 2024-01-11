@@ -86,14 +86,7 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
                         // Parse response as a JSONObject
                         val jsonObject = JSONObject(response)
 
-                        if (jsonObject.getString("fail") == "fail") {
-                            Toast.makeText(
-                                requireContext(),
-                                "Book is not available",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        if (jsonObject.has("id_buku")) {
+                        if (!jsonObject.has("fail")) {
                             // Extract values from the JSONObject
                             val pinjam = Pinjam()
                             pinjam.id_buku = book.id_buku.toString()
@@ -110,8 +103,14 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
 
                             // Now you can use pinjam object as needed
                             bookingViewModel.insertBookingList(pinjam)
-                            Toast.makeText(requireContext(), "Booking Succesfull", Toast.LENGTH_SHORT)
+                            Toast.makeText(requireContext(), "Booking Successful", Toast.LENGTH_SHORT)
                                 .show()
+                        } else  {
+                            Toast.makeText(
+                                requireContext(),
+                                "Book is not available",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                     } catch (e: JSONException) {
@@ -133,9 +132,6 @@ class BookOnClickDetail(book: Book, memberID: String) : Fragment() {
 
             Volley.newRequestQueue(requireContext()).add(stringRequest)
         }
-
-
-
 
         return view
     }

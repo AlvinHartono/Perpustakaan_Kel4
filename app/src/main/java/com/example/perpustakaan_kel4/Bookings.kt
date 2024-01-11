@@ -62,11 +62,11 @@ class Bookings : Fragment() {
         }
 
         bookingViewModel.currentBooking.observe(requireActivity(), Observer {
-
+            val currentBooking = it.orEmpty()
 
             if (recyclerViewBookingAdapter == null) {
                 recyclerViewBookingAdapter = RecyclerViewBookingAdapter(
-                    bookings = it.orEmpty(),
+                    bookings = currentBooking,
                     bookingCommunicator = bookingCommunicator
                 )
                 val layoutManager: RecyclerView.LayoutManager =
