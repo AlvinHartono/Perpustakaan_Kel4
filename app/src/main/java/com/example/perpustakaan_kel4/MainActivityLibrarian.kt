@@ -178,6 +178,10 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         replaceFragment(AddBook())
     }
 
+    override fun editBookFragment(currentBook : Book) {
+        replaceFragment(EditBook())
+    }
+
     override fun editTransactionFragment(currentTransaction: Pinjam) {
         replaceFragment(EditTransactionFromLibrarian())
     }

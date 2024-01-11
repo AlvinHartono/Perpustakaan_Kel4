@@ -19,8 +19,8 @@ class RecyclerViewTransactionAdapter(
         val namaMember : TextView = itemView.findViewById(R.id.Transaction_MemberName_ListView)
         val tglpinjam : TextView = itemView.findViewById(R.id.Transaction_tglpeminjaman_ListView)
 
-        val editbtn : ImageView = itemView.findViewById(R.id.EditTransactionImg)
-        val deletebtn : ImageView = itemView.findViewById(R.id.DeleteTransactionImg)
+        val editbtn : ImageView = itemView.findViewById(R.id.EditBookImg)
+        val deletebtn : ImageView = itemView.findViewById(R.id.DeleteBookImg)
 
         val cardview : CardView = itemView.findViewById(R.id.TransactionCardView)
     }
@@ -38,7 +38,7 @@ class RecyclerViewTransactionAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentTransaction = TransactionList[position]
 
-        holder.namaMember.text = currentTransaction.id_member
+        holder.namaMember.text = currentTransaction.nama_member
         //ganti ke nama
         holder.judulBuku.text = currentTransaction.judul_buku
         holder.tglpinjam.text = currentTransaction.tgl_peminjaman.toString()

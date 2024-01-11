@@ -1,9 +1,11 @@
 package com.example.perpustakaan_kel4
 
+import android.view.inputmethod.DeleteGesture
+
 class ApiEndPoint {
 
     companion object {
-        var ipAddress = "192.168.0.5"
+        var ipAddress = "192.168.0.100"
 
         private val SERVER = "http://$ipAddress/Perpustakaan_Kel4/"
 
@@ -25,6 +27,7 @@ class ApiEndPoint {
 
         //BOOK'S CRUD
         val READ_BOOKS = SERVER+"buku_read.php"
+        val DELETE_BOOKS = SERVER+"buku_delete.php"
         //TODO: ADD BOOKS CRUD
 
         //PINJAM'S CRUD
