@@ -24,7 +24,7 @@ class BookingViewModel : ViewModel() {
 
     fun cancelBooking(booking : Pinjam){
         try {
-        val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
+            val currentList = currentBooking.value?.toMutableList() ?: mutableListOf()
             currentList.remove(booking)
             currentBooking.value = currentList
 

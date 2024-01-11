@@ -29,13 +29,6 @@ class RecyclerViewBookLibrarianAdapter(
         val bookLibrarianCardView : CardView = itemView.findViewById(R.id.BookLibrarianCardView)
     }
 
-    fun deleteBook(position: Int) {
-        val mutableList =BookList.toMutableList()
-        mutableList.removeAt(position)
-        BookList = mutableList.toList()
-        notifyItemRemoved(position)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_book_librarian, parent, false)
 
@@ -59,7 +52,7 @@ class RecyclerViewBookLibrarianAdapter(
 
         holder.delbtn.setOnClickListener {
             //delete pake delete buku php
-            val url : String = ApiEndPoint.DELETE_BOOKS
+            val url : String = ApiEndPoint.DELETE_BOOK
             val stringRequest = object : StringRequest(
                 Method.POST, url,
                 Response.Listener { response ->
@@ -71,7 +64,7 @@ class RecyclerViewBookLibrarianAdapter(
                             "Book Deleted",
                             Toast.LENGTH_SHORT
                         ).show()
-                        deleteBook(holder.adapterPosition)
+                        bookCommunicator.deleteBook(currentBook)
 
                     } else {
                         Toast.makeText(

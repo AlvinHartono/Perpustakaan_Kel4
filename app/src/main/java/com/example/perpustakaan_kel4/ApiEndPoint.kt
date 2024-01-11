@@ -1,7 +1,5 @@
 package com.example.perpustakaan_kel4
 
-import android.view.inputmethod.DeleteGesture
-
 class ApiEndPoint {
 
     companion object {
@@ -27,7 +25,7 @@ class ApiEndPoint {
 
         //BOOK'S CRUD
         val READ_BOOKS = SERVER+"buku_read.php"
-        val DELETE_BOOKS = SERVER+"buku_delete.php"
+        val DELETE_BOOK = SERVER+"buku_delete.php"
         //TODO: ADD BOOKS CRUD
 
         //PINJAM'S CRUD
