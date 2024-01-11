@@ -57,6 +57,12 @@ class Pinjam {
             field = value
         }
 
+    var nama_member : String = ""
+        get() = field
+        set(value){
+            field = value
+        }
+
     constructor(
         idBuku: String = "",
         idMember : String = "",
@@ -65,7 +71,8 @@ class Pinjam {
         batasTglKembali: String = "",
         status: Boolean = false,
         imgBuku: ByteArray = byteArrayOf(),
-        judulBuku: String = ""
+        judulBuku: String = "",
+        namaMember: String = ""
     ){
         this.id_buku = idBuku
         this.id_member = idMember
@@ -75,6 +82,7 @@ class Pinjam {
         this.status = status
         this.image_buku = imgBuku
         this.judul_buku = judulBuku
+        this.nama_member = namaMember
     }
 
     constructor()
