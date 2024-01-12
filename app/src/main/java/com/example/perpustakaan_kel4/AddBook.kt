@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +21,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.perpustakaan_kel4.databinding.FragmentAddBookBinding
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
@@ -77,39 +84,83 @@ class AddBook : Fragment() {
         val pengarang: TextView = view.findViewById(R.id.pengarang)
 
         btnsave.setOnClickListener {
-            //save
-            var newBook = Book()
-            newBook.judul_buku = judulbuku.text.toString()
-            newBook.penerbit = penerbit.text.toString()
-            newBook.pengarang = pengarang.text.toString()
-            newBook.tahun_terbit = thnterbit.text.toString()
-            if (kategori.text.toString().toInt() == 1) {
-                newBook.nama_kategori = "Adventure"
-            } else if (kategori.text.toString().toInt() == 2) {
-                newBook.nama_kategori = "Fiction"
-            } else if (kategori.text.toString().toInt() == 3) {
-                newBook.nama_kategori = "Novel"
-            } else if (kategori.text.toString().toInt() == 4) {
-                newBook.nama_kategori = "Anthology"
-            } else if (kategori.text.toString().toInt() == 5) {
-                newBook.nama_kategori = "Bibliography"
-            } else if (kategori.text.toString().toInt() == 6) {
-                newBook.nama_kategori = "Autobiography"
-            } else {
-                newBook.nama_kategori = "null"
-            }
+
             if(pickedBitmap != null){
                 val stream = ByteArrayOutputStream()
                 pickedBitmap!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 byteArray = stream.toByteArray()
-                newBook.image_buku = byteArray
+
+            }
+            //save
+            val url: String = ApiEndPoint.ADD_BOOK
+            val stringRequest = object : StringRequest(
+                Method.POST, url,
+                Response.Listener { response ->
+                    try {
+                        if (response == "success") {
+                            var newBook = Book()
+                            newBook.judul_buku = judulbuku.text.toString()
+                            newBook.penerbit = penerbit.text.toString()
+                            newBook.pengarang = pengarang.text.toString()
+                            newBook.tahun_terbit = thnterbit.text.toString()
+                            if (kategori.text.toString().toInt() == 1) {
+                                newBook.nama_kategori = "Adventure"
+                            } else if (kategori.text.toString().toInt() == 2) {
+                                newBook.nama_kategori = "Fiction"
+                            } else if (kategori.text.toString().toInt() == 3) {
+                                newBook.nama_kategori = "Novel"
+                            } else if (kategori.text.toString().toInt() == 4) {
+                                newBook.nama_kategori = "Anthology"
+                            } else if (kategori.text.toString().toInt() == 5) {
+                                newBook.nama_kategori = "Bibliography"
+                            } else if (kategori.text.toString().toInt() == 6) {
+                                newBook.nama_kategori = "Autobiography"
+                            } else {
+                                newBook.nama_kategori = "null"
+                            }
+                            if(pickedBitmap != null){
+                                newBook.image_buku = byteArray
+                            }
+
+                            booksViewModel.insertBookList(newBook = newBook)
+
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                closeCurrentFragment()
+                            }, 1000)
+
+                        } else  {
+                            Log.d("responseError", response)
+                            Log.d("response kategori", kategori.text.toString())
+                            Toast.makeText(
+                                requireContext(),
+                                response,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    } catch (e: JSONException) {
+                        Log.e("JSON Parsing Error", e.toString())
+                    }
+                },
+                Response.ErrorListener { error ->
+                    Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show()
+                    Log.d("responseError", error.toString())
+                }
+            ) {
+                override fun getParams(): Map<String, String> {
+                    val params = HashMap<String, String>()
+                    params["judul_buku"] = judulbuku.text.toString()
+                    params["penerbit"] = penerbit.text.toString()
+                    params["pengarang"] = pengarang.text.toString()
+                    params["tahun_terbit"] = thnterbit.text.toString()
+                    params["id_kategori"] = kategori.text.toString()
+                    params["image_buku"] = Base64.encodeToString(byteArray, Base64.DEFAULT)
+                    return params
+                }
             }
 
-            booksViewModel.insertBookList(newBook = newBook)
+            Volley.newRequestQueue(requireContext()).add(stringRequest)
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                closeCurrentFragment()
-            }, 1000)
         }
 
         btncancel.setOnClickListener {
