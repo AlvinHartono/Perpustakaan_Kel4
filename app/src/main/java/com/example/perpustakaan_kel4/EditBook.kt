@@ -1,6 +1,10 @@
 package com.example.perpustakaan_kel4
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +12,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +36,11 @@ class EditBook(book: Book) : Fragment() {
     private var book : Book = book
     private lateinit var  booksViewModel: BooksViewModel
 
+    private lateinit var editImage: ImageView
+    private var pickedBitmap: Bitmap? = null
+    private lateinit var byteArray : ByteArray
+    private var resId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -44,7 +57,7 @@ class EditBook(book: Book) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_book, container, false)
         var backButton : ImageView = view.findViewById(R.id.backbtneditbook) as ImageView
-        var editImage : ImageView = view.findViewById(R.id.imageViewUpload) as ImageView
+        editImage = view.findViewById(R.id.imageViewUpload)
         var judul_buku : EditText = view.findViewById(R.id.judulBukuedit) as EditText
         var penerbit : EditText = view.findViewById(R.id.Penerbitedit) as EditText
         var pengarang : EditText = view.findViewById(R.id.Pengarangedit) as EditText
@@ -69,10 +82,32 @@ class EditBook(book: Book) : Fragment() {
             closeCurrentFragment()
         }
         editImage.setOnClickListener {
-
+            Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            activityResultLauncher.launch(intent)
         }
+
         return view
+
     }
+
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val uri = data?.data
+                try {
+                    pickedBitmap =
+                        MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                    editImage.setImageBitmap(pickedBitmap)
+                    resId = 1
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
 
     private fun closeCurrentFragment() {
         // Get the fragment manager
