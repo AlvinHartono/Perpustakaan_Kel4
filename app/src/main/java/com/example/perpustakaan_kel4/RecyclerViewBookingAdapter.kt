@@ -21,8 +21,6 @@ class RecyclerViewBookingAdapter(
 ) :
     RecyclerView.Adapter<RecyclerViewBookingAdapter.MyViewHolder>() {
 
-//    fun delete
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_booking, parent, false)
         return MyViewHolder(view)
@@ -58,7 +56,6 @@ class RecyclerViewBookingAdapter(
 
         }
         holder.cancelBooking.setOnClickListener {
-
             val url: String = ApiEndPoint.DELETE_PINJAM
             val stringRequest = object : StringRequest(
                 Method.POST, url,

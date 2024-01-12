@@ -41,8 +41,7 @@ class RecyclerViewBookAdapter(private val booklist: List<Book>,private var bookC
             try {
 
             bookCommunicator.BookDetailFragment(currentBook, memberID)
-
-
+                Log.d("response Byte", currentBook.image_buku.toString())
 //            Toast.makeText(holder.itemView.context, currentBook.tahun_terbit, Toast.LENGTH_LONG)
 //            Toast.makeText(holder.itemView.context, currentBook.judul_buku, Toast.LENGTH_SHORT)
 //                .show()

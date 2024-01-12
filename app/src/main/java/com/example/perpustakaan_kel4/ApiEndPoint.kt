@@ -26,6 +26,8 @@ class ApiEndPoint {
         //BOOK'S CRUD
         val READ_BOOKS = SERVER+"buku_read.php"
         val DELETE_BOOK = SERVER+"buku_delete.php"
+        val ADD_BOOK = SERVER+"buku_add.php"
+        val UPDATE_BOOK = SERVER+"buku_update.php"
         //TODO: ADD BOOKS CRUD
 
         //PINJAM'S CRUD
@@ -33,6 +35,6 @@ class ApiEndPoint {
         val READ_PINJAM_ALL = SERVER+"pinjam_read_all.php"
         val DELETE_PINJAM = SERVER+"pinjam_delete.php"
         val ADD_PINJAM = SERVER+"pinjam_add.php"
-        val UPDATE_PINJAM = SERVER+"pinjam_confirm.php"
+        val UPDATE_PINJAM = SERVER+"pinjam_confirm.php"//UPDATE
     }
 }
