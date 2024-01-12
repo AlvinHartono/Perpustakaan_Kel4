@@ -20,7 +20,8 @@ import org.json.JSONObject
 import android.util.Base64
 import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator, BookingMemberComunicator{
+class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunicator,
+    BookingMemberComunicator {
 
 
     private lateinit var binding: ActivityMainBinding
@@ -187,7 +188,7 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
                     if (jsonObject.getString("status") == "0") {
                         pinjam.status = false
 
-                    } else if(jsonObject.getString("status") == "1"){
+                    } else if (jsonObject.getString("status") == "1") {
                         pinjam.status = true
                     }
 
@@ -199,11 +200,26 @@ class MainActivity : AppCompatActivity(), MemberCommunicator, BookDetailCommunic
 
                     bookingViewModel.insertBookingList(pinjam)
 
-                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].id_member)
-                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].status.toString())
-                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].batas_tgl_pengembalian)
-                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].tgl_pengembalian)
-                    Log.d("response booking isi", bookingViewModel.currentBooking.value!![i].tgl_peminjaman)
+                    Log.d(
+                        "response booking isi",
+                        bookingViewModel.currentBooking.value!![i].id_member
+                    )
+                    Log.d(
+                        "response booking isi",
+                        bookingViewModel.currentBooking.value!![i].status.toString()
+                    )
+                    Log.d(
+                        "response booking isi",
+                        bookingViewModel.currentBooking.value!![i].batas_tgl_pengembalian
+                    )
+                    Log.d(
+                        "response booking isi",
+                        bookingViewModel.currentBooking.value!![i].tgl_pengembalian
+                    )
+                    Log.d(
+                        "response booking isi",
+                        bookingViewModel.currentBooking.value!![i].tgl_peminjaman
+                    )
                 }
 
             } catch (e: Throwable) {

@@ -10,13 +10,24 @@ class TransactionViewModel : ViewModel() {
         MutableLiveData<List<Pinjam>>()
     }
 
-    fun insertTransactionList(newTransaction: Pinjam){
+    fun insertBookingList(booking: Pinjam){
         try {
             val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()
-            currentList.add(newTransaction)
+            currentList.add(booking)
             Log.d("response insert zz", currentList.toList().toString())
             currentTransaction.value = currentList.toList()
-//          Log.d("response insert", currentBooking.value!![1].judul_buku)
+//        Log.d("response insert", currentBooking.value!![1].judul_buku)
+        } catch (e : Exception){
+            Log.d("response", e.toString())
+        }
+    }
+
+    fun cancelBooking(booking : Pinjam){
+        try {
+            val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()
+            currentList.remove(booking)
+            currentTransaction.value = currentList
+
         } catch (e : Exception){
             Log.d("response", e.toString())
         }

@@ -30,7 +30,7 @@ class TransactionLibrarian : Fragment() {
     private lateinit var transactionList: List<Pinjam>
     private lateinit var bookingCommunicator: BookingCommunicator
 
-    private var recyclerView : RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
     private var recyclerViewTransactionAdapter: RecyclerViewTransactionAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,8 @@ class TransactionLibrarian : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transactionViewModel =
+            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         Log.d("TransactionLibrarian", "onCreate")
     }
 
@@ -49,35 +50,35 @@ class TransactionLibrarian : Fragment() {
     ): View? {
         bookingCommunicator = activity as BookingCommunicator
         // Inflate the layout for this fragment
-        val view : View = inflater.inflate(R.layout.fragment_transaction_librarian, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_transaction_librarian, container, false)
 
-        recyclerView = view.findViewById(R.id.TransactionRecyclerView)
-        initializeRecyclerView()
+        try {
+            recyclerView = view.findViewById(R.id.TransactionRecyclerView)
+
+        } catch (e: Exception) {
+            Log.e("error", e.message.toString())
+        }
         Log.d("TransactionLibrarian", "onCreateView")
 
         transactionViewModel.currentTransaction.observe(requireActivity(), Observer {
-            updateRecyclerView(it)
+            if (recyclerViewTransactionAdapter == null) {
+                recyclerViewTransactionAdapter = RecyclerViewTransactionAdapter(
+                    TransactionList = it.orEmpty(),
+                    bookingCommunicator = bookingCommunicator
+                )
+                val layoutManager: RecyclerView.LayoutManager =
+                    LinearLayoutManager(requireActivity())
+                recyclerView!!.layoutManager = layoutManager
+                recyclerView!!.adapter = recyclerViewTransactionAdapter
+            } else {
+                recyclerViewTransactionAdapter?.updateData(transactionList)
+            }
 
         })
 
         return view
     }
 
-    private fun initializeRecyclerView() {
-        recyclerViewTransactionAdapter = RecyclerViewTransactionAdapter(
-            mutableListOf(),
-            bookingCommunicator
-        )
-        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireActivity())
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = recyclerViewTransactionAdapter
-        Log.d("TransactionLibrarian", "RecyclerView initialized")
-    }
-
-    private fun updateRecyclerView(transactionList: List<Pinjam>) {
-        recyclerViewTransactionAdapter?.updateData(transactionList)
-        Log.d("TransactionLibrarian", "RecyclerView updated with data: $transactionList")
-    }
 
     companion object {
         /**

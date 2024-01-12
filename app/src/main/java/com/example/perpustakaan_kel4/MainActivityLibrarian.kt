@@ -14,12 +14,14 @@ import com.example.perpustakaan_kel4.databinding.ActivityMainLibrarianBinding
 import org.json.JSONArray
 import org.json.JSONObject
 
-class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator, BookingCommunicator {
+class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCommunicator,
+    BookingCommunicator {
 
     private lateinit var binding: ActivityMainLibrarianBinding
     private lateinit var librarianViewModel: LibrarianViewModel
     private lateinit var memberViewModel: MemberViewModel
     private lateinit var booksViewModel: BooksViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +41,11 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         //Initialize MemberViewModel
         memberViewModel = ViewModelProvider(this)[MemberViewModel::class.java]
 
-        //
+        //Initialize BooksViewModel
         booksViewModel = ViewModelProvider(this)[BooksViewModel::class.java]
+
+        //Initialize TransactionViewModel
+        transactionViewModel = ViewModelProvider(this)[TransactionViewModel::class.java]
 
         //Fetching Librarian Data from the database
         getLibrarianInfo(phoneNumber)
@@ -50,6 +55,9 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
 
         //Fetching Lists of books from the database
         getAllBooks()
+
+        //Fetching Lists of Transactions from the database
+        getTransactions()
 
         //First Initial fragment
         replaceFragment(BooksLibrarian())
@@ -161,7 +169,8 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         }
         Volley.newRequestQueue(this).add(stringRequest)
     }
-    private fun getAllBooks(){
+
+    private fun getAllBooks() {
         val url: String = ApiEndPoint.READ_BOOKS
         val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
             try {
@@ -197,6 +206,70 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         Volley.newRequestQueue(this).add(stringRequest)
     }
 
+    private fun getTransactions() {
+        val url: String = ApiEndPoint.READ_PINJAM_ALL
+        val stringRequest = object : StringRequest(Method.POST, url, Response.Listener { response ->
+            Log.d("response function", response)
+            try {
+                val jsonArray = JSONArray(response)
+
+                Log.d("response booking", jsonArray.length().toString())
+                for (i in 0 until jsonArray.length()) {
+                    Log.d("response bookings", i.toString())
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    val pinjam = Pinjam()
+
+                    pinjam.id_member = jsonObject.getString("id_member")
+                    pinjam.id_buku = jsonObject.getString("id_buku")
+                    pinjam.judul_buku = jsonObject.getString("judul_buku")
+
+
+                    pinjam.tgl_peminjaman =
+                        jsonObject.getString("tgl_peminjaman")
+
+                    pinjam.tgl_pengembalian =
+                        jsonObject.getString("tgl_pengembalian")
+
+                    pinjam.batas_tgl_pengembalian =
+                        jsonObject.getString("batas_tgl_pengembalian")
+                    Log.d("response date 1", pinjam.tgl_peminjaman)
+                    Log.d("response date 2", pinjam.tgl_pengembalian)
+                    Log.d("response date 3", pinjam.batas_tgl_pengembalian)
+
+                    if (jsonObject.getString("status") == "0") {
+                        pinjam.status = false
+
+                    } else if (jsonObject.getString("status") == "1") {
+                        pinjam.status = true
+                    }
+
+                    Log.d("response book status", jsonObject.getString("status"))
+                    Log.d("response book status", pinjam.status.toString())
+                    val imageBase64 = jsonObject.getString("image_buku")
+                    val imageByteArray: ByteArray = Base64.decode(imageBase64, Base64.DEFAULT)
+                    pinjam.image_buku = imageByteArray
+
+                    transactionViewModel.insertBookingList(pinjam)
+
+                    Log.d("response transaksi read", transactionViewModel.currentTransaction.value!![i].id_member)
+                    Log.d("response booking read", transactionViewModel.currentTransaction.value!![i].status.toString())
+                    Log.d("response booking read", transactionViewModel.currentTransaction.value!![i].batas_tgl_pengembalian)
+                    Log.d("response booking read", transactionViewModel.currentTransaction.value!![i].tgl_pengembalian)
+                    Log.d("response booking read", transactionViewModel.currentTransaction.value!![i].tgl_peminjaman)
+                }
+
+            } catch (e: Throwable) {
+                Log.d("response fetch books", e.toString())
+            }
+
+            Log.d("response function", "getbookingdata finish")
+        }, Response.ErrorListener { response ->
+            Log.d("data", response.toString())
+        }) {
+        }
+        Volley.newRequestQueue(this).add(stringRequest)
+    }
+
     //this function is doing okay
     override fun editLibrarianFragment() {
         replaceFragment(editLibrarianAccount())
@@ -212,13 +285,14 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
     override fun deleteMember(member: Member) {
         memberViewModel.deleteMember(member)
     }
+
     //???
     override fun booksToAddBooksFragment() {
         replaceFragment(AddBook())
     }
 
 
-    override fun editBookFragment(currentBook : Book) {
+    override fun editBookFragment(currentBook: Book) {
         replaceFragment(EditBook(currentBook))
     }
 

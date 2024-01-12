@@ -20,8 +20,8 @@ class RecyclerViewTransactionAdapter(
         val namaMember : TextView = itemView.findViewById(R.id.Transaction_MemberName_ListView)
         val tglpinjam : TextView = itemView.findViewById(R.id.Transaction_tglpeminjaman_ListView)
 
-        val editbtn : ImageView = itemView.findViewById(R.id.EditBookImg)
-        val deletebtn : ImageView = itemView.findViewById(R.id.DeleteBookImg)
+        val cancelButton : ImageView = itemView.findViewById(R.id.EditBookingImgTrans)
+        val confirmButton : ImageView = itemView.findViewById(R.id.ReturnedBookingImgTrans)
 
         val cardview : CardView = itemView.findViewById(R.id.TransactionCardView)
     }
@@ -43,11 +43,11 @@ class RecyclerViewTransactionAdapter(
         holder.judulBuku.text = currentTransaction.judul_buku
         holder.tglpinjam.text = currentTransaction.tgl_peminjaman.toString()
 
-        holder.deletebtn.setOnClickListener {
+        holder.confirmButton.setOnClickListener {
             //delete pake pinjam_delete.php
         }
 
-        holder.editbtn.setOnClickListener {
+        holder.cancelButton.setOnClickListener {
             //pindah fragment
 //            bookingCommunicator.editTransactionFragment(currentTransaction)
         }
