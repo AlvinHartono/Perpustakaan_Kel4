@@ -41,7 +41,6 @@ class AddBook : Fragment() {
     private var pickedBitmap: Bitmap? = null
     private lateinit var byteArray : ByteArray
     private var resId = 0
-
     private lateinit var imagebuku: ImageView
 
     private lateinit var binding: FragmentAddBookBinding
