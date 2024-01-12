@@ -90,6 +90,8 @@ class AddBook : Fragment() {
                 pickedBitmap!!.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 byteArray = stream.toByteArray()
 
+//                Log.d("response bjr", Base64.encodeToString(byteArray, Base64.DEFAULT))
+
             }
             //save
             val url: String = ApiEndPoint.ADD_BOOK
