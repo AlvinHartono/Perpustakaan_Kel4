@@ -22,6 +22,17 @@ class TransactionViewModel : ViewModel() {
         }
     }
 
+    fun confirmBooking(booking : Pinjam){
+        val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()
+
+        val index = currentList.indexOfFirst { it.id_member == booking.id_member }
+        if (index != -1) {
+            // Replace the old member with the updated member
+            currentList[index] = booking
+            currentTransaction.value = currentList
+        }
+    }
+
     fun cancelBooking(booking : Pinjam){
         try {
             val currentList = currentTransaction.value?.toMutableList() ?: mutableListOf()

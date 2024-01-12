@@ -34,7 +34,7 @@
                 android:layout_marginRight="6dp"
                 android:text="Book Name"
                 android:textColor="@color/black"
-                android:textSize="19sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -46,7 +46,7 @@
                 android:layout_marginRight="6dp"
                 android:text="Member Name"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <LinearLayout

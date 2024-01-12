@@ -286,6 +286,14 @@ class MainActivityLibrarian : AppCompatActivity(), LibrarianCommunicator, BookCo
         memberViewModel.deleteMember(member)
     }
 
+    override fun cancelBooking(booking: Pinjam) {
+        transactionViewModel.cancelBooking(booking)
+    }
+
+    override fun confirmedBooking(booking: Pinjam) {
+        transactionViewModel.confirmBooking(booking)
+    }
+
     //???
     override fun booksToAddBooksFragment() {
         replaceFragment(AddBook())

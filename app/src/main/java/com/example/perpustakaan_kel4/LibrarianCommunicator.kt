@@ -7,4 +7,5 @@ interface LibrarianCommunicator {
 
     fun deleteMember(member: Member)
 
+
 }
